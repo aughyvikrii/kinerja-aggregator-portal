@@ -1,450 +1,775 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Order - TalentOps HR App</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Create Order - SolusiSDM HR App</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+        ></script>
+        <script src="https://unpkg.com/lucide@latest"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            sans: ["Inter", "sans-serif"],
+                        },
+                        colors: {
+                            zinc: {
+                                50: "#fafafa",
+                                100: "#f4f4f5",
+                                200: "#e4e4e7",
+                                300: "#d4d4d8",
+                                400: "#a1a1aa",
+                                500: "#71717a",
+                                600: "#52525b",
+                                700: "#3f3f46",
+                                800: "#27272a",
+                                900: "#18181b",
+                            },
+                        },
                     },
-                    colors: {
-                        zinc: {
-                            50: '#fafafa',
-                            100: '#f4f4f5',
-                            200: '#e4e4e7',
-                            300: '#d4d4d8',
-                            400: '#a1a1aa',
-                            500: '#71717a',
-                            600: '#52525b',
-                            700: '#3f3f46',
-                            800: '#27272a',
-                            900: '#18181b',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-</head>
-<body class="bg-zinc-50 font-sans" x-data="createOrder()" x-init="init()">
-    <div class="flex h-screen">
-        <!-- Sidebar -->
-        <aside class="w-64 bg-white border-r border-zinc-200 flex flex-col">
-            <div class="p-6 border-b border-zinc-100">
-                <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
-                        <i data-lucide="building-2" class="w-4 h-4 text-white"></i>
-                    </div>
-                    <div>
-                        <span class="font-semibold text-zinc-900">TechCorp HR</span>
-                        <p class="text-xs text-zinc-500">HR Application</p>
-                    </div>
-                </div>
-            </div>
-
-            <nav class="flex-1 p-4 space-y-1">
-                <div class="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2 px-3">Menu</div>
-
-                <a href="dashboard.html" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg">
-                    <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
-                    Dashboard
-                </a>
-
-                <a href="create-order.html" class="flex items-center gap-3 px-3 py-2 text-sm font-medium bg-zinc-100 text-zinc-900 rounded-lg">
-                    <i data-lucide="plus-circle" class="w-4 h-4"></i>
-                    Create Order
-                </a>
-
-                <a href="order-history.html" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg">
-                    <i data-lucide="history" class="w-4 h-4"></i>
-                    Order History
-                </a>
-
-                <a href="analytics.html" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg">
-                    <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
-                    Analytics
-                </a>
-
-                <div class="text-xs font-semibold text-zinc-400 uppercase tracking-wider mt-6 mb-2 px-3">External</div>
-
-                <a href="../aggregator-platform/login.html" target="_blank" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg">
-                    <i data-lucide="external-link" class="w-4 h-4"></i>
-                    Aggregator Platform
-                </a>
-            </nav>
-
-            <div class="p-4 border-t border-zinc-200">
-                <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 bg-zinc-200 rounded-full flex items-center justify-center">
-                        <i data-lucide="user" class="w-4 h-4 text-zinc-600"></i>
-                    </div>
-                    <div class="flex-1 min-w-0">
-                        <div class="text-sm font-medium text-zinc-900 truncate">Budi Santoso</div>
-                        <div class="text-xs text-zinc-500">HR Admin</div>
-                    </div>
-                </div>
-            </div>
-        </aside>
-
-        <!-- Main Content -->
-        <main class="flex-1 overflow-y-auto">
-            <header class="bg-white border-b border-zinc-200 px-8 py-4">
-                <div class="flex items-center gap-4">
-                    <a href="dashboard.html" class="p-2 text-zinc-400 hover:text-zinc-600 rounded-lg hover:bg-zinc-50">
-                        <i data-lucide="arrow-left" class="w-5 h-5"></i>
-                    </a>
-                    <div>
-                        <h1 class="text-xl font-semibold text-zinc-900">Create Order</h1>
-                        <p class="text-sm text-zinc-500">Submit a new service request</p>
-                    </div>
-                </div>
-            </header>
-
-            <div class="p-8">
-                <!-- Service Type Selection -->
-                <div x-show="step === 1" class="max-w-4xl mx-auto">
-                    <h2 class="text-lg font-semibold text-zinc-900 mb-2">Select Service Type</h2>
-                    <p class="text-zinc-500 mb-6">Choose the type of service you want to request</p>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <button @click="selectType('mcu')"
-                                :class="type === 'mcu' ? 'border-zinc-900 bg-zinc-50' : 'border-zinc-200 hover:border-zinc-300'"
-                                class="flex items-start gap-4 p-6 border rounded-xl text-left transition-all">
-                            <div class="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center">
-                                <i data-lucide="heart-pulse" class="w-6 h-6 text-red-600"></i>
-                            </div>
-                            <div>
-                                <div class="font-semibold text-zinc-900">Medical Check Up (MCU)</div>
-                                <p class="text-sm text-zinc-500 mt-1">Comprehensive health screening for employees including blood tests, physical examination, and health consultations.</p>
-                            </div>
-                        </button>
-
-                        <button @click="selectType('training')"
-                                :class="type === 'training' ? 'border-zinc-900 bg-zinc-50' : 'border-zinc-200 hover:border-zinc-300'"
-                                class="flex items-start gap-4 p-6 border rounded-xl text-left transition-all">
-                            <div class="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center">
-                                <i data-lucide="graduation-cap" class="w-6 h-6 text-blue-600"></i>
-                            </div>
-                            <div>
-                                <div class="font-semibold text-zinc-900">Training</div>
-                                <p class="text-sm text-zinc-500 mt-1">Professional development programs including leadership, technical skills, and soft skills training.</p>
-                            </div>
-                        </button>
-
-                        <button @click="selectType('psychological')"
-                                :class="type === 'psychological' ? 'border-zinc-900 bg-zinc-50' : 'border-zinc-200 hover:border-zinc-300'"
-                                class="flex items-start gap-4 p-6 border rounded-xl text-left transition-all">
-                            <div class="w-12 h-12 bg-violet-50 rounded-lg flex items-center justify-center">
-                                <i data-lucide="brain" class="w-6 h-6 text-violet-600"></i>
-                            </div>
-                            <div>
-                                <div class="font-semibold text-zinc-900">Psychological Test</div>
-                                <p class="text-sm text-zinc-500 mt-1">Mental health assessments, personality tests, and cognitive evaluations for employees.</p>
-                            </div>
-                        </button>
-
-                        <button @click="selectType('manpower')"
-                                :class="type === 'manpower' ? 'border-zinc-900 bg-zinc-50' : 'border-zinc-200 hover:border-zinc-300'"
-                                class="flex items-start gap-4 p-6 border rounded-xl text-left transition-all">
-                            <div class="w-12 h-12 bg-emerald-50 rounded-lg flex items-center justify-center">
-                                <i data-lucide="users" class="w-6 h-6 text-emerald-600"></i>
-                            </div>
-                            <div>
-                                <div class="font-semibold text-zinc-900">Man Power Supply</div>
-                                <p class="text-sm text-zinc-500 mt-1">Temporary or permanent workforce supply for various positions and skill levels.</p>
-                            </div>
-                        </button>
-                    </div>
-
-                    <div class="mt-8 flex justify-end">
-                        <button @click="step = 2" :disabled="!type"
-                                :class="type ? 'bg-zinc-900 hover:bg-zinc-800' : 'bg-zinc-300 cursor-not-allowed'"
-                                class="px-6 py-2.5 text-white font-medium rounded-lg transition-colors">
-                            Continue
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Order Form -->
-                <div x-show="step === 2" class="max-w-2xl mx-auto" style="display: none;">
-                    <h2 class="text-lg font-semibold text-zinc-900 mb-2" x-text="getFormTitle()"></h2>
-                    <p class="text-zinc-500 mb-6">Fill in the details for your order</p>
-
-                    <form @submit.prevent="submitOrder" class="space-y-6">
-                        <!-- Common Fields -->
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-sm font-medium text-zinc-700 mb-1.5">Department</label>
-                                <select x-model="form.department" class="w-full px-3 py-2 bg-white border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900">
-                                    <option value="">Select department</option>
-                                    <option value="operations">Operations</option>
-                                    <option value="technology">Technology</option>
-                                    <option value="sales">Sales</option>
-                                    <option value="hr">Human Resources</option>
-                                    <option value="finance">Finance</option>
-                                    <option value="marketing">Marketing</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-zinc-700 mb-1.5">Employee Count</label>
-                                <input type="number" x-model="form.employeeCount" min="1" placeholder="e.g. 50"
-                                    class="w-full px-3 py-2 border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900">
-                            </div>
+                },
+            };
+        </script>
+    </head>
+    <body class="bg-zinc-50 font-sans" x-data="createOrder()" x-init="init()">
+        <div class="flex h-screen">
+            <!-- Sidebar -->
+            <aside class="w-64 bg-white border-r border-zinc-200 flex flex-col">
+                <div class="p-6 border-b border-zinc-100">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center"
+                        >
+                            <i
+                                data-lucide="building-2"
+                                class="w-4 h-4 text-white"
+                            ></i>
                         </div>
-
-                        <div class="grid grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-sm font-medium text-zinc-700 mb-1.5">Schedule Date</label>
-                                <input type="date" x-model="form.schedule"
-                                    class="w-full px-3 py-2 border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-zinc-700 mb-1.5">Priority</label>
-                                <select x-model="form.priority" class="w-full px-3 py-2 bg-white border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900">
-                                    <option value="low">Low</option>
-                                    <option value="medium">Medium</option>
-                                    <option value="high">High</option>
-                                    <option value="urgent">Urgent</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <!-- Partner Preference -->
                         <div>
-                            <label class="block text-sm font-medium text-zinc-700 mb-1.5">Partner Preference</label>
-                            <select x-model="form.partnerPreference" class="w-full px-3 py-2 bg-white border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900">
-                                <option value="">Auto-assign (recommended)</option>
-                                <option value="p1">MediCheck Pro</option>
-                                <option value="p2">TalentHub Training</option>
-                                <option value="p3">PsychePro Assessment</option>
-                                <option value="p4">Workforce Solutions</option>
-                                <option value="p5">MultiService Indonesia</option>
-                            </select>
+                            <span class="font-semibold text-zinc-900"
+                                >TechCorp HR</span
+                            >
+                            <p class="text-xs text-zinc-500">HR Application</p>
+                        </div>
+                    </div>
+                </div>
+
+                <nav class="flex-1 p-4 space-y-1">
+                    <div
+                        class="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2 px-3"
+                    >
+                        Menu
+                    </div>
+
+                    <a
+                        href="dashboard.html"
+                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                    >
+                        <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                        Dashboard
+                    </a>
+
+                    <a
+                        href="create-order.html"
+                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium bg-zinc-100 text-zinc-900 rounded-lg"
+                    >
+                        <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                        Create Order
+                    </a>
+
+                    <a
+                        href="order-history.html"
+                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                    >
+                        <i data-lucide="history" class="w-4 h-4"></i>
+                        Order History
+                    </a>
+
+                    <a
+                        href="analytics.html"
+                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                    >
+                        <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
+                        Analytics
+                    </a>
+
+                    <div
+                        class="text-xs font-semibold text-zinc-400 uppercase tracking-wider mt-6 mb-2 px-3"
+                    >
+                        External
+                    </div>
+
+                    <a
+                        href="../aggregator-platform/login.html"
+                        target="_blank"
+                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                    >
+                        <i data-lucide="external-link" class="w-4 h-4"></i>
+                        Aggregator Platform
+                    </a>
+                </nav>
+
+                <div class="p-4 border-t border-zinc-200">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-8 h-8 bg-zinc-200 rounded-full flex items-center justify-center"
+                        >
+                            <i
+                                data-lucide="user"
+                                class="w-4 h-4 text-zinc-600"
+                            ></i>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div
+                                class="text-sm font-medium text-zinc-900 truncate"
+                            >
+                                Budi Santoso
+                            </div>
+                            <div class="text-xs text-zinc-500">HR Admin</div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="flex-1 overflow-y-auto">
+                <header class="bg-white border-b border-zinc-200 px-8 py-4">
+                    <div class="flex items-center gap-4">
+                        <a
+                            href="dashboard.html"
+                            class="p-2 text-zinc-400 hover:text-zinc-600 rounded-lg hover:bg-zinc-50"
+                        >
+                            <i data-lucide="arrow-left" class="w-5 h-5"></i>
+                        </a>
+                        <div>
+                            <h1 class="text-xl font-semibold text-zinc-900">
+                                Create Order
+                            </h1>
+                            <p class="text-sm text-zinc-500">
+                                Submit a new service request
+                            </p>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="p-8">
+                    <!-- Service Type Selection -->
+                    <div x-show="step === 1" class="max-w-4xl mx-auto">
+                        <h2 class="text-lg font-semibold text-zinc-900 mb-2">
+                            Select Service Type
+                        </h2>
+                        <p class="text-zinc-500 mb-6">
+                            Choose the type of service you want to request
+                        </p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <button
+                                @click="selectType('mcu')"
+                                :class="type === 'mcu' ? 'border-zinc-900 bg-zinc-50' : 'border-zinc-200 hover:border-zinc-300'"
+                                class="flex items-start gap-4 p-6 border rounded-xl text-left transition-all"
+                            >
+                                <div
+                                    class="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center"
+                                >
+                                    <i
+                                        data-lucide="heart-pulse"
+                                        class="w-6 h-6 text-red-600"
+                                    ></i>
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-zinc-900">
+                                        Medical Check Up (MCU)
+                                    </div>
+                                    <p class="text-sm text-zinc-500 mt-1">
+                                        Comprehensive health screening for
+                                        employees including blood tests,
+                                        physical examination, and health
+                                        consultations.
+                                    </p>
+                                </div>
+                            </button>
+
+                            <button
+                                @click="selectType('training')"
+                                :class="type === 'training' ? 'border-zinc-900 bg-zinc-50' : 'border-zinc-200 hover:border-zinc-300'"
+                                class="flex items-start gap-4 p-6 border rounded-xl text-left transition-all"
+                            >
+                                <div
+                                    class="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center"
+                                >
+                                    <i
+                                        data-lucide="graduation-cap"
+                                        class="w-6 h-6 text-blue-600"
+                                    ></i>
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-zinc-900">
+                                        Training
+                                    </div>
+                                    <p class="text-sm text-zinc-500 mt-1">
+                                        Professional development programs
+                                        including leadership, technical skills,
+                                        and soft skills training.
+                                    </p>
+                                </div>
+                            </button>
+
+                            <button
+                                @click="selectType('psychological')"
+                                :class="type === 'psychological' ? 'border-zinc-900 bg-zinc-50' : 'border-zinc-200 hover:border-zinc-300'"
+                                class="flex items-start gap-4 p-6 border rounded-xl text-left transition-all"
+                            >
+                                <div
+                                    class="w-12 h-12 bg-violet-50 rounded-lg flex items-center justify-center"
+                                >
+                                    <i
+                                        data-lucide="brain"
+                                        class="w-6 h-6 text-violet-600"
+                                    ></i>
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-zinc-900">
+                                        Psychological Test
+                                    </div>
+                                    <p class="text-sm text-zinc-500 mt-1">
+                                        Mental health assessments, personality
+                                        tests, and cognitive evaluations for
+                                        employees.
+                                    </p>
+                                </div>
+                            </button>
+
+                            <button
+                                @click="selectType('manpower')"
+                                :class="type === 'manpower' ? 'border-zinc-900 bg-zinc-50' : 'border-zinc-200 hover:border-zinc-300'"
+                                class="flex items-start gap-4 p-6 border rounded-xl text-left transition-all"
+                            >
+                                <div
+                                    class="w-12 h-12 bg-emerald-50 rounded-lg flex items-center justify-center"
+                                >
+                                    <i
+                                        data-lucide="users"
+                                        class="w-6 h-6 text-emerald-600"
+                                    ></i>
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-zinc-900">
+                                        Man Power Supply
+                                    </div>
+                                    <p class="text-sm text-zinc-500 mt-1">
+                                        Temporary or permanent workforce supply
+                                        for various positions and skill levels.
+                                    </p>
+                                </div>
+                            </button>
                         </div>
 
-                        <!-- MCU Specific Fields -->
-                        <template x-if="type === 'mcu'">
-                            <div class="space-y-4 p-4 bg-zinc-50 rounded-lg">
-                                <div class="font-medium text-zinc-900">MCU Options</div>
-                                <div class="grid grid-cols-2 gap-3">
-                                    <label class="flex items-center gap-2">
-                                        <input type="checkbox" class="rounded border-zinc-300" checked>
-                                        <span class="text-sm text-zinc-700">Blood Test</span>
-                                    </label>
-                                    <label class="flex items-center gap-2">
-                                        <input type="checkbox" class="rounded border-zinc-300" checked>
-                                        <span class="text-sm text-zinc-700">Physical Exam</span>
-                                    </label>
-                                    <label class="flex items-center gap-2">
-                                        <input type="checkbox" class="rounded border-zinc-300">
-                                        <span class="text-sm text-zinc-700">ECG</span>
-                                    </label>
-                                    <label class="flex items-center gap-2">
-                                        <input type="checkbox" class="rounded border-zinc-300">
-                                        <span class="text-sm text-zinc-700">X-Ray</span>
-                                    </label>
-                                </div>
-                            </div>
-                        </template>
+                        <div class="mt-8 flex justify-end">
+                            <button
+                                @click="step = 2"
+                                :disabled="!type"
+                                :class="type ? 'bg-zinc-900 hover:bg-zinc-800' : 'bg-zinc-300 cursor-not-allowed'"
+                                class="px-6 py-2.5 text-white font-medium rounded-lg transition-colors"
+                            >
+                                Continue
+                            </button>
+                        </div>
+                    </div>
 
-                        <!-- Training Specific Fields -->
-                        <template x-if="type === 'training'">
-                            <div class="space-y-4 p-4 bg-zinc-50 rounded-lg">
-                                <div class="font-medium text-zinc-900">Training Details</div>
+                    <!-- Order Form -->
+                    <div
+                        x-show="step === 2"
+                        class="max-w-2xl mx-auto"
+                        style="display: none"
+                    >
+                        <h2
+                            class="text-lg font-semibold text-zinc-900 mb-2"
+                            x-text="getFormTitle()"
+                        ></h2>
+                        <p class="text-zinc-500 mb-6">
+                            Fill in the details for your order
+                        </p>
+
+                        <form @submit.prevent="submitOrder" class="space-y-6">
+                            <!-- Common Fields -->
+                            <div class="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label class="block text-sm font-medium text-zinc-700 mb-1.5">Training Type</label>
-                                    <select class="w-full px-3 py-2 bg-white border border-zinc-200 rounded-lg">
-                                        <option>Leadership Development</option>
-                                        <option>Technical Skills</option>
-                                        <option>Soft Skills</option>
-                                        <option>Compliance Training</option>
-                                        <option>Safety Training</option>
+                                    <label
+                                        class="block text-sm font-medium text-zinc-700 mb-1.5"
+                                        >Department</label
+                                    >
+                                    <select
+                                        x-model="form.department"
+                                        class="w-full px-3 py-2 bg-white border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900"
+                                    >
+                                        <option value="">
+                                            Select department
+                                        </option>
+                                        <option value="operations">
+                                            Operations
+                                        </option>
+                                        <option value="technology">
+                                            Technology
+                                        </option>
+                                        <option value="sales">Sales</option>
+                                        <option value="hr">
+                                            Human Resources
+                                        </option>
+                                        <option value="finance">Finance</option>
+                                        <option value="marketing">
+                                            Marketing
+                                        </option>
                                     </select>
                                 </div>
                                 <div>
-                                    <label class="block text-sm font-medium text-zinc-700 mb-1.5">Duration (days)</label>
-                                    <input type="number" min="1" value="3" class="w-full px-3 py-2 border border-zinc-200 rounded-lg">
+                                    <label
+                                        class="block text-sm font-medium text-zinc-700 mb-1.5"
+                                        >Employee Count</label
+                                    >
+                                    <input
+                                        type="number"
+                                        x-model="form.employeeCount"
+                                        min="1"
+                                        placeholder="e.g. 50"
+                                        class="w-full px-3 py-2 border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900"
+                                    />
                                 </div>
                             </div>
-                        </template>
 
-                        <!-- Psychological Test Specific Fields -->
-                        <template x-if="type === 'psychological'">
-                            <div class="space-y-4 p-4 bg-zinc-50 rounded-lg">
-                                <div class="font-medium text-zinc-900">Test Details</div>
+                            <div class="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label class="block text-sm font-medium text-zinc-700 mb-1.5">Test Type</label>
-                                    <select class="w-full px-3 py-2 bg-white border border-zinc-200 rounded-lg">
-                                        <option>Pre-employment Screening</option>
-                                        <option>Leadership Assessment</option>
-                                        <option>Team Compatibility</option>
-                                        <option>Stress & Burnout</option>
-                                        <option>Full Psychological Profile</option>
+                                    <label
+                                        class="block text-sm font-medium text-zinc-700 mb-1.5"
+                                        >Schedule Date</label
+                                    >
+                                    <input
+                                        type="date"
+                                        x-model="form.schedule"
+                                        class="w-full px-3 py-2 border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900"
+                                    />
+                                </div>
+                                <div>
+                                    <label
+                                        class="block text-sm font-medium text-zinc-700 mb-1.5"
+                                        >Priority</label
+                                    >
+                                    <select
+                                        x-model="form.priority"
+                                        class="w-full px-3 py-2 bg-white border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900"
+                                    >
+                                        <option value="low">Low</option>
+                                        <option value="medium">Medium</option>
+                                        <option value="high">High</option>
+                                        <option value="urgent">Urgent</option>
                                     </select>
                                 </div>
                             </div>
-                        </template>
 
-                        <!-- Man Power Specific Fields -->
-                        <template x-if="type === 'manpower'">
-                            <div class="space-y-4 p-4 bg-zinc-50 rounded-lg">
-                                <div class="font-medium text-zinc-900">Workforce Requirements</div>
-                                <div>
-                                    <label class="block text-sm font-medium text-zinc-700 mb-1.5">Position/Role</label>
-                                    <input type="text" placeholder="e.g. Warehouse Staff, Sales Associate" class="w-full px-3 py-2 border border-zinc-200 rounded-lg">
+                            <!-- Partner Preference -->
+                            <div>
+                                <label
+                                    class="block text-sm font-medium text-zinc-700 mb-1.5"
+                                    >Partner Preference</label
+                                >
+                                <select
+                                    x-model="form.partnerPreference"
+                                    class="w-full px-3 py-2 bg-white border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900"
+                                >
+                                    <option value="">
+                                        Auto-assign (recommended)
+                                    </option>
+                                    <option value="p1">MediCheck Pro</option>
+                                    <option value="p2">
+                                        TalentHub Training
+                                    </option>
+                                    <option value="p3">
+                                        PsychePro Assessment
+                                    </option>
+                                    <option value="p4">
+                                        Workforce Solutions
+                                    </option>
+                                    <option value="p5">
+                                        MultiService Indonesia
+                                    </option>
+                                </select>
+                            </div>
+
+                            <!-- MCU Specific Fields -->
+                            <template x-if="type === 'mcu'">
+                                <div
+                                    class="space-y-4 p-4 bg-zinc-50 rounded-lg"
+                                >
+                                    <div class="font-medium text-zinc-900">
+                                        MCU Options
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-3">
+                                        <label class="flex items-center gap-2">
+                                            <input
+                                                type="checkbox"
+                                                class="rounded border-zinc-300"
+                                                checked
+                                            />
+                                            <span class="text-sm text-zinc-700"
+                                                >Blood Test</span
+                                            >
+                                        </label>
+                                        <label class="flex items-center gap-2">
+                                            <input
+                                                type="checkbox"
+                                                class="rounded border-zinc-300"
+                                                checked
+                                            />
+                                            <span class="text-sm text-zinc-700"
+                                                >Physical Exam</span
+                                            >
+                                        </label>
+                                        <label class="flex items-center gap-2">
+                                            <input
+                                                type="checkbox"
+                                                class="rounded border-zinc-300"
+                                            />
+                                            <span class="text-sm text-zinc-700"
+                                                >ECG</span
+                                            >
+                                        </label>
+                                        <label class="flex items-center gap-2">
+                                            <input
+                                                type="checkbox"
+                                                class="rounded border-zinc-300"
+                                            />
+                                            <span class="text-sm text-zinc-700"
+                                                >X-Ray</span
+                                            >
+                                        </label>
+                                    </div>
                                 </div>
-                                <div class="grid grid-cols-2 gap-4">
+                            </template>
+
+                            <!-- Training Specific Fields -->
+                            <template x-if="type === 'training'">
+                                <div
+                                    class="space-y-4 p-4 bg-zinc-50 rounded-lg"
+                                >
+                                    <div class="font-medium text-zinc-900">
+                                        Training Details
+                                    </div>
                                     <div>
-                                        <label class="block text-sm font-medium text-zinc-700 mb-1.5">Contract Duration</label>
-                                        <select class="w-full px-3 py-2 bg-white border border-zinc-200 rounded-lg">
-                                            <option>3 months</option>
-                                            <option>6 months</option>
-                                            <option>1 year</option>
-                                            <option>Permanent</option>
+                                        <label
+                                            class="block text-sm font-medium text-zinc-700 mb-1.5"
+                                            >Training Type</label
+                                        >
+                                        <select
+                                            class="w-full px-3 py-2 bg-white border border-zinc-200 rounded-lg"
+                                        >
+                                            <option>
+                                                Leadership Development
+                                            </option>
+                                            <option>Technical Skills</option>
+                                            <option>Soft Skills</option>
+                                            <option>Compliance Training</option>
+                                            <option>Safety Training</option>
                                         </select>
                                     </div>
                                     <div>
-                                        <label class="block text-sm font-medium text-zinc-700 mb-1.5">Quantity</label>
-                                        <input type="number" min="1" value="5" class="w-full px-3 py-2 border border-zinc-200 rounded-lg">
+                                        <label
+                                            class="block text-sm font-medium text-zinc-700 mb-1.5"
+                                            >Duration (days)</label
+                                        >
+                                        <input
+                                            type="number"
+                                            min="1"
+                                            value="3"
+                                            class="w-full px-3 py-2 border border-zinc-200 rounded-lg"
+                                        />
                                     </div>
                                 </div>
+                            </template>
+
+                            <!-- Psychological Test Specific Fields -->
+                            <template x-if="type === 'psychological'">
+                                <div
+                                    class="space-y-4 p-4 bg-zinc-50 rounded-lg"
+                                >
+                                    <div class="font-medium text-zinc-900">
+                                        Test Details
+                                    </div>
+                                    <div>
+                                        <label
+                                            class="block text-sm font-medium text-zinc-700 mb-1.5"
+                                            >Test Type</label
+                                        >
+                                        <select
+                                            class="w-full px-3 py-2 bg-white border border-zinc-200 rounded-lg"
+                                        >
+                                            <option>
+                                                Pre-employment Screening
+                                            </option>
+                                            <option>
+                                                Leadership Assessment
+                                            </option>
+                                            <option>Team Compatibility</option>
+                                            <option>Stress & Burnout</option>
+                                            <option>
+                                                Full Psychological Profile
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <!-- Man Power Specific Fields -->
+                            <template x-if="type === 'manpower'">
+                                <div
+                                    class="space-y-4 p-4 bg-zinc-50 rounded-lg"
+                                >
+                                    <div class="font-medium text-zinc-900">
+                                        Workforce Requirements
+                                    </div>
+                                    <div>
+                                        <label
+                                            class="block text-sm font-medium text-zinc-700 mb-1.5"
+                                            >Position/Role</label
+                                        >
+                                        <input
+                                            type="text"
+                                            placeholder="e.g. Warehouse Staff, Sales Associate"
+                                            class="w-full px-3 py-2 border border-zinc-200 rounded-lg"
+                                        />
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label
+                                                class="block text-sm font-medium text-zinc-700 mb-1.5"
+                                                >Contract Duration</label
+                                            >
+                                            <select
+                                                class="w-full px-3 py-2 bg-white border border-zinc-200 rounded-lg"
+                                            >
+                                                <option>3 months</option>
+                                                <option>6 months</option>
+                                                <option>1 year</option>
+                                                <option>Permanent</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label
+                                                class="block text-sm font-medium text-zinc-700 mb-1.5"
+                                                >Quantity</label
+                                            >
+                                            <input
+                                                type="number"
+                                                min="1"
+                                                value="5"
+                                                class="w-full px-3 py-2 border border-zinc-200 rounded-lg"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <!-- Notes -->
+                            <div>
+                                <label
+                                    class="block text-sm font-medium text-zinc-700 mb-1.5"
+                                    >Additional Notes</label
+                                >
+                                <textarea
+                                    x-model="form.notes"
+                                    rows="3"
+                                    placeholder="Any special requirements or notes..."
+                                    class="w-full px-3 py-2 border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900"
+                                ></textarea>
                             </div>
-                        </template>
 
-                        <!-- Notes -->
-                        <div>
-                            <label class="block text-sm font-medium text-zinc-700 mb-1.5">Additional Notes</label>
-                            <textarea x-model="form.notes" rows="3" placeholder="Any special requirements or notes..."
-                                class="w-full px-3 py-2 border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900"></textarea>
+                            <!-- Actions -->
+                            <div class="flex items-center justify-between pt-4">
+                                <button
+                                    type="button"
+                                    @click="step = 1"
+                                    class="px-6 py-2.5 text-zinc-600 font-medium hover:text-zinc-900"
+                                >
+                                    Back
+                                </button>
+                                <button
+                                    type="submit"
+                                    :disabled="submitting"
+                                    class="px-6 py-2.5 bg-zinc-900 text-white font-medium rounded-lg hover:bg-zinc-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-2"
+                                >
+                                    <i
+                                        x-show="submitting"
+                                        data-lucide="loader-2"
+                                        class="w-4 h-4 animate-spin"
+                                    ></i>
+                                    <span
+                                        x-text="submitting ? 'Creating...' : 'Create Order'"
+                                    ></span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Sync Simulation -->
+                    <div
+                        x-show="step === 3"
+                        class="max-w-md mx-auto text-center py-12"
+                        style="display: none"
+                    >
+                        <div
+                            class="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-6"
+                        >
+                            <i
+                                data-lucide="refresh-cw"
+                                class="w-10 h-10 text-blue-600 animate-spin"
+                            ></i>
                         </div>
-
-                        <!-- Actions -->
-                        <div class="flex items-center justify-between pt-4">
-                            <button type="button" @click="step = 1" class="px-6 py-2.5 text-zinc-600 font-medium hover:text-zinc-900">
-                                Back
-                            </button>
-                            <button type="submit" :disabled="submitting"
-                                class="px-6 py-2.5 bg-zinc-900 text-white font-medium rounded-lg hover:bg-zinc-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-2">
-                                <i x-show="submitting" data-lucide="loader-2" class="w-4 h-4 animate-spin"></i>
-                                <span x-text="submitting ? 'Creating...' : 'Create Order'"></span>
-                            </button>
+                        <h2 class="text-xl font-semibold text-zinc-900 mb-2">
+                            Syncing to Aggregator Platform
+                        </h2>
+                        <p class="text-zinc-500">
+                            Please wait while we synchronize your order...
+                        </p>
+                        <div
+                            class="mt-6 bg-zinc-100 rounded-full h-2 overflow-hidden"
+                        >
+                            <div
+                                class="bg-blue-600 h-full transition-all duration-[2000ms]"
+                                :style="`width: ${syncProgress}%`"
+                            ></div>
                         </div>
-                    </form>
+                    </div>
+
+                    <!-- Success -->
+                    <div
+                        x-show="step === 4"
+                        class="max-w-md mx-auto text-center py-12"
+                        style="display: none"
+                    >
+                        <div
+                            class="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-6"
+                        >
+                            <i
+                                data-lucide="check"
+                                class="w-10 h-10 text-emerald-600"
+                            ></i>
+                        </div>
+                        <h2 class="text-xl font-semibold text-zinc-900 mb-2">
+                            Order Created Successfully!
+                        </h2>
+                        <p class="text-zinc-500 mb-6">
+                            Your order has been created and synced to the
+                            Aggregator Platform. The partner will be notified
+                            shortly.
+                        </p>
+                        <div class="bg-zinc-50 rounded-lg p-4 mb-6">
+                            <div class="text-sm text-zinc-500">Order ID</div>
+                            <div
+                                class="text-lg font-semibold text-zinc-900"
+                                x-text="createdOrderId"
+                            ></div>
+                        </div>
+                        <div class="flex gap-3 justify-center">
+                            <a
+                                href="order-history.html"
+                                class="px-6 py-2.5 border border-zinc-200 text-zinc-700 font-medium rounded-lg hover:bg-zinc-50 transition-colors"
+                            >
+                                View Orders
+                            </a>
+                            <a
+                                href="dashboard.html"
+                                class="px-6 py-2.5 bg-zinc-900 text-white font-medium rounded-lg hover:bg-zinc-800 transition-colors"
+                            >
+                                Back to Dashboard
+                            </a>
+                        </div>
+                    </div>
                 </div>
+            </main>
+        </div>
 
-                <!-- Sync Simulation -->
-                <div x-show="step === 3" class="max-w-md mx-auto text-center py-12" style="display: none;">
-                    <div class="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <i data-lucide="refresh-cw" class="w-10 h-10 text-blue-600 animate-spin"></i>
-                    </div>
-                    <h2 class="text-xl font-semibold text-zinc-900 mb-2">Syncing to Aggregator Platform</h2>
-                    <p class="text-zinc-500">Please wait while we synchronize your order...</p>
-                    <div class="mt-6 bg-zinc-100 rounded-full h-2 overflow-hidden">
-                        <div class="bg-blue-600 h-full transition-all duration-[2000ms]" :style="`width: ${syncProgress}%`"></div>
-                    </div>
-                </div>
+        <script>
+            function createOrder() {
+                return {
+                    step: 1,
+                    type: "",
+                    submitting: false,
+                    syncProgress: 0,
+                    createdOrderId: "",
+                    form: {
+                        department: "",
+                        employeeCount: "",
+                        schedule: "",
+                        priority: "medium",
+                        partnerPreference: "",
+                        notes: "",
+                    },
 
-                <!-- Success -->
-                <div x-show="step === 4" class="max-w-md mx-auto text-center py-12" style="display: none;">
-                    <div class="w-20 h-20 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <i data-lucide="check" class="w-10 h-10 text-emerald-600"></i>
-                    </div>
-                    <h2 class="text-xl font-semibold text-zinc-900 mb-2">Order Created Successfully!</h2>
-                    <p class="text-zinc-500 mb-6">Your order has been created and synced to the Aggregator Platform. The partner will be notified shortly.</p>
-                    <div class="bg-zinc-50 rounded-lg p-4 mb-6">
-                        <div class="text-sm text-zinc-500">Order ID</div>
-                        <div class="text-lg font-semibold text-zinc-900" x-text="createdOrderId"></div>
-                    </div>
-                    <div class="flex gap-3 justify-center">
-                        <a href="order-history.html" class="px-6 py-2.5 border border-zinc-200 text-zinc-700 font-medium rounded-lg hover:bg-zinc-50 transition-colors">
-                            View Orders
-                        </a>
-                        <a href="dashboard.html" class="px-6 py-2.5 bg-zinc-900 text-white font-medium rounded-lg hover:bg-zinc-800 transition-colors">
-                            Back to Dashboard
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </main>
-    </div>
-
-    <script>
-        function createOrder() {
-            return {
-                step: 1,
-                type: '',
-                submitting: false,
-                syncProgress: 0,
-                createdOrderId: '',
-                form: {
-                    department: '',
-                    employeeCount: '',
-                    schedule: '',
-                    priority: 'medium',
-                    partnerPreference: '',
-                    notes: ''
-                },
-
-                init() {
-                    // Check URL params for type
-                    const params = new URLSearchParams(window.location.search);
-                    const typeParam = params.get('type');
-                    if (typeParam) {
-                        this.type = typeParam;
-                        this.step = 2;
-                    }
-                    lucide.createIcons();
-                },
-
-                selectType(type) {
-                    this.type = type;
-                },
-
-                getFormTitle() {
-                    const titles = {
-                        'mcu': 'Medical Check Up Request',
-                        'training': 'Training Request',
-                        'psychological': 'Psychological Test Request',
-                        'manpower': 'Man Power Supply Request'
-                    };
-                    return titles[this.type] || 'New Order';
-                },
-
-                submitOrder() {
-                    this.submitting = true;
-
-                    // Simulate API call
-                    setTimeout(() => {
-                        this.submitting = false;
-                        this.step = 3;
-                        this.runSyncAnimation();
-                    }, 800);
-                },
-
-                runSyncAnimation() {
-                    this.syncProgress = 0;
-                    const interval = setInterval(() => {
-                        this.syncProgress += 20;
-                        if (this.syncProgress >= 100) {
-                            clearInterval(interval);
-                            this.createdOrderId = 'ORD-2024-' + String(Math.floor(Math.random() * 900) + 100).padStart(3, '0');
-                            this.step = 4;
-                            lucide.createIcons();
+                    init() {
+                        // Check URL params for type
+                        const params = new URLSearchParams(
+                            window.location.search,
+                        );
+                        const typeParam = params.get("type");
+                        if (typeParam) {
+                            this.type = typeParam;
+                            this.step = 2;
                         }
-                    }, 400);
-                }
+                        lucide.createIcons();
+                    },
+
+                    selectType(type) {
+                        this.type = type;
+                    },
+
+                    getFormTitle() {
+                        const titles = {
+                            mcu: "Medical Check Up Request",
+                            training: "Training Request",
+                            psychological: "Psychological Test Request",
+                            manpower: "Man Power Supply Request",
+                        };
+                        return titles[this.type] || "New Order";
+                    },
+
+                    submitOrder() {
+                        this.submitting = true;
+
+                        // Simulate API call
+                        setTimeout(() => {
+                            this.submitting = false;
+                            this.step = 3;
+                            this.runSyncAnimation();
+                        }, 800);
+                    },
+
+                    runSyncAnimation() {
+                        this.syncProgress = 0;
+                        const interval = setInterval(() => {
+                            this.syncProgress += 20;
+                            if (this.syncProgress >= 100) {
+                                clearInterval(interval);
+                                this.createdOrderId =
+                                    "ORD-2024-" +
+                                    String(
+                                        Math.floor(Math.random() * 900) + 100,
+                                    ).padStart(3, "0");
+                                this.step = 4;
+                                lucide.createIcons();
+                            }
+                        }, 400);
+                    },
+                };
             }
-        }
-    </script>
-</body>
+        </script>
+    </body>
 </html>

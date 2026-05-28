@@ -1,4 +1,4 @@
-# TalentOps Aggregator Platform
+# SolusiSDM Aggregator Platform
 
 A modern web platform that acts as an aggregator marketplace and analytics hub for HR services including Medical Check Up (MCU), Man Power Supply, Training, and Psychological Testing.
 

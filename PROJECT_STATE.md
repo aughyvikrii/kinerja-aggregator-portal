@@ -1,4 +1,4 @@
-# TalentOps Aggregator Platform - Project State
+# SolusiSDM Aggregator Platform - Project State
 
 **Last Updated:** 2024-05-28  
 **Project Phase:** MVP Complete (Static Frontend)
@@ -9,11 +9,11 @@
 
 ### 1. Public Portal (`/apps/public-portal/`)
 - [x] **Modern Landing Page** - ilovelife.co.id inspired design with:
+  - **Hero Slider** with 4 informative slides (auto-play + navigation)
   - Warm gradient hero section (orange to blue)
   - Animated floating blobs and glassmorphism effects
   - Gradient text and modern typography
   - Floating card animations on hover
-  - Stats counter section
   - Smooth scroll animations
 - [x] **5-Step Order Wizard** with enhanced interactions:
   1. Category selection with glassmorphism cards

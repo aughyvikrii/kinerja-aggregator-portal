@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Order Management - TalentOps</title>
+        <title>Order Management - SolusiSDM</title>
         <script src="https://cdn.tailwindcss.com"></script>
         <script
             defer
@@ -21,20 +21,20 @@
                 theme: {
                     extend: {
                         fontFamily: {
-                            sans: ['Inter', 'sans-serif'],
+                            sans: ["Inter", "sans-serif"],
                         },
                         colors: {
                             zinc: {
-                                50: '#fafafa',
-                                100: '#f4f4f5',
-                                200: '#e4e4e7',
-                                300: '#d4d4d8',
-                                400: '#a1a1aa',
-                                500: '#71717a',
-                                600: '#52525b',
-                                700: '#3f3f46',
-                                800: '#27272a',
-                                900: '#18181b',
+                                50: "#fafafa",
+                                100: "#f4f4f5",
+                                200: "#e4e4e7",
+                                300: "#d4d4d8",
+                                400: "#a1a1aa",
+                                500: "#71717a",
+                                600: "#52525b",
+                                700: "#3f3f46",
+                                800: "#27272a",
+                                900: "#18181b",
                             },
                         },
                     },
@@ -61,7 +61,7 @@
                             ></i>
                         </div>
                         <span class="font-semibold text-zinc-900"
-                            >TalentOps</span
+                            >SolusiSDM</span
                         >
                     </div>
                 </div>
@@ -174,9 +174,7 @@
                     <div
                         class="bg-white rounded-xl border border-zinc-200 p-4 mb-6"
                     >
-                        <div
-                            class="flex flex-wrap items-center gap-4"
-                        >
+                        <div class="flex flex-wrap items-center gap-4">
                             <div class="flex items-center gap-2">
                                 <i
                                     data-lucide="search"
@@ -197,7 +195,9 @@
                                 <option value="">All Categories</option>
                                 <option value="mcu">MCU</option>
                                 <option value="training">Training</option>
-                                <option value="psychological">Psych Test</option>
+                                <option value="psychological">
+                                    Psych Test
+                                </option>
                                 <option value="manpower">Man Power</option>
                             </select>
                             <select
@@ -346,79 +346,79 @@
         <script>
             function ordersData() {
                 return {
-                    search: '',
-                    filterCategory: '',
-                    filterStatus: '',
-                    filterSync: '',
+                    search: "",
+                    filterCategory: "",
+                    filterStatus: "",
+                    filterSync: "",
                     orders: [
                         {
-                            id: 'ORD-2024-008',
-                            company: 'TechCorp Indonesia',
-                            partner: 'MediCheck Pro',
-                            category: 'MCU',
-                            status: 'Processing',
-                            sla: 'On Track',
-                            sync_source: 'HR App',
+                            id: "ORD-2024-008",
+                            company: "TechCorp Indonesia",
+                            partner: "MediCheck Pro",
+                            category: "MCU",
+                            status: "Processing",
+                            sla: "On Track",
+                            sync_source: "HR App",
                             ai_flag: false,
                         },
                         {
-                            id: 'ORD-2024-007',
-                            company: 'FinanceFirst Bank',
-                            partner: 'PsychePro Assessment',
-                            category: 'Psych Test',
-                            status: 'Completed',
-                            sla: 'Met',
-                            sync_source: 'HR App',
+                            id: "ORD-2024-007",
+                            company: "FinanceFirst Bank",
+                            partner: "PsychePro Assessment",
+                            category: "Psych Test",
+                            status: "Completed",
+                            sla: "Met",
+                            sync_source: "HR App",
                             ai_flag: true,
                         },
                         {
-                            id: 'ORD-2024-006',
-                            company: 'TechCorp Indonesia',
-                            partner: 'TalentHub Training',
-                            category: 'Training',
-                            status: 'Pending',
-                            sla: 'On Track',
-                            sync_source: 'HR App',
+                            id: "ORD-2024-006",
+                            company: "TechCorp Indonesia",
+                            partner: "TalentHub Training",
+                            category: "Training",
+                            status: "Pending",
+                            sla: "On Track",
+                            sync_source: "HR App",
                             ai_flag: false,
                         },
                         {
-                            id: 'ORD-2024-004',
-                            company: 'RetailGiant',
-                            partner: 'Workforce Solutions',
-                            category: 'Man Power',
-                            status: 'Processing',
-                            sla: 'At Risk',
-                            sync_source: 'HR App',
+                            id: "ORD-2024-004",
+                            company: "RetailGiant",
+                            partner: "Workforce Solutions",
+                            category: "Man Power",
+                            status: "Processing",
+                            sla: "At Risk",
+                            sync_source: "HR App",
                             ai_flag: true,
                         },
                         {
-                            id: 'ORD-2024-003',
-                            company: 'ManufacturePro',
-                            partner: 'PsychePro Assessment',
-                            category: 'Psych Test',
-                            status: 'Pending',
-                            sla: 'On Track',
-                            sync_source: 'HR App',
+                            id: "ORD-2024-003",
+                            company: "ManufacturePro",
+                            partner: "PsychePro Assessment",
+                            category: "Psych Test",
+                            status: "Pending",
+                            sla: "On Track",
+                            sync_source: "HR App",
                             ai_flag: false,
                         },
                         {
-                            id: 'ORD-2024-002',
-                            company: 'FinanceFirst Bank',
-                            partner: 'TalentHub Training',
-                            category: 'Training',
-                            status: 'Processing',
-                            sla: 'On Track',
-                            sync_source: 'HR App',
+                            id: "ORD-2024-002",
+                            company: "FinanceFirst Bank",
+                            partner: "TalentHub Training",
+                            category: "Training",
+                            status: "Processing",
+                            sla: "On Track",
+                            sync_source: "HR App",
                             ai_flag: false,
                         },
                         {
-                            id: 'ORD-2024-001',
-                            company: 'TechCorp Indonesia',
-                            partner: 'MediCheck Pro',
-                            category: 'MCU',
-                            status: 'Completed',
-                            sla: 'Met',
-                            sync_source: 'HR App',
+                            id: "ORD-2024-001",
+                            company: "TechCorp Indonesia",
+                            partner: "MediCheck Pro",
+                            category: "MCU",
+                            status: "Completed",
+                            sla: "Met",
+                            sync_source: "HR App",
                             ai_flag: true,
                         },
                     ],
@@ -442,38 +442,37 @@
                                     .includes(this.filterCategory);
                             const matchStatus =
                                 !this.filterStatus ||
-                                order.status
-                                    .toLowerCase() ===
+                                order.status.toLowerCase() ===
                                     this.filterStatus;
                             return matchSearch && matchCategory && matchStatus;
                         });
                     },
                     getCategoryClass(category) {
                         const classes = {
-                            MCU: 'bg-red-50 text-red-700',
-                            Training: 'bg-blue-50 text-blue-700',
-                            'Psych Test': 'bg-violet-50 text-violet-700',
-                            'Man Power': 'bg-emerald-50 text-emerald-700',
+                            MCU: "bg-red-50 text-red-700",
+                            Training: "bg-blue-50 text-blue-700",
+                            "Psych Test": "bg-violet-50 text-violet-700",
+                            "Man Power": "bg-emerald-50 text-emerald-700",
                         };
-                        return classes[category] || 'bg-zinc-50 text-zinc-700';
+                        return classes[category] || "bg-zinc-50 text-zinc-700";
                     },
                     getStatusClass(status) {
                         const classes = {
-                            Pending: 'bg-amber-50 text-amber-700',
-                            Processing: 'bg-blue-50 text-blue-700',
-                            Completed: 'bg-emerald-50 text-emerald-700',
-                            Cancelled: 'bg-red-50 text-red-700',
+                            Pending: "bg-amber-50 text-amber-700",
+                            Processing: "bg-blue-50 text-blue-700",
+                            Completed: "bg-emerald-50 text-emerald-700",
+                            Cancelled: "bg-red-50 text-red-700",
                         };
-                        return classes[status] || 'bg-zinc-50 text-zinc-700';
+                        return classes[status] || "bg-zinc-50 text-zinc-700";
                     },
                     getSlaClass(sla) {
                         const classes = {
-                            'On Track': 'text-emerald-600',
-                            Met: 'text-zinc-500',
-                            'At Risk': 'text-amber-600',
-                            Breached: 'text-red-600',
+                            "On Track": "text-emerald-600",
+                            Met: "text-zinc-500",
+                            "At Risk": "text-amber-600",
+                            Breached: "text-red-600",
                         };
-                        return classes[sla] || 'text-zinc-500';
+                        return classes[sla] || "text-zinc-500";
                     },
                 };
             }

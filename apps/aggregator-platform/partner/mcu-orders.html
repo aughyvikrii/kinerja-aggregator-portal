@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>MCU Orders - TalentOps</title>
+        <title>MCU Orders - SolusiSDM</title>
         <script src="https://cdn.tailwindcss.com"></script>
         <script
             defer
@@ -21,97 +21,195 @@
                 theme: {
                     extend: {
                         fontFamily: {
-                            sans: ['Inter', 'sans-serif'],
+                            sans: ["Inter", "sans-serif"],
                         },
                     },
                 },
             };
         </script>
     </head>
-    <body class="bg-zinc-50 font-sans" x-data="{ showDetail: false, selectedOrder: null, showUpload: false, showSuccess: false, uploading: false, uploadData: { type: '', files: [], notes: '' }, handleFileSelect(e) { this.uploadData.files = Array.from(e.target.files); }, removeFile(index) { this.uploadData.files.splice(index, 1); }, submitUpload() { this.uploading = true; setTimeout(() => { this.uploading = false; this.showUpload = false; this.showSuccess = true; setTimeout(() => this.showSuccess = false, 3000); lucide.createIcons(); }, 1500); } }" x-init="lucide.createIcons()">
+    <body
+        class="bg-zinc-50 font-sans"
+        x-data="{ showDetail: false, selectedOrder: null, showUpload: false, showSuccess: false, uploading: false, uploadData: { type: '', files: [], notes: '' }, handleFileSelect(e) { this.uploadData.files = Array.from(e.target.files); }, removeFile(index) { this.uploadData.files.splice(index, 1); }, submitUpload() { this.uploading = true; setTimeout(() => { this.uploading = false; this.showUpload = false; this.showSuccess = true; setTimeout(() => this.showSuccess = false, 3000); lucide.createIcons(); }, 1500); } }"
+        x-init="lucide.createIcons()"
+    >
         <div class="flex h-screen">
             <!-- Sidebar -->
             <aside class="w-64 bg-white border-r border-zinc-200 flex flex-col">
                 <div class="p-6 border-b border-zinc-100">
                     <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 bg-zinc-900 rounded-lg flex items-center justify-center">
-                            <i data-lucide="hexagon" class="w-4 h-4 text-white"></i>
+                        <div
+                            class="w-8 h-8 bg-zinc-900 rounded-lg flex items-center justify-center"
+                        >
+                            <i
+                                data-lucide="hexagon"
+                                class="w-4 h-4 text-white"
+                            ></i>
                         </div>
-                        <span class="font-semibold text-zinc-900">TalentOps</span>
+                        <span class="font-semibold text-zinc-900"
+                            >SolusiSDM</span
+                        >
                     </div>
                 </div>
 
                 <nav class="flex-1 p-4 space-y-1 overflow-y-auto">
-                    <div class="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2 px-3">Overview</div>
-                    <a href="dashboard.html" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg">
+                    <div
+                        class="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2 px-3"
+                    >
+                        Overview
+                    </div>
+                    <a
+                        href="dashboard.html"
+                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                    >
                         <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
                         Dashboard
                     </a>
 
-                    <div class="text-xs font-semibold text-zinc-400 uppercase tracking-wider mt-6 mb-2 px-3">Services</div>
+                    <div
+                        class="text-xs font-semibold text-zinc-400 uppercase tracking-wider mt-6 mb-2 px-3"
+                    >
+                        Services
+                    </div>
 
                     <div x-data="{ open: true }">
-                        <button @click="open = !open" class="w-full flex items-center justify-between px-3 py-2 text-sm font-medium bg-zinc-100 text-zinc-900 rounded-lg">
+                        <button
+                            @click="open = !open"
+                            class="w-full flex items-center justify-between px-3 py-2 text-sm font-medium bg-zinc-100 text-zinc-900 rounded-lg"
+                        >
                             <span class="flex items-center gap-3">
-                                <i data-lucide="heart-pulse" class="w-4 h-4"></i>
+                                <i
+                                    data-lucide="heart-pulse"
+                                    class="w-4 h-4"
+                                ></i>
                                 MCU
                             </span>
-                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform" :class="open ? 'rotate-180' : ''"></i>
+                            <i
+                                data-lucide="chevron-down"
+                                class="w-4 h-4 transition-transform"
+                                :class="open ? 'rotate-180' : ''"
+                            ></i>
                         </button>
                         <div x-show="open" class="ml-4 mt-1 space-y-1">
-                            <a href="mcu-orders.html" class="block px-3 py-2 text-sm text-zinc-900 bg-zinc-50 rounded-lg font-medium">Orders</a>
-                            <a href="mcu-analytics.html" class="block px-3 py-2 text-sm text-zinc-600 hover:text-zinc-900 rounded-lg">Analytics</a>
+                            <a
+                                href="mcu-orders.html"
+                                class="block px-3 py-2 text-sm text-zinc-900 bg-zinc-50 rounded-lg font-medium"
+                                >Orders</a
+                            >
+                            <a
+                                href="mcu-analytics.html"
+                                class="block px-3 py-2 text-sm text-zinc-600 hover:text-zinc-900 rounded-lg"
+                                >Analytics</a
+                            >
                         </div>
                     </div>
 
                     <div x-data="{ open: false }">
-                        <button @click="open = !open" class="w-full flex items-center justify-between px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg">
+                        <button
+                            @click="open = !open"
+                            class="w-full flex items-center justify-between px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                        >
                             <span class="flex items-center gap-3">
-                                <i data-lucide="graduation-cap" class="w-4 h-4"></i>
+                                <i
+                                    data-lucide="graduation-cap"
+                                    class="w-4 h-4"
+                                ></i>
                                 Training
                             </span>
-                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform" :class="open ? 'rotate-180' : ''"></i>
+                            <i
+                                data-lucide="chevron-down"
+                                class="w-4 h-4 transition-transform"
+                                :class="open ? 'rotate-180' : ''"
+                            ></i>
                         </button>
                         <div x-show="open" class="ml-4 mt-1 space-y-1">
-                            <a href="training-programs.html" class="block px-3 py-2 text-sm text-zinc-600 hover:text-zinc-900 rounded-lg">Programs</a>
-                            <a href="training-analytics.html" class="block px-3 py-2 text-sm text-zinc-600 hover:text-zinc-900 rounded-lg">Analytics</a>
+                            <a
+                                href="training-programs.html"
+                                class="block px-3 py-2 text-sm text-zinc-600 hover:text-zinc-900 rounded-lg"
+                                >Programs</a
+                            >
+                            <a
+                                href="training-analytics.html"
+                                class="block px-3 py-2 text-sm text-zinc-600 hover:text-zinc-900 rounded-lg"
+                                >Analytics</a
+                            >
                         </div>
                     </div>
 
                     <div x-data="{ open: false }">
-                        <button @click="open = !open" class="w-full flex items-center justify-between px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg">
+                        <button
+                            @click="open = !open"
+                            class="w-full flex items-center justify-between px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                        >
                             <span class="flex items-center gap-3">
                                 <i data-lucide="brain" class="w-4 h-4"></i>
                                 Psych Test
                             </span>
-                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform" :class="open ? 'rotate-180' : ''"></i>
+                            <i
+                                data-lucide="chevron-down"
+                                class="w-4 h-4 transition-transform"
+                                :class="open ? 'rotate-180' : ''"
+                            ></i>
                         </button>
                         <div x-show="open" class="ml-4 mt-1 space-y-1">
-                            <a href="psychological-orders.html" class="block px-3 py-2 text-sm text-zinc-600 hover:text-zinc-900 rounded-lg">Orders</a>
-                            <a href="psychological-analytics.html" class="block px-3 py-2 text-sm text-zinc-600 hover:text-zinc-900 rounded-lg">Analytics</a>
+                            <a
+                                href="psychological-orders.html"
+                                class="block px-3 py-2 text-sm text-zinc-600 hover:text-zinc-900 rounded-lg"
+                                >Orders</a
+                            >
+                            <a
+                                href="psychological-analytics.html"
+                                class="block px-3 py-2 text-sm text-zinc-600 hover:text-zinc-900 rounded-lg"
+                                >Analytics</a
+                            >
                         </div>
                     </div>
 
                     <div x-data="{ open: false }">
-                        <button @click="open = !open" class="w-full flex items-center justify-between px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg">
+                        <button
+                            @click="open = !open"
+                            class="w-full flex items-center justify-between px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                        >
                             <span class="flex items-center gap-3">
                                 <i data-lucide="users" class="w-4 h-4"></i>
                                 Man Power
                             </span>
-                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform" :class="open ? 'rotate-180' : ''"></i>
+                            <i
+                                data-lucide="chevron-down"
+                                class="w-4 h-4 transition-transform"
+                                :class="open ? 'rotate-180' : ''"
+                            ></i>
                         </button>
                         <div x-show="open" class="ml-4 mt-1 space-y-1">
-                            <a href="workforce-requests.html" class="block px-3 py-2 text-sm text-zinc-600 hover:text-zinc-900 rounded-lg">Requests</a>
-                            <a href="workforce-analytics.html" class="block px-3 py-2 text-sm text-zinc-600 hover:text-zinc-900 rounded-lg">Analytics</a>
+                            <a
+                                href="workforce-requests.html"
+                                class="block px-3 py-2 text-sm text-zinc-600 hover:text-zinc-900 rounded-lg"
+                                >Requests</a
+                            >
+                            <a
+                                href="workforce-analytics.html"
+                                class="block px-3 py-2 text-sm text-zinc-600 hover:text-zinc-900 rounded-lg"
+                                >Analytics</a
+                            >
                         </div>
                     </div>
 
-                    <div class="text-xs font-semibold text-zinc-400 uppercase tracking-wider mt-6 mb-2 px-3">Account</div>
-                    <a href="profile.html" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg">
+                    <div
+                        class="text-xs font-semibold text-zinc-400 uppercase tracking-wider mt-6 mb-2 px-3"
+                    >
+                        Account
+                    </div>
+                    <a
+                        href="profile.html"
+                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                    >
                         <i data-lucide="user" class="w-4 h-4"></i>
                         Profile
                     </a>
-                    <a href="../login.html" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg">
+                    <a
+                        href="../login.html"
+                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                    >
                         <i data-lucide="log-out" class="w-4 h-4"></i>
                         Sign Out
                     </a>
@@ -123,20 +221,35 @@
                 <header class="bg-white border-b border-zinc-200 px-8 py-4">
                     <div class="flex items-center justify-between">
                         <div>
-                            <h1 class="text-xl font-semibold text-zinc-900">MCU Orders</h1>
-                            <p class="text-sm text-zinc-500">Manage medical checkup orders</p>
+                            <h1 class="text-xl font-semibold text-zinc-900">
+                                MCU Orders
+                            </h1>
+                            <p class="text-sm text-zinc-500">
+                                Manage medical checkup orders
+                            </p>
                         </div>
                         <div class="flex items-center gap-4">
-                            <button class="p-2 text-zinc-400 hover:text-zinc-600 relative">
+                            <button
+                                class="p-2 text-zinc-400 hover:text-zinc-600 relative"
+                            >
                                 <i data-lucide="bell" class="w-5 h-5"></i>
-                                <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full"></span>
+                                <span
+                                    class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full"
+                                ></span>
                             </button>
                             <div class="flex items-center gap-3">
-                                <div class="w-8 h-8 bg-zinc-200 rounded-full flex items-center justify-center">
-                                    <i data-lucide="user" class="w-4 h-4 text-zinc-600"></i>
+                                <div
+                                    class="w-8 h-8 bg-zinc-200 rounded-full flex items-center justify-center"
+                                >
+                                    <i
+                                        data-lucide="user"
+                                        class="w-4 h-4 text-zinc-600"
+                                    ></i>
                                 </div>
                                 <div class="text-sm">
-                                    <div class="font-medium text-zinc-900">Dr. Sarah Johnson</div>
+                                    <div class="font-medium text-zinc-900">
+                                        Dr. Sarah Johnson
+                                    </div>
                                     <div class="text-zinc-500">Partner</div>
                                 </div>
                             </div>
@@ -147,74 +260,234 @@
                 <div class="p-8">
                     <!-- Stats -->
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                        <div class="bg-white rounded-xl border border-zinc-200 p-6">
-                            <div class="text-sm text-zinc-500">Total MCU Orders</div>
-                            <div class="text-2xl font-semibold text-zinc-900 mt-1">156</div>
+                        <div
+                            class="bg-white rounded-xl border border-zinc-200 p-6"
+                        >
+                            <div class="text-sm text-zinc-500">
+                                Total MCU Orders
+                            </div>
+                            <div
+                                class="text-2xl font-semibold text-zinc-900 mt-1"
+                            >
+                                156
+                            </div>
                         </div>
-                        <div class="bg-white rounded-xl border border-zinc-200 p-6">
+                        <div
+                            class="bg-white rounded-xl border border-zinc-200 p-6"
+                        >
                             <div class="text-sm text-zinc-500">Pending</div>
-                            <div class="text-2xl font-semibold text-amber-600 mt-1">12</div>
+                            <div
+                                class="text-2xl font-semibold text-amber-600 mt-1"
+                            >
+                                12
+                            </div>
                         </div>
-                        <div class="bg-white rounded-xl border border-zinc-200 p-6">
+                        <div
+                            class="bg-white rounded-xl border border-zinc-200 p-6"
+                        >
                             <div class="text-sm text-zinc-500">Processing</div>
-                            <div class="text-2xl font-semibold text-blue-600 mt-1">8</div>
+                            <div
+                                class="text-2xl font-semibold text-blue-600 mt-1"
+                            >
+                                8
+                            </div>
                         </div>
-                        <div class="bg-white rounded-xl border border-zinc-200 p-6">
+                        <div
+                            class="bg-white rounded-xl border border-zinc-200 p-6"
+                        >
                             <div class="text-sm text-zinc-500">Completed</div>
-                            <div class="text-2xl font-semibold text-emerald-600 mt-1">136</div>
+                            <div
+                                class="text-2xl font-semibold text-emerald-600 mt-1"
+                            >
+                                136
+                            </div>
                         </div>
                     </div>
 
                     <!-- Orders Table -->
-                    <div class="bg-white rounded-xl border border-zinc-200 overflow-hidden">
+                    <div
+                        class="bg-white rounded-xl border border-zinc-200 overflow-hidden"
+                    >
                         <table class="w-full">
                             <thead class="bg-zinc-50 border-b border-zinc-200">
                                 <tr>
-                                    <th class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase">Order ID</th>
-                                    <th class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase">Company</th>
-                                    <th class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase">Employees</th>
-                                    <th class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase">Schedule</th>
-                                    <th class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase">Status</th>
-                                    <th class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase">Results</th>
-                                    <th class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase"></th>
+                                    <th
+                                        class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase"
+                                    >
+                                        Order ID
+                                    </th>
+                                    <th
+                                        class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase"
+                                    >
+                                        Company
+                                    </th>
+                                    <th
+                                        class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase"
+                                    >
+                                        Employees
+                                    </th>
+                                    <th
+                                        class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase"
+                                    >
+                                        Schedule
+                                    </th>
+                                    <th
+                                        class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase"
+                                    >
+                                        Status
+                                    </th>
+                                    <th
+                                        class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase"
+                                    >
+                                        Results
+                                    </th>
+                                    <th
+                                        class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase"
+                                    ></th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-zinc-100">
-                                <tr class="hover:bg-zinc-50 cursor-pointer" @click="selectedOrder = {id: 'ORD-2024-001', company: 'TechCorp Indonesia', employees: 150, schedule: '2024-01-15', status: 'completed', results: '98%'}; showDetail = true">
-                                    <td class="py-3 px-4 text-sm font-medium text-zinc-900">ORD-2024-001</td>
-                                    <td class="py-3 px-4 text-sm text-zinc-600">TechCorp Indonesia</td>
-                                    <td class="py-3 px-4 text-sm text-zinc-600">150</td>
-                                    <td class="py-3 px-4 text-sm text-zinc-600">Jan 15, 2024</td>
-                                    <td class="py-3 px-4"><span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700">Completed</span></td>
-                                    <td class="py-3 px-4 text-sm text-emerald-600">98% Complete</td>
-                                    <td class="py-3 px-4"><i data-lucide="chevron-right" class="w-4 h-4 text-zinc-400"></i></td>
+                                <tr
+                                    class="hover:bg-zinc-50 cursor-pointer"
+                                    @click="selectedOrder = {id: 'ORD-2024-001', company: 'TechCorp Indonesia', employees: 150, schedule: '2024-01-15', status: 'completed', results: '98%'}; showDetail = true"
+                                >
+                                    <td
+                                        class="py-3 px-4 text-sm font-medium text-zinc-900"
+                                    >
+                                        ORD-2024-001
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-zinc-600">
+                                        TechCorp Indonesia
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-zinc-600">
+                                        150
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-zinc-600">
+                                        Jan 15, 2024
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700"
+                                            >Completed</span
+                                        >
+                                    </td>
+                                    <td
+                                        class="py-3 px-4 text-sm text-emerald-600"
+                                    >
+                                        98% Complete
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <i
+                                            data-lucide="chevron-right"
+                                            class="w-4 h-4 text-zinc-400"
+                                        ></i>
+                                    </td>
                                 </tr>
-                                <tr class="hover:bg-zinc-50 cursor-pointer" @click="selectedOrder = {id: 'ORD-2024-005', company: 'LogisticsPlus', employees: 300, schedule: '2024-01-20', status: 'completed', results: '100%'}; showDetail = true">
-                                    <td class="py-3 px-4 text-sm font-medium text-zinc-900">ORD-2024-005</td>
-                                    <td class="py-3 px-4 text-sm text-zinc-600">LogisticsPlus</td>
-                                    <td class="py-3 px-4 text-sm text-zinc-600">300</td>
-                                    <td class="py-3 px-4 text-sm text-zinc-600">Jan 20, 2024</td>
-                                    <td class="py-3 px-4"><span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700">Completed</span></td>
-                                    <td class="py-3 px-4 text-sm text-emerald-600">100% Complete</td>
-                                    <td class="py-3 px-4"><i data-lucide="chevron-right" class="w-4 h-4 text-zinc-400"></i></td>
+                                <tr
+                                    class="hover:bg-zinc-50 cursor-pointer"
+                                    @click="selectedOrder = {id: 'ORD-2024-005', company: 'LogisticsPlus', employees: 300, schedule: '2024-01-20', status: 'completed', results: '100%'}; showDetail = true"
+                                >
+                                    <td
+                                        class="py-3 px-4 text-sm font-medium text-zinc-900"
+                                    >
+                                        ORD-2024-005
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-zinc-600">
+                                        LogisticsPlus
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-zinc-600">
+                                        300
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-zinc-600">
+                                        Jan 20, 2024
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700"
+                                            >Completed</span
+                                        >
+                                    </td>
+                                    <td
+                                        class="py-3 px-4 text-sm text-emerald-600"
+                                    >
+                                        100% Complete
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <i
+                                            data-lucide="chevron-right"
+                                            class="w-4 h-4 text-zinc-400"
+                                        ></i>
+                                    </td>
                                 </tr>
-                                <tr class="hover:bg-zinc-50 cursor-pointer" @click="selectedOrder = {id: 'ORD-2024-008', company: 'ManufacturePro', employees: 500, schedule: '2024-02-05', status: 'processing', results: '45%'}; showDetail = true">
-                                    <td class="py-3 px-4 text-sm font-medium text-zinc-900">ORD-2024-008</td>
-                                    <td class="py-3 px-4 text-sm text-zinc-600">ManufacturePro</td>
-                                    <td class="py-3 px-4 text-sm text-zinc-600">500</td>
-                                    <td class="py-3 px-4 text-sm text-zinc-600">Feb 5, 2024</td>
-                                    <td class="py-3 px-4"><span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700">Processing</span></td>
-                                    <td class="py-3 px-4 text-sm text-amber-600">45% Complete</td>
-                                    <td class="py-3 px-4"><i data-lucide="chevron-right" class="w-4 h-4 text-zinc-400"></i></td>
+                                <tr
+                                    class="hover:bg-zinc-50 cursor-pointer"
+                                    @click="selectedOrder = {id: 'ORD-2024-008', company: 'ManufacturePro', employees: 500, schedule: '2024-02-05', status: 'processing', results: '45%'}; showDetail = true"
+                                >
+                                    <td
+                                        class="py-3 px-4 text-sm font-medium text-zinc-900"
+                                    >
+                                        ORD-2024-008
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-zinc-600">
+                                        ManufacturePro
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-zinc-600">
+                                        500
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-zinc-600">
+                                        Feb 5, 2024
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700"
+                                            >Processing</span
+                                        >
+                                    </td>
+                                    <td
+                                        class="py-3 px-4 text-sm text-amber-600"
+                                    >
+                                        45% Complete
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <i
+                                            data-lucide="chevron-right"
+                                            class="w-4 h-4 text-zinc-400"
+                                        ></i>
+                                    </td>
                                 </tr>
-                                <tr class="hover:bg-zinc-50 cursor-pointer" @click="selectedOrder = {id: 'ORD-2024-010', company: 'RetailGiant', employees: 200, schedule: '2024-02-10', status: 'pending', results: '0%'}; showDetail = true">
-                                    <td class="py-3 px-4 text-sm font-medium text-zinc-900">ORD-2024-010</td>
-                                    <td class="py-3 px-4 text-sm text-zinc-600">RetailGiant</td>
-                                    <td class="py-3 px-4 text-sm text-zinc-600">200</td>
-                                    <td class="py-3 px-4 text-sm text-zinc-600">Feb 10, 2024</td>
-                                    <td class="py-3 px-4"><span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-700">Pending</span></td>
-                                    <td class="py-3 px-4 text-sm text-zinc-400">Not Started</td>
-                                    <td class="py-3 px-4"><i data-lucide="chevron-right" class="w-4 h-4 text-zinc-400"></i></td>
+                                <tr
+                                    class="hover:bg-zinc-50 cursor-pointer"
+                                    @click="selectedOrder = {id: 'ORD-2024-010', company: 'RetailGiant', employees: 200, schedule: '2024-02-10', status: 'pending', results: '0%'}; showDetail = true"
+                                >
+                                    <td
+                                        class="py-3 px-4 text-sm font-medium text-zinc-900"
+                                    >
+                                        ORD-2024-010
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-zinc-600">
+                                        RetailGiant
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-zinc-600">
+                                        200
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-zinc-600">
+                                        Feb 10, 2024
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-700"
+                                            >Pending</span
+                                        >
+                                    </td>
+                                    <td class="py-3 px-4 text-sm text-zinc-400">
+                                        Not Started
+                                    </td>
+                                    <td class="py-3 px-4">
+                                        <i
+                                            data-lucide="chevron-right"
+                                            class="w-4 h-4 text-zinc-400"
+                                        ></i>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -224,50 +497,102 @@
         </div>
 
         <!-- Order Detail Modal -->
-        <div x-show="showDetail" class="fixed inset-0 z-50 overflow-y-auto" style="display: none;">
-            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                <div class="fixed inset-0 bg-zinc-500 bg-opacity-75 transition-opacity" @click="showDetail = false"></div>
-                <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
-                <div class="inline-block align-bottom bg-white rounded-xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+        <div
+            x-show="showDetail"
+            class="fixed inset-0 z-50 overflow-y-auto"
+            style="display: none"
+        >
+            <div
+                class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+            >
+                <div
+                    class="fixed inset-0 bg-zinc-500 bg-opacity-75 transition-opacity"
+                    @click="showDetail = false"
+                ></div>
+                <span class="hidden sm:inline-block sm:align-middle sm:h-screen"
+                    >&#8203;</span
+                >
+                <div
+                    class="inline-block align-bottom bg-white rounded-xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+                >
                     <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                         <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-lg font-semibold text-zinc-900" x-text="selectedOrder?.id"></h3>
-                            <button @click="showDetail = false" class="text-zinc-400 hover:text-zinc-600">
+                            <h3
+                                class="text-lg font-semibold text-zinc-900"
+                                x-text="selectedOrder?.id"
+                            ></h3>
+                            <button
+                                @click="showDetail = false"
+                                class="text-zinc-400 hover:text-zinc-600"
+                            >
                                 <i data-lucide="x" class="w-5 h-5"></i>
                             </button>
                         </div>
                         <div class="space-y-3">
                             <div class="flex justify-between">
-                                <span class="text-sm text-zinc-500">Company</span>
-                                <span class="text-sm font-medium text-zinc-900" x-text="selectedOrder?.company"></span>
+                                <span class="text-sm text-zinc-500"
+                                    >Company</span
+                                >
+                                <span
+                                    class="text-sm font-medium text-zinc-900"
+                                    x-text="selectedOrder?.company"
+                                ></span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-sm text-zinc-500">Employees</span>
-                                <span class="text-sm font-medium text-zinc-900" x-text="selectedOrder?.employees"></span>
+                                <span class="text-sm text-zinc-500"
+                                    >Employees</span
+                                >
+                                <span
+                                    class="text-sm font-medium text-zinc-900"
+                                    x-text="selectedOrder?.employees"
+                                ></span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-sm text-zinc-500">Schedule</span>
-                                <span class="text-sm font-medium text-zinc-900" x-text="selectedOrder?.schedule"></span>
+                                <span class="text-sm text-zinc-500"
+                                    >Schedule</span
+                                >
+                                <span
+                                    class="text-sm font-medium text-zinc-900"
+                                    x-text="selectedOrder?.schedule"
+                                ></span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-sm text-zinc-500">Status</span>
-                                <span class="text-sm font-medium capitalize" :class="selectedOrder?.status === 'completed' ? 'text-emerald-600' : selectedOrder?.status === 'processing' ? 'text-blue-600' : 'text-amber-600'" x-text="selectedOrder?.status"></span>
+                                <span class="text-sm text-zinc-500"
+                                    >Status</span
+                                >
+                                <span
+                                    class="text-sm font-medium capitalize"
+                                    :class="selectedOrder?.status === 'completed' ? 'text-emerald-600' : selectedOrder?.status === 'processing' ? 'text-blue-600' : 'text-amber-600'"
+                                    x-text="selectedOrder?.status"
+                                ></span>
                             </div>
                             <div class="flex justify-between">
-                                <span class="text-sm text-zinc-500">Results</span>
-                                <span class="text-sm font-medium text-zinc-900" x-text="selectedOrder?.results"></span>
+                                <span class="text-sm text-zinc-500"
+                                    >Results</span
+                                >
+                                <span
+                                    class="text-sm font-medium text-zinc-900"
+                                    x-text="selectedOrder?.results"
+                                ></span>
                             </div>
                         </div>
                     </div>
 
-                        <div class="bg-zinc-50 px-4 py-3 sm:px-6 flex gap-3">
-                        <button type="button" @click="showDetail = false; showUpload = true"
-                                x-show="selectedOrder?.status === 'processing' || selectedOrder?.status === 'completed'"
-                                class="flex-1 inline-flex justify-center rounded-lg border border-transparent shadow-sm px-4 py-2 bg-emerald-600 text-base font-medium text-white hover:bg-emerald-700 focus:outline-none sm:text-sm">
+                    <div class="bg-zinc-50 px-4 py-3 sm:px-6 flex gap-3">
+                        <button
+                            type="button"
+                            @click="showDetail = false; showUpload = true"
+                            x-show="selectedOrder?.status === 'processing' || selectedOrder?.status === 'completed'"
+                            class="flex-1 inline-flex justify-center rounded-lg border border-transparent shadow-sm px-4 py-2 bg-emerald-600 text-base font-medium text-white hover:bg-emerald-700 focus:outline-none sm:text-sm"
+                        >
                             <i data-lucide="upload" class="w-4 h-4 mr-2"></i>
                             Upload Results
                         </button>
-                        <button type="button" @click="showDetail = false" class="flex-1 inline-flex justify-center rounded-lg border border-zinc-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-zinc-700 hover:bg-zinc-50 focus:outline-none sm:text-sm">
+                        <button
+                            type="button"
+                            @click="showDetail = false"
+                            class="flex-1 inline-flex justify-center rounded-lg border border-zinc-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-zinc-700 hover:bg-zinc-50 focus:outline-none sm:text-sm"
+                        >
                             Close
                         </button>
                     </div>
@@ -276,81 +601,198 @@
         </div>
 
         <!-- Upload Results Modal -->
-        <div x-show="showUpload" class="fixed inset-0 z-50 overflow-y-auto" style="display: none;">
-            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                <div class="fixed inset-0 bg-zinc-500 bg-opacity-75 transition-opacity" @click="showUpload = false"></div>
-                <span class="hidden sm:inline-block sm:align-middle sm:h-screen">&#8203;</span>
-                <div class="inline-block align-bottom bg-white rounded-xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+        <div
+            x-show="showUpload"
+            class="fixed inset-0 z-50 overflow-y-auto"
+            style="display: none"
+        >
+            <div
+                class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0"
+            >
+                <div
+                    class="fixed inset-0 bg-zinc-500 bg-opacity-75 transition-opacity"
+                    @click="showUpload = false"
+                ></div>
+                <span class="hidden sm:inline-block sm:align-middle sm:h-screen"
+                    >&#8203;</span
+                >
+                <div
+                    class="inline-block align-bottom bg-white rounded-xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+                >
                     <form @submit.prevent="submitUpload">
                         <div class="bg-white px-4 pt-5 pb-4 sm:p-6">
                             <div class="flex items-center justify-between mb-4">
-                                <h3 class="text-lg font-semibold text-zinc-900">Upload MCU Results</h3>
-                                <button type="button" @click="showUpload = false" class="text-zinc-400 hover:text-zinc-600">
+                                <h3 class="text-lg font-semibold text-zinc-900">
+                                    Upload MCU Results
+                                </h3>
+                                <button
+                                    type="button"
+                                    @click="showUpload = false"
+                                    class="text-zinc-400 hover:text-zinc-600"
+                                >
                                     <i data-lucide="x" class="w-5 h-5"></i>
                                 </button>
                             </div>
 
                             <div class="space-y-4">
                                 <div>
-                                    <label class="block text-sm font-medium text-zinc-700 mb-1.5">Order ID</label>
-                                    <input type="text" :value="selectedOrder?.id" readonly class="w-full px-3 py-2 bg-zinc-50 border border-zinc-200 rounded-lg text-zinc-500">
+                                    <label
+                                        class="block text-sm font-medium text-zinc-700 mb-1.5"
+                                        >Order ID</label
+                                    >
+                                    <input
+                                        type="text"
+                                        :value="selectedOrder?.id"
+                                        readonly
+                                        class="w-full px-3 py-2 bg-zinc-50 border border-zinc-200 rounded-lg text-zinc-500"
+                                    />
                                 </div>
 
                                 <div>
-                                    <label class="block text-sm font-medium text-zinc-700 mb-1.5">Upload Type *</label>
-                                    <select x-model="uploadData.type" required class="w-full px-3 py-2 border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900">
-                                        <option value="">Select upload type...</option>
-                                        <option value="results">Medical Results (PDF/Excel)</option>
-                                        <option value="reports">Detailed Reports</option>
-                                        <option value="certificates">Health Certificates</option>
-                                        <option value="raw_data">Raw Data for AI Extraction</option>
+                                    <label
+                                        class="block text-sm font-medium text-zinc-700 mb-1.5"
+                                        >Upload Type *</label
+                                    >
+                                    <select
+                                        x-model="uploadData.type"
+                                        required
+                                        class="w-full px-3 py-2 border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900"
+                                    >
+                                        <option value="">
+                                            Select upload type...
+                                        </option>
+                                        <option value="results">
+                                            Medical Results (PDF/Excel)
+                                        </option>
+                                        <option value="reports">
+                                            Detailed Reports
+                                        </option>
+                                        <option value="certificates">
+                                            Health Certificates
+                                        </option>
+                                        <option value="raw_data">
+                                            Raw Data for AI Extraction
+                                        </option>
                                     </select>
                                 </div>
 
                                 <div>
-                                    <label class="block text-sm font-medium text-zinc-700 mb-1.5">Files *</label>
-                                    <div class="border-2 border-dashed border-zinc-300 rounded-lg p-6 text-center hover:border-zinc-400 transition-colors cursor-pointer" @click="$refs.fileInput.click()">
-                                        <input type="file" x-ref="fileInput" @change="handleFileSelect" multiple accept=".pdf,.xlsx,.xls,.csv,.doc,.docx" class="hidden">
-                                        <i data-lucide="upload-cloud" class="w-10 h-10 text-zinc-400 mx-auto mb-2"></i>
-                                        <p class="text-sm text-zinc-600 mb-1">Click to upload or drag and drop</p>
-                                        <p class="text-xs text-zinc-400">PDF, Excel, CSV, Word (Max 50MB)</p>
+                                    <label
+                                        class="block text-sm font-medium text-zinc-700 mb-1.5"
+                                        >Files *</label
+                                    >
+                                    <div
+                                        class="border-2 border-dashed border-zinc-300 rounded-lg p-6 text-center hover:border-zinc-400 transition-colors cursor-pointer"
+                                        @click="$refs.fileInput.click()"
+                                    >
+                                        <input
+                                            type="file"
+                                            x-ref="fileInput"
+                                            @change="handleFileSelect"
+                                            multiple
+                                            accept=".pdf,.xlsx,.xls,.csv,.doc,.docx"
+                                            class="hidden"
+                                        />
+                                        <i
+                                            data-lucide="upload-cloud"
+                                            class="w-10 h-10 text-zinc-400 mx-auto mb-2"
+                                        ></i>
+                                        <p class="text-sm text-zinc-600 mb-1">
+                                            Click to upload or drag and drop
+                                        </p>
+                                        <p class="text-xs text-zinc-400">
+                                            PDF, Excel, CSV, Word (Max 50MB)
+                                        </p>
                                     </div>
-                                    <div x-show="uploadData.files.length > 0" class="mt-3 space-y-2">
-                                        <template x-for="(file, index) in uploadData.files" :key="index">
-                                            <div class="flex items-center gap-2 p-2 bg-zinc-50 rounded-lg">
-                                                <i data-lucide="file" class="w-4 h-4 text-zinc-400"></i>
-                                                <span class="flex-1 text-sm text-zinc-700 truncate" x-text="file.name"></span>
-                                                <button type="button" @click="removeFile(index)" class="text-red-400 hover:text-red-600">
-                                                    <i data-lucide="x" class="w-4 h-4"></i>
+                                    <div
+                                        x-show="uploadData.files.length > 0"
+                                        class="mt-3 space-y-2"
+                                    >
+                                        <template
+                                            x-for="(file, index) in uploadData.files"
+                                            :key="index"
+                                        >
+                                            <div
+                                                class="flex items-center gap-2 p-2 bg-zinc-50 rounded-lg"
+                                            >
+                                                <i
+                                                    data-lucide="file"
+                                                    class="w-4 h-4 text-zinc-400"
+                                                ></i>
+                                                <span
+                                                    class="flex-1 text-sm text-zinc-700 truncate"
+                                                    x-text="file.name"
+                                                ></span>
+                                                <button
+                                                    type="button"
+                                                    @click="removeFile(index)"
+                                                    class="text-red-400 hover:text-red-600"
+                                                >
+                                                    <i
+                                                        data-lucide="x"
+                                                        class="w-4 h-4"
+                                                    ></i>
                                                 </button>
                                             </div>
                                         </template>
                                     </div>
                                 </div>
 
-                                <div x-show="uploadData.type === 'raw_data' || uploadData.type === 'results'">
-                                    <div class="flex items-start gap-2 p-3 bg-blue-50 border border-blue-100 rounded-lg">
-                                        <i data-lucide="sparkles" class="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5"></i>
+                                <div
+                                    x-show="uploadData.type === 'raw_data' || uploadData.type === 'results'"
+                                >
+                                    <div
+                                        class="flex items-start gap-2 p-3 bg-blue-50 border border-blue-100 rounded-lg"
+                                    >
+                                        <i
+                                            data-lucide="sparkles"
+                                            class="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5"
+                                        ></i>
                                         <div class="text-sm text-blue-700">
-                                            <strong>AI Extraction Enabled</strong><br>
-                                            Data will be automatically extracted and added to the employee database for health analytics.
+                                            <strong
+                                                >AI Extraction Enabled</strong
+                                            ><br />
+                                            Data will be automatically extracted
+                                            and added to the employee database
+                                            for health analytics.
                                         </div>
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label class="block text-sm font-medium text-zinc-700 mb-1.5">Notes</label>
-                                    <textarea x-model="uploadData.notes" rows="2" placeholder="Additional information..." class="w-full px-3 py-2 border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 resize-none"></textarea>
+                                    <label
+                                        class="block text-sm font-medium text-zinc-700 mb-1.5"
+                                        >Notes</label
+                                    >
+                                    <textarea
+                                        x-model="uploadData.notes"
+                                        rows="2"
+                                        placeholder="Additional information..."
+                                        class="w-full px-3 py-2 border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-900/10 focus:border-zinc-900 resize-none"
+                                    ></textarea>
                                 </div>
                             </div>
                         </div>
                         <div class="bg-zinc-50 px-4 py-3 sm:px-6 flex gap-3">
-                            <button type="submit" :disabled="uploading || uploadData.files.length === 0"
-                                    class="flex-1 inline-flex justify-center items-center rounded-lg border border-transparent shadow-sm px-4 py-2 bg-zinc-900 text-base font-medium text-white hover:bg-zinc-800 disabled:opacity-50 disabled:cursor-not-allowed sm:text-sm">
-                                <i x-show="uploading" data-lucide="loader-2" class="w-4 h-4 mr-2 animate-spin"></i>
-                                <span x-text="uploading ? 'Uploading...' : 'Upload Files'"></span>
+                            <button
+                                type="submit"
+                                :disabled="uploading || uploadData.files.length === 0"
+                                class="flex-1 inline-flex justify-center items-center rounded-lg border border-transparent shadow-sm px-4 py-2 bg-zinc-900 text-base font-medium text-white hover:bg-zinc-800 disabled:opacity-50 disabled:cursor-not-allowed sm:text-sm"
+                            >
+                                <i
+                                    x-show="uploading"
+                                    data-lucide="loader-2"
+                                    class="w-4 h-4 mr-2 animate-spin"
+                                ></i>
+                                <span
+                                    x-text="uploading ? 'Uploading...' : 'Upload Files'"
+                                ></span>
                             </button>
-                            <button type="button" @click="showUpload = false" class="flex-1 inline-flex justify-center rounded-lg border border-zinc-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-zinc-700 hover:bg-zinc-50 sm:text-sm">
+                            <button
+                                type="button"
+                                @click="showUpload = false"
+                                class="flex-1 inline-flex justify-center rounded-lg border border-zinc-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-zinc-700 hover:bg-zinc-50 sm:text-sm"
+                            >
                                 Cancel
                             </button>
                         </div>
@@ -360,12 +802,20 @@
         </div>
 
         <!-- Upload Success Toast -->
-        <div x-show="showSuccess" x-transition class="fixed bottom-4 right-4 z-50">
-            <div class="bg-emerald-600 text-white px-6 py-4 rounded-lg shadow-lg flex items-center gap-3">
+        <div
+            x-show="showSuccess"
+            x-transition
+            class="fixed bottom-4 right-4 z-50"
+        >
+            <div
+                class="bg-emerald-600 text-white px-6 py-4 rounded-lg shadow-lg flex items-center gap-3"
+            >
                 <i data-lucide="check-circle" class="w-5 h-5"></i>
                 <div>
                     <div class="font-medium">Upload Successful!</div>
-                    <div class="text-sm text-emerald-100">AI is processing the data...</div>
+                    <div class="text-sm text-emerald-100">
+                        AI is processing the data...
+                    </div>
                 </div>
             </div>
         </div>

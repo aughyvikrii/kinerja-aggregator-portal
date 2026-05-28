@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-Build a modern web platform called **TalentOps Aggregator Platform** that acts as an aggregator marketplace and analytics hub for:
+Build a modern web platform called **SolusiSDM Aggregator Platform** that acts as an aggregator marketplace and analytics hub for:
 
 1. Medical Check Up (MCU)
 2. Man Power Supply

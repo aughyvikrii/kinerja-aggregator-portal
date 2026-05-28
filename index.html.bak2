@@ -243,7 +243,7 @@
                         </div>
                         <span
                             class="font-display font-bold text-2xl text-slate-800"
-                            >Solusi<span class="gradient-text">SDM</span></span
+                            >Talent<span class="gradient-text">Ops</span></span
                         >
                     </a>
                     <nav class="hidden md:flex items-center gap-8">
@@ -334,596 +334,85 @@
                     <div
                         class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
                     >
-                        <!-- Hero Slider -->
-                        <div
-                            class="relative mb-16"
-                            x-data="{ currentSlide: 0, totalSlides: 4, autoSlide: true }"
-                            x-init="setInterval(() => { if(autoSlide) currentSlide = (currentSlide + 1) % totalSlides }, 5000)"
-                            @mouseenter="autoSlide = false"
-                            @mouseleave="autoSlide = true"
-                        >
-                            <!-- Slides Container -->
-                            <div class="relative overflow-hidden rounded-3xl">
+                        <div class="text-center max-w-4xl mx-auto mb-16">
+                            <div
+                                class="inline-flex items-center gap-2 px-4 py-2 bg-white/60 backdrop-blur rounded-full text-sm font-medium text-slate-700 mb-6 animate-fade-in shadow-sm"
+                            >
+                                <span
+                                    class="w-2 h-2 bg-brand-500 rounded-full animate-pulse"
+                                ></span>
+                                Solusi Workforce Terpercaya
+                            </div>
+                            <h1
+                                class="font-display text-4xl sm:text-5xl lg:text-7xl font-bold text-slate-900 mb-6 leading-tight animate-slide-up"
+                            >
+                                Wujudkan Potensi<br />
+                                <span class="gradient-text">Tim Terbaik</span>
+                                Anda
+                            </h1>
+                            <p
+                                class="text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto mb-10 animate-slide-up"
+                                style="animation-delay: 0.1s"
+                            >
+                                Platform lengkap untuk Medical Check Up,
+                                Training, Psychological Test, dan Man Power
+                                Supply. Partner terpercaya untuk pertumbuhan
+                                perusahaan Anda.
+                            </p>
+
+                            <!-- Trust Badges -->
+                            <div
+                                class="flex flex-wrap items-center justify-center gap-6 mb-16 animate-slide-up"
+                                style="animation-delay: 0.2s"
+                            >
                                 <div
-                                    class="flex transition-transform duration-700 ease-out"
-                                    :style="`transform: translateX(-${currentSlide * 100}%)`"
+                                    class="flex items-center gap-2 px-4 py-2 bg-white/70 backdrop-blur rounded-full shadow-sm"
                                 >
-                                    <!-- Slide 1: Main Hero -->
-                                    <div class="w-full flex-shrink-0">
-                                        <div
-                                            class="text-center max-w-4xl mx-auto py-12 px-4"
-                                        >
-                                            <div
-                                                class="inline-flex items-center gap-2 px-4 py-2 bg-white/60 backdrop-blur rounded-full text-sm font-medium text-slate-700 mb-6 shadow-sm"
-                                            >
-                                                <span
-                                                    class="w-2 h-2 bg-brand-500 rounded-full animate-pulse"
-                                                ></span>
-                                                Solusi Workforce Terpercaya
-                                            </div>
-                                            <h1
-                                                class="font-display text-4xl sm:text-5xl lg:text-7xl font-bold text-slate-900 mb-6 leading-tight"
-                                            >
-                                                Wujudkan Potensi<br />
-                                                <span class="gradient-text"
-                                                    >Tim Terbaik</span
-                                                >
-                                                Anda
-                                            </h1>
-                                            <p
-                                                class="text-lg sm:text-xl text-slate-600 max-w-2xl mx-auto mb-8"
-                                            >
-                                                Platform lengkap untuk Medical
-                                                Check Up, Training,
-                                                Psychological Test, dan Man
-                                                Power Supply. Partner terpercaya
-                                                untuk pertumbuhan perusahaan
-                                                Anda.
-                                            </p>
-                                            <div
-                                                class="flex flex-wrap items-center justify-center gap-4"
-                                            >
-                                                <div
-                                                    class="flex items-center gap-2 px-4 py-2 bg-white/70 backdrop-blur rounded-full shadow-sm"
-                                                >
-                                                    <div
-                                                        class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center"
-                                                    >
-                                                        <i
-                                                            data-lucide="shield-check"
-                                                            class="w-4 h-4 text-emerald-600"
-                                                        ></i>
-                                                    </div>
-                                                    <span
-                                                        class="text-sm font-medium text-slate-700"
-                                                        >500+ Perusahaan</span
-                                                    >
-                                                </div>
-                                                <div
-                                                    class="flex items-center gap-2 px-4 py-2 bg-white/70 backdrop-blur rounded-full shadow-sm"
-                                                >
-                                                    <div
-                                                        class="w-8 h-8 bg-brand-100 rounded-full flex items-center justify-center"
-                                                    >
-                                                        <i
-                                                            data-lucide="star"
-                                                            class="w-4 h-4 text-brand-600"
-                                                        ></i>
-                                                    </div>
-                                                    <span
-                                                        class="text-sm font-medium text-slate-700"
-                                                        >Rating 4.9/5</span
-                                                    >
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div
+                                        class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center"
+                                    >
+                                        <i
+                                            data-lucide="shield-check"
+                                            class="w-4 h-4 text-emerald-600"
+                                        ></i>
                                     </div>
-
-                                    <!-- Slide 2: Medical Check Up -->
-                                    <div class="w-full flex-shrink-0">
-                                        <div
-                                            class="grid lg:grid-cols-2 gap-8 items-center max-w-6xl mx-auto py-8 px-4"
-                                        >
-                                            <div class="text-left">
-                                                <div
-                                                    class="inline-flex items-center gap-2 px-3 py-1 bg-red-100 text-red-600 rounded-full text-xs font-bold mb-4"
-                                                >
-                                                    <i
-                                                        data-lucide="heart-pulse"
-                                                        class="w-3 h-3"
-                                                    ></i>
-                                                    Layanan Kesehatan
-                                                </div>
-                                                <h2
-                                                    class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mb-4 leading-tight"
-                                                >
-                                                    Jaga Kesehatan<br />
-                                                    <span class="text-red-500"
-                                                        >Karyawan Anda</span
-                                                    >
-                                                </h2>
-                                                <p
-                                                    class="text-slate-600 mb-6 text-lg"
-                                                >
-                                                    Medical Check Up lengkap
-                                                    dengan partner klinik
-                                                    terbaik. Dari pemeriksaan
-                                                    dasar hingga paket eksekutif
-                                                    premium.
-                                                </p>
-                                                <ul class="space-y-3 mb-8">
-                                                    <li
-                                                        class="flex items-center gap-3 text-slate-700"
-                                                    >
-                                                        <div
-                                                            class="w-6 h-6 bg-red-100 rounded-full flex items-center justify-center"
-                                                        >
-                                                            <i
-                                                                data-lucide="check"
-                                                                class="w-3 h-3 text-red-500"
-                                                            ></i>
-                                                        </div>
-                                                        MCU Karyawan Baru &
-                                                        Rutin
-                                                    </li>
-                                                    <li
-                                                        class="flex items-center gap-3 text-slate-700"
-                                                    >
-                                                        <div
-                                                            class="w-6 h-6 bg-red-100 rounded-full flex items-center justify-center"
-                                                        >
-                                                            <i
-                                                                data-lucide="check"
-                                                                class="w-3 h-3 text-red-500"
-                                                            ></i>
-                                                        </div>
-                                                        Paket Executive Premium
-                                                    </li>
-                                                    <li
-                                                        class="flex items-center gap-3 text-slate-700"
-                                                    >
-                                                        <div
-                                                            class="w-6 h-6 bg-red-100 rounded-full flex items-center justify-center"
-                                                        >
-                                                            <i
-                                                                data-lucide="check"
-                                                                class="w-3 h-3 text-red-500"
-                                                            ></i>
-                                                        </div>
-                                                        Hasil Digital dalam 24
-                                                        Jam
-                                                    </li>
-                                                </ul>
-                                                <button
-                                                    @click="selectCategory('mcu')"
-                                                    class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 text-white font-semibold rounded-xl hover:from-red-600 hover:to-red-700 transition-all hover:scale-105 shadow-lg shadow-red-500/25"
-                                                >
-                                                    Pesan MCU Sekarang
-                                                    <i
-                                                        data-lucide="arrow-right"
-                                                        class="w-4 h-4"
-                                                    ></i>
-                                                </button>
-                                            </div>
-                                            <div
-                                                class="relative hidden lg:block"
-                                            >
-                                                <div
-                                                    class="absolute inset-0 bg-gradient-to-br from-red-200 to-red-300 rounded-3xl transform rotate-3 opacity-50"
-                                                ></div>
-                                                <div
-                                                    class="relative bg-white rounded-3xl p-8 shadow-2xl"
-                                                >
-                                                    <div
-                                                        class="w-16 h-16 bg-red-100 rounded-2xl flex items-center justify-center mb-4"
-                                                    >
-                                                        <i
-                                                            data-lucide="heart-pulse"
-                                                            class="w-8 h-8 text-red-500"
-                                                        ></i>
-                                                    </div>
-                                                    <div
-                                                        class="text-3xl font-bold text-slate-900 mb-1"
-                                                    >
-                                                        10,000+
-                                                    </div>
-                                                    <div
-                                                        class="text-slate-500 mb-6"
-                                                    >
-                                                        Karyawan Terlayani
-                                                    </div>
-                                                    <div
-                                                        class="flex items-center gap-4"
-                                                    >
-                                                        <div
-                                                            class="flex -space-x-2"
-                                                        >
-                                                            <div
-                                                                class="w-8 h-8 bg-red-200 rounded-full border-2 border-white"
-                                                            ></div>
-                                                            <div
-                                                                class="w-8 h-8 bg-red-300 rounded-full border-2 border-white"
-                                                            ></div>
-                                                            <div
-                                                                class="w-8 h-8 bg-red-400 rounded-full border-2 border-white"
-                                                            ></div>
-                                                        </div>
-                                                        <span
-                                                            class="text-sm text-slate-500"
-                                                            >50+ Partner
-                                                            Klinik</span
-                                                        >
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Slide 3: Training & Development -->
-                                    <div class="w-full flex-shrink-0">
-                                        <div
-                                            class="grid lg:grid-cols-2 gap-8 items-center max-w-6xl mx-auto py-8 px-4"
-                                        >
-                                            <div
-                                                class="relative hidden lg:block order-2"
-                                            >
-                                                <div
-                                                    class="absolute inset-0 bg-gradient-to-br from-ocean-200 to-ocean-300 rounded-3xl transform -rotate-3 opacity-50"
-                                                ></div>
-                                                <div
-                                                    class="relative bg-white rounded-3xl p-8 shadow-2xl"
-                                                >
-                                                    <div
-                                                        class="grid grid-cols-2 gap-4"
-                                                    >
-                                                        <div
-                                                            class="bg-ocean-50 rounded-2xl p-4 text-center"
-                                                        >
-                                                            <div
-                                                                class="w-10 h-10 bg-ocean-100 rounded-xl flex items-center justify-center mx-auto mb-2"
-                                                            >
-                                                                <i
-                                                                    data-lucide="users"
-                                                                    class="w-5 h-5 text-ocean-600"
-                                                                ></i>
-                                                            </div>
-                                                            <div
-                                                                class="text-lg font-bold text-slate-900"
-                                                            >
-                                                                Leadership
-                                                            </div>
-                                                        </div>
-                                                        <div
-                                                            class="bg-violet-50 rounded-2xl p-4 text-center"
-                                                        >
-                                                            <div
-                                                                class="w-10 h-10 bg-violet-100 rounded-xl flex items-center justify-center mx-auto mb-2"
-                                                            >
-                                                                <i
-                                                                    data-lucide="code"
-                                                                    class="w-5 h-5 text-violet-600"
-                                                                ></i>
-                                                            </div>
-                                                            <div
-                                                                class="text-lg font-bold text-slate-900"
-                                                            >
-                                                                Technical
-                                                            </div>
-                                                        </div>
-                                                        <div
-                                                            class="bg-pink-50 rounded-2xl p-4 text-center"
-                                                        >
-                                                            <div
-                                                                class="w-10 h-10 bg-pink-100 rounded-xl flex items-center justify-center mx-auto mb-2"
-                                                            >
-                                                                <i
-                                                                    data-lucide="heart-handshake"
-                                                                    class="w-5 h-5 text-pink-600"
-                                                                ></i>
-                                                            </div>
-                                                            <div
-                                                                class="text-lg font-bold text-slate-900"
-                                                            >
-                                                                Soft Skills
-                                                            </div>
-                                                        </div>
-                                                        <div
-                                                            class="bg-emerald-50 rounded-2xl p-4 text-center"
-                                                        >
-                                                            <div
-                                                                class="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center mx-auto mb-2"
-                                                            >
-                                                                <i
-                                                                    data-lucide="shield-check"
-                                                                    class="w-5 h-5 text-emerald-600"
-                                                                ></i>
-                                                            </div>
-                                                            <div
-                                                                class="text-lg font-bold text-slate-900"
-                                                            >
-                                                                Compliance
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="text-left order-1">
-                                                <div
-                                                    class="inline-flex items-center gap-2 px-3 py-1 bg-ocean-100 text-ocean-600 rounded-full text-xs font-bold mb-4"
-                                                >
-                                                    <i
-                                                        data-lucide="graduation-cap"
-                                                        class="w-3 h-3"
-                                                    ></i>
-                                                    Pengembangan Tim
-                                                </div>
-                                                <h2
-                                                    class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mb-4 leading-tight"
-                                                >
-                                                    Tingkatkan Skill<br />
-                                                    <span class="text-ocean-500"
-                                                        >Tim Anda</span
-                                                    >
-                                                </h2>
-                                                <p
-                                                    class="text-slate-600 mb-6 text-lg"
-                                                >
-                                                    Program training
-                                                    komprehensif dari
-                                                    leadership, technical
-                                                    skills, soft skills, hingga
-                                                    safety & compliance.
-                                                </p>
-                                                <ul class="space-y-3 mb-8">
-                                                    <li
-                                                        class="flex items-center gap-3 text-slate-700"
-                                                    >
-                                                        <div
-                                                            class="w-6 h-6 bg-ocean-100 rounded-full flex items-center justify-center"
-                                                        >
-                                                            <i
-                                                                data-lucide="check"
-                                                                class="w-3 h-3 text-ocean-500"
-                                                            ></i>
-                                                        </div>
-                                                        Leadership Development
-                                                    </li>
-                                                    <li
-                                                        class="flex items-center gap-3 text-slate-700"
-                                                    >
-                                                        <div
-                                                            class="w-6 h-6 bg-ocean-100 rounded-full flex items-center justify-center"
-                                                        >
-                                                            <i
-                                                                data-lucide="check"
-                                                                class="w-3 h-3 text-ocean-500"
-                                                            ></i>
-                                                        </div>
-                                                        Technical & Soft Skills
-                                                    </li>
-                                                    <li
-                                                        class="flex items-center gap-3 text-slate-700"
-                                                    >
-                                                        <div
-                                                            class="w-6 h-6 bg-ocean-100 rounded-full flex items-center justify-center"
-                                                        >
-                                                            <i
-                                                                data-lucide="check"
-                                                                class="w-3 h-3 text-ocean-500"
-                                                            ></i>
-                                                        </div>
-                                                        Sertifikasi Resmi
-                                                    </li>
-                                                </ul>
-                                                <button
-                                                    @click="selectCategory('training')"
-                                                    class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-ocean-500 to-ocean-600 text-white font-semibold rounded-xl hover:from-ocean-600 hover:to-ocean-700 transition-all hover:scale-105 shadow-lg shadow-ocean-500/25"
-                                                >
-                                                    Lihat Program Training
-                                                    <i
-                                                        data-lucide="arrow-right"
-                                                        class="w-4 h-4"
-                                                    ></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Slide 4: Stats & Trust -->
-                                    <div class="w-full flex-shrink-0">
-                                        <div
-                                            class="text-center max-w-5xl mx-auto py-8 px-4"
-                                        >
-                                            <div
-                                                class="inline-flex items-center gap-2 px-3 py-1 bg-emerald-100 text-emerald-600 rounded-full text-xs font-bold mb-6"
-                                            >
-                                                <i
-                                                    data-lucide="trending-up"
-                                                    class="w-3 h-3"
-                                                ></i>
-                                                Dipercaya Perusahaan Indonesia
-                                            </div>
-                                            <h2
-                                                class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 mb-8"
-                                            >
-                                                Partner Terpercaya untuk<br />
-                                                <span class="gradient-text"
-                                                    >500+ Perusahaan</span
-                                                >
-                                            </h2>
-
-                                            <!-- Stats Grid -->
-                                            <div
-                                                class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8"
-                                            >
-                                                <div
-                                                    class="bg-white/70 backdrop-blur rounded-2xl p-6 shadow-lg"
-                                                >
-                                                    <div
-                                                        class="text-3xl lg:text-4xl font-display font-bold gradient-text mb-1"
-                                                    >
-                                                        500+
-                                                    </div>
-                                                    <div
-                                                        class="text-sm text-slate-600"
-                                                    >
-                                                        Perusahaan Klien
-                                                    </div>
-                                                </div>
-                                                <div
-                                                    class="bg-white/70 backdrop-blur rounded-2xl p-6 shadow-lg"
-                                                >
-                                                    <div
-                                                        class="text-3xl lg:text-4xl font-display font-bold gradient-text mb-1"
-                                                    >
-                                                        50+
-                                                    </div>
-                                                    <div
-                                                        class="text-sm text-slate-600"
-                                                    >
-                                                        Partner Terverifikasi
-                                                    </div>
-                                                </div>
-                                                <div
-                                                    class="bg-white/70 backdrop-blur rounded-2xl p-6 shadow-lg"
-                                                >
-                                                    <div
-                                                        class="text-3xl lg:text-4xl font-display font-bold gradient-text mb-1"
-                                                    >
-                                                        10K+
-                                                    </div>
-                                                    <div
-                                                        class="text-sm text-slate-600"
-                                                    >
-                                                        Karyawan Terlayani
-                                                    </div>
-                                                </div>
-                                                <div
-                                                    class="bg-white/70 backdrop-blur rounded-2xl p-6 shadow-lg"
-                                                >
-                                                    <div
-                                                        class="text-3xl lg:text-4xl font-display font-bold gradient-text mb-1"
-                                                    >
-                                                        4.9
-                                                    </div>
-                                                    <div
-                                                        class="text-sm text-slate-600"
-                                                    >
-                                                        Rating Kepuasan
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <!-- Trust Logos -->
-                                            <div
-                                                class="flex flex-wrap items-center justify-center gap-8 opacity-60"
-                                            >
-                                                <div
-                                                    class="flex items-center gap-2 text-slate-400"
-                                                >
-                                                    <i
-                                                        data-lucide="building-2"
-                                                        class="w-6 h-6"
-                                                    ></i>
-                                                    <span class="font-semibold"
-                                                        >TechCorp</span
-                                                    >
-                                                </div>
-                                                <div
-                                                    class="flex items-center gap-2 text-slate-400"
-                                                >
-                                                    <i
-                                                        data-lucide="landmark"
-                                                        class="w-6 h-6"
-                                                    ></i>
-                                                    <span class="font-semibold"
-                                                        >FinanceFirst</span
-                                                    >
-                                                </div>
-                                                <div
-                                                    class="flex items-center gap-2 text-slate-400"
-                                                >
-                                                    <i
-                                                        data-lucide="factory"
-                                                        class="w-6 h-6"
-                                                    ></i>
-                                                    <span class="font-semibold"
-                                                        >ManufacturePro</span
-                                                    >
-                                                </div>
-                                                <div
-                                                    class="flex items-center gap-2 text-slate-400"
-                                                >
-                                                    <i
-                                                        data-lucide="shopping-bag"
-                                                        class="w-6 h-6"
-                                                    ></i>
-                                                    <span class="font-semibold"
-                                                        >RetailMax</span
-                                                    >
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <span
+                                        class="text-sm font-medium text-slate-700"
+                                        >Partner Terverifikasi</span
+                                    >
                                 </div>
-                            </div>
-
-                            <!-- Slider Navigation -->
-                            <div
-                                class="flex items-center justify-center gap-4 mt-8"
-                            >
-                                <!-- Prev Button -->
-                                <button
-                                    @click="currentSlide = (currentSlide - 1 + totalSlides) % totalSlides"
-                                    class="w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-slate-600 hover:text-brand-600 hover:scale-110 transition-all"
+                                <div
+                                    class="flex items-center gap-2 px-4 py-2 bg-white/70 backdrop-blur rounded-full shadow-sm"
                                 >
-                                    <i
-                                        data-lucide="chevron-left"
-                                        class="w-5 h-5"
-                                    ></i>
-                                </button>
-
-                                <!-- Dots -->
-                                <div class="flex items-center gap-2">
-                                    <template x-for="i in totalSlides" :key="i">
-                                        <button
-                                            @click="currentSlide = i - 1"
-                                            class="transition-all duration-300 rounded-full"
-                                            :class="currentSlide === i - 1 ? 'w-8 h-3 bg-brand-500' : 'w-3 h-3 bg-slate-300 hover:bg-slate-400'"
-                                        ></button>
-                                    </template>
+                                    <div
+                                        class="w-8 h-8 bg-brand-100 rounded-full flex items-center justify-center"
+                                    >
+                                        <i
+                                            data-lucide="zap"
+                                            class="w-4 h-4 text-brand-600"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="text-sm font-medium text-slate-700"
+                                        >Proses Express</span
+                                    >
                                 </div>
-
-                                <!-- Next Button -->
-                                <button
-                                    @click="currentSlide = (currentSlide + 1) % totalSlides"
-                                    class="w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-slate-600 hover:text-brand-600 hover:scale-110 transition-all"
+                                <div
+                                    class="flex items-center gap-2 px-4 py-2 bg-white/70 backdrop-blur rounded-full shadow-sm"
                                 >
-                                    <i
-                                        data-lucide="chevron-right"
-                                        class="w-5 h-5"
-                                    ></i>
-                                </button>
-                            </div>
-
-                            <!-- Auto-play Indicator -->
-                            <div
-                                class="flex items-center justify-center gap-2 mt-4 text-sm text-slate-500"
-                            >
-                                <span
-                                    x-show="autoSlide"
-                                    class="flex items-center gap-1"
-                                >
-                                    <i data-lucide="play" class="w-3 h-3"></i>
-                                    Auto-play
-                                </span>
-                                <span
-                                    x-show="!autoSlide"
-                                    class="flex items-center gap-1"
-                                >
-                                    <i data-lucide="pause" class="w-3 h-3"></i>
-                                    Paused
-                                </span>
+                                    <div
+                                        class="w-8 h-8 bg-ocean-100 rounded-full flex items-center justify-center"
+                                    >
+                                        <i
+                                            data-lucide="badge-check"
+                                            class="w-4 h-4 text-ocean-600"
+                                        ></i>
+                                    </div>
+                                    <span
+                                        class="text-sm font-medium text-slate-700"
+                                        >Jaminan Kualitas</span
+                                    >
+                                </div>
                             </div>
                         </div>
 
@@ -1108,6 +597,52 @@
                                 ></div>
                             </button>
                         </div>
+
+                        <!-- Stats Section -->
+                        <div
+                            class="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto"
+                        >
+                            <div class="text-center">
+                                <div
+                                    class="text-3xl sm:text-4xl font-display font-bold gradient-text mb-1"
+                                >
+                                    500+
+                                </div>
+                                <div class="text-sm text-slate-600">
+                                    Perusahaan Klien
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <div
+                                    class="text-3xl sm:text-4xl font-display font-bold gradient-text mb-1"
+                                >
+                                    50+
+                                </div>
+                                <div class="text-sm text-slate-600">
+                                    Partner Terverifikasi
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <div
+                                    class="text-3xl sm:text-4xl font-display font-bold gradient-text mb-1"
+                                >
+                                    10K+
+                                </div>
+                                <div class="text-sm text-slate-600">
+                                    Karyawan Terlayani
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <div
+                                    class="text-3xl sm:text-4xl font-display font-bold gradient-text mb-1"
+                                >
+                                    4.9
+                                </div>
+                                <div class="text-sm text-slate-600">
+                                    Rating Kepuasan
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </section>
 
@@ -1238,8 +773,8 @@
                                     </div>
                                     <span
                                         class="font-display font-bold text-xl text-white"
-                                        >Solusi<span class="text-brand-400"
-                                            >SDM</span
+                                        >Talent<span class="text-brand-400"
+                                            >Ops</span
                                         ></span
                                     >
                                 </div>

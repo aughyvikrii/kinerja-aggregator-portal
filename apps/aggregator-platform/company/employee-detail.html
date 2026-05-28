@@ -3,79 +3,122 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Employee Detail - TalentOps</title>
+        <title>Employee Detail - SolusiSDM</title>
         <script src="https://cdn.tailwindcss.com"></script>
-        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+        ></script>
         <script src="https://unpkg.com/lucide@latest"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
         <script>
             tailwind.config = {
                 theme: {
                     extend: {
-                        fontFamily: { sans: ['Inter', 'sans-serif'] },
+                        fontFamily: { sans: ["Inter", "sans-serif"] },
                         colors: {
                             zinc: {
-                                50: '#fafafa',
-                                100: '#f4f4f5',
-                                200: '#e4e4e7',
-                                300: '#d4d4d8',
-                                400: '#a1a1aa',
-                                500: '#71717a',
-                                600: '#52525b',
-                                700: '#3f3f46',
-                                800: '#27272a',
-                                900: '#18181b',
-                            }
-                        }
-                    }
-                }
+                                50: "#fafafa",
+                                100: "#f4f4f5",
+                                200: "#e4e4e7",
+                                300: "#d4d4d8",
+                                400: "#a1a1aa",
+                                500: "#71717a",
+                                600: "#52525b",
+                                700: "#3f3f46",
+                                800: "#27272a",
+                                900: "#18181b",
+                            },
+                        },
+                    },
+                },
             };
         </script>
     </head>
-    <body class="bg-zinc-50 font-sans" x-data="employeeDetail()" x-init="initCharts(); lucide.createIcons()">
+    <body
+        class="bg-zinc-50 font-sans"
+        x-data="employeeDetail()"
+        x-init="initCharts(); lucide.createIcons()"
+    >
         <div class="flex h-screen">
             <!-- Sidebar -->
             <aside class="w-64 bg-white border-r border-zinc-200 flex flex-col">
                 <div class="p-6 border-b border-zinc-100">
                     <div class="flex items-center gap-3">
-                        <div class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center">
-                            <i data-lucide="building-2" class="w-4 h-4 text-white"></i>
+                        <div
+                            class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center"
+                        >
+                            <i
+                                data-lucide="building-2"
+                                class="w-4 h-4 text-white"
+                            ></i>
                         </div>
                         <div>
-                            <span class="font-semibold text-zinc-900">TechCorp</span>
+                            <span class="font-semibold text-zinc-900"
+                                >TechCorp</span
+                            >
                             <p class="text-xs text-zinc-500">Company View</p>
                         </div>
                     </div>
                 </div>
 
                 <nav class="flex-1 p-4 space-y-1 overflow-y-auto">
-                    <div class="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2 px-3">Overview</div>
-                    <a href="dashboard.html" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg">
+                    <div
+                        class="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2 px-3"
+                    >
+                        Overview
+                    </div>
+                    <a
+                        href="dashboard.html"
+                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                    >
                         <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
                         Dashboard
                     </a>
-                    <a href="employee-database.html" class="flex items-center gap-3 px-3 py-2 text-sm font-medium bg-zinc-100 text-zinc-900 rounded-lg">
+                    <a
+                        href="employee-database.html"
+                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium bg-zinc-100 text-zinc-900 rounded-lg"
+                    >
                         <i data-lucide="users" class="w-4 h-4"></i>
                         Employee Database
                     </a>
-                    <a href="orders.html" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg">
+                    <a
+                        href="orders.html"
+                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                    >
                         <i data-lucide="clipboard-list" class="w-4 h-4"></i>
                         My Orders
                     </a>
-                    <a href="analytics.html" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg">
+                    <a
+                        href="analytics.html"
+                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                    >
                         <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
                         Analytics
                     </a>
 
-                    <div class="text-xs font-semibold text-zinc-400 uppercase tracking-wider mt-6 mb-2 px-3">External</div>
-                    <a href="../../hr-app/dashboard.html" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg">
+                    <div
+                        class="text-xs font-semibold text-zinc-400 uppercase tracking-wider mt-6 mb-2 px-3"
+                    >
+                        External
+                    </div>
+                    <a
+                        href="../../hr-app/dashboard.html"
+                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                    >
                         <i data-lucide="arrow-left" class="w-4 h-4"></i>
                         Back to HR App
                     </a>
-                    <a href="../login.html" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg">
+                    <a
+                        href="../login.html"
+                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                    >
                         <i data-lucide="log-out" class="w-4 h-4"></i>
                         Sign Out
                     </a>
@@ -86,167 +129,382 @@
                 <header class="bg-white border-b border-zinc-200 px-8 py-4">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-4">
-                            <a href="employee-database.html" class="p-2 text-zinc-400 hover:text-zinc-600 rounded-lg hover:bg-zinc-50">
+                            <a
+                                href="employee-database.html"
+                                class="p-2 text-zinc-400 hover:text-zinc-600 rounded-lg hover:bg-zinc-50"
+                            >
                                 <i data-lucide="arrow-left" class="w-5 h-5"></i>
                             </a>
                             <div>
-                                <h1 class="text-xl font-semibold text-zinc-900">Employee Health Profile</h1>
-                                <p class="text-sm text-zinc-500">AI-extracted health analytics</p>
+                                <h1 class="text-xl font-semibold text-zinc-900">
+                                    Employee Health Profile
+                                </h1>
+                                <p class="text-sm text-zinc-500">
+                                    AI-extracted health analytics
+                                </p>
                             </div>
                         </div>
                         <div class="flex items-center gap-3">
-                            <button class="px-4 py-2 bg-zinc-900 text-white text-sm font-medium rounded-lg hover:bg-zinc-800">Download Report</button>
+                            <button
+                                class="px-4 py-2 bg-zinc-900 text-white text-sm font-medium rounded-lg hover:bg-zinc-800"
+                            >
+                                Download Report
+                            </button>
                         </div>
                     </div>
                 </header>
 
                 <div class="p-8">
                     <!-- Read-only Banner -->
-                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-8 flex items-center gap-3">
-                        <i data-lucide="info" class="w-5 h-5 text-blue-600 flex-shrink-0"></i>
+                    <div
+                        class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-8 flex items-center gap-3"
+                    >
+                        <i
+                            data-lucide="info"
+                            class="w-5 h-5 text-blue-600 flex-shrink-0"
+                        ></i>
                         <p class="text-sm text-blue-700">
-                            This is a read-only view. Contact your partner for data corrections or questions about health assessments.
+                            This is a read-only view. Contact your partner for
+                            data corrections or questions about health
+                            assessments.
                         </p>
                     </div>
 
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
                         <div class="lg:col-span-1">
-                            <div class="bg-white rounded-xl border border-zinc-200 p-6">
+                            <div
+                                class="bg-white rounded-xl border border-zinc-200 p-6"
+                            >
                                 <div class="flex items-center gap-4 mb-6">
-                                    <div class="w-16 h-16 bg-zinc-200 rounded-full flex items-center justify-center">
-                                        <i data-lucide="user" class="w-8 h-8 text-zinc-400"></i>
+                                    <div
+                                        class="w-16 h-16 bg-zinc-200 rounded-full flex items-center justify-center"
+                                    >
+                                        <i
+                                            data-lucide="user"
+                                            class="w-8 h-8 text-zinc-400"
+                                        ></i>
                                     </div>
                                     <div>
-                                        <h2 class="text-xl font-bold text-zinc-900">Ahmad Wijaya</h2>
-                                        <p class="text-sm text-zinc-500">TC-2024-001</p>
-                                        <p class="text-sm text-zinc-500">TechCorp Indonesia</p>
+                                        <h2
+                                            class="text-xl font-bold text-zinc-900"
+                                        >
+                                            Ahmad Wijaya
+                                        </h2>
+                                        <p class="text-sm text-zinc-500">
+                                            TC-2024-001
+                                        </p>
+                                        <p class="text-sm text-zinc-500">
+                                            TechCorp Indonesia
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="space-y-3">
-                                    <div class="flex justify-between py-2 border-b border-zinc-100">
-                                        <span class="text-zinc-500">Age / Gender</span>
-                                        <span class="font-medium">34 / Male</span>
+                                    <div
+                                        class="flex justify-between py-2 border-b border-zinc-100"
+                                    >
+                                        <span class="text-zinc-500"
+                                            >Age / Gender</span
+                                        >
+                                        <span class="font-medium"
+                                            >34 / Male</span
+                                        >
                                     </div>
-                                    <div class="flex justify-between py-2 border-b border-zinc-100">
-                                        <span class="text-zinc-500">Department</span>
-                                        <span class="font-medium">Operations</span>
+                                    <div
+                                        class="flex justify-between py-2 border-b border-zinc-100"
+                                    >
+                                        <span class="text-zinc-500"
+                                            >Department</span
+                                        >
+                                        <span class="font-medium"
+                                            >Operations</span
+                                        >
                                     </div>
-                                    <div class="flex justify-between py-2 border-b border-zinc-100">
-                                        <span class="text-zinc-500">Last MCU</span>
-                                        <span class="font-medium">Jan 15, 2024</span>
+                                    <div
+                                        class="flex justify-between py-2 border-b border-zinc-100"
+                                    >
+                                        <span class="text-zinc-500"
+                                            >Last MCU</span
+                                        >
+                                        <span class="font-medium"
+                                            >Jan 15, 2024</span
+                                        >
                                     </div>
                                     <div class="flex justify-between py-2">
-                                        <span class="text-zinc-500">Overall Risk</span>
-                                        <span class="px-2 py-1 bg-red-50 text-red-700 text-xs font-medium rounded-full">High</span>
+                                        <span class="text-zinc-500"
+                                            >Overall Risk</span
+                                        >
+                                        <span
+                                            class="px-2 py-1 bg-red-50 text-red-700 text-xs font-medium rounded-full"
+                                            >High</span
+                                        >
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="lg:col-span-2 grid grid-cols-2 gap-4">
-                            <div class="bg-white rounded-xl border border-zinc-200 p-5" :class="health.diabetes.risk === 'High' ? 'border-red-300 bg-red-50/30' : ''">
+                            <div
+                                class="bg-white rounded-xl border border-zinc-200 p-5"
+                                :class="health.diabetes.risk === 'High' ? 'border-red-300 bg-red-50/30' : ''"
+                            >
                                 <div class="flex items-center gap-3 mb-3">
-                                    <div class="w-10 h-10 rounded-lg flex items-center justify-center" :class="health.diabetes.risk === 'High' ? 'bg-red-100' : 'bg-zinc-100'">
-                                        <i data-lucide="activity" class="w-5 h-5" :class="health.diabetes.risk === 'High' ? 'text-red-600' : 'text-zinc-600'"></i>
+                                    <div
+                                        class="w-10 h-10 rounded-lg flex items-center justify-center"
+                                        :class="health.diabetes.risk === 'High' ? 'bg-red-100' : 'bg-zinc-100'"
+                                    >
+                                        <i
+                                            data-lucide="activity"
+                                            class="w-5 h-5"
+                                            :class="health.diabetes.risk === 'High' ? 'text-red-600' : 'text-zinc-600'"
+                                        ></i>
                                     </div>
                                     <div>
-                                        <h3 class="font-semibold text-zinc-900">Diabetes Mellitus</h3>
-                                        <p class="text-xs text-zinc-500">Blood Glucose Analysis</p>
+                                        <h3 class="font-semibold text-zinc-900">
+                                            Diabetes Mellitus
+                                        </h3>
+                                        <p class="text-xs text-zinc-500">
+                                            Blood Glucose Analysis
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <div class="flex items-center justify-between mb-1">
-                                        <span class="text-sm text-zinc-600">Risk Level</span>
-                                        <span class="text-sm font-medium" :class="health.diabetes.risk === 'High' ? 'text-red-600' : 'text-emerald-600'" x-text="health.diabetes.risk"></span>
+                                    <div
+                                        class="flex items-center justify-between mb-1"
+                                    >
+                                        <span class="text-sm text-zinc-600"
+                                            >Risk Level</span
+                                        >
+                                        <span
+                                            class="text-sm font-medium"
+                                            :class="health.diabetes.risk === 'High' ? 'text-red-600' : 'text-emerald-600'"
+                                            x-text="health.diabetes.risk"
+                                        ></span>
                                     </div>
-                                    <div class="h-2 bg-zinc-100 rounded-full overflow-hidden">
-                                        <div class="h-full rounded-full transition-all" :class="health.diabetes.risk === 'High' ? 'bg-red-500' : 'bg-emerald-500'" :style="`width: ${health.diabetes.score}%`"></div>
+                                    <div
+                                        class="h-2 bg-zinc-100 rounded-full overflow-hidden"
+                                    >
+                                        <div
+                                            class="h-full rounded-full transition-all"
+                                            :class="health.diabetes.risk === 'High' ? 'bg-red-500' : 'bg-emerald-500'"
+                                            :style="`width: ${health.diabetes.score}%`"
+                                        ></div>
                                     </div>
                                 </div>
-                                <div class="text-sm text-zinc-600 mb-2">Glucose: <span class="font-medium" :class="health.diabetes.value >= 126 ? 'text-red-600' : ''" x-text="health.diabetes.value + ' mg/dL'"></span></div>
-                                <p class="text-xs text-zinc-500" x-text="health.diabetes.recommendation"></p>
+                                <div class="text-sm text-zinc-600 mb-2">
+                                    Glucose:
+                                    <span
+                                        class="font-medium"
+                                        :class="health.diabetes.value >= 126 ? 'text-red-600' : ''"
+                                        x-text="health.diabetes.value + ' mg/dL'"
+                                    ></span>
+                                </div>
+                                <p
+                                    class="text-xs text-zinc-500"
+                                    x-text="health.diabetes.recommendation"
+                                ></p>
                             </div>
 
-                            <div class="bg-white rounded-xl border border-zinc-200 p-5" :class="health.hypertension.risk === 'High' ? 'border-amber-300 bg-amber-50/30' : ''">
+                            <div
+                                class="bg-white rounded-xl border border-zinc-200 p-5"
+                                :class="health.hypertension.risk === 'High' ? 'border-amber-300 bg-amber-50/30' : ''"
+                            >
                                 <div class="flex items-center gap-3 mb-3">
-                                    <div class="w-10 h-10 rounded-lg flex items-center justify-center" :class="health.hypertension.risk === 'High' ? 'bg-amber-100' : 'bg-zinc-100'">
-                                        <i data-lucide="heart" class="w-5 h-5" :class="health.hypertension.risk === 'High' ? 'text-amber-600' : 'text-zinc-600'"></i>
+                                    <div
+                                        class="w-10 h-10 rounded-lg flex items-center justify-center"
+                                        :class="health.hypertension.risk === 'High' ? 'bg-amber-100' : 'bg-zinc-100'"
+                                    >
+                                        <i
+                                            data-lucide="heart"
+                                            class="w-5 h-5"
+                                            :class="health.hypertension.risk === 'High' ? 'text-amber-600' : 'text-zinc-600'"
+                                        ></i>
                                     </div>
                                     <div>
-                                        <h3 class="font-semibold text-zinc-900">Hypertension</h3>
-                                        <p class="text-xs text-zinc-500">Blood Pressure Analysis</p>
+                                        <h3 class="font-semibold text-zinc-900">
+                                            Hypertension
+                                        </h3>
+                                        <p class="text-xs text-zinc-500">
+                                            Blood Pressure Analysis
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <div class="flex items-center justify-between mb-1">
-                                        <span class="text-sm text-zinc-600">Risk Level</span>
-                                        <span class="text-sm font-medium" :class="health.hypertension.risk === 'High' ? 'text-amber-600' : 'text-emerald-600'" x-text="health.hypertension.risk"></span>
+                                    <div
+                                        class="flex items-center justify-between mb-1"
+                                    >
+                                        <span class="text-sm text-zinc-600"
+                                            >Risk Level</span
+                                        >
+                                        <span
+                                            class="text-sm font-medium"
+                                            :class="health.hypertension.risk === 'High' ? 'text-amber-600' : 'text-emerald-600'"
+                                            x-text="health.hypertension.risk"
+                                        ></span>
                                     </div>
-                                    <div class="h-2 bg-zinc-100 rounded-full overflow-hidden">
-                                        <div class="h-full rounded-full transition-all" :class="health.hypertension.risk === 'High' ? 'bg-amber-500' : 'bg-emerald-500'" :style="`width: ${health.hypertension.score}%`"></div>
+                                    <div
+                                        class="h-2 bg-zinc-100 rounded-full overflow-hidden"
+                                    >
+                                        <div
+                                            class="h-full rounded-full transition-all"
+                                            :class="health.hypertension.risk === 'High' ? 'bg-amber-500' : 'bg-emerald-500'"
+                                            :style="`width: ${health.hypertension.score}%`"
+                                        ></div>
                                     </div>
                                 </div>
-                                <div class="text-sm text-zinc-600 mb-2">BP: <span class="font-medium" :class="health.hypertension.systolic >= 140 ? 'text-amber-600' : ''" x-text="health.hypertension.systolic + '/' + health.hypertension.diastolic + ' mmHg'"></span></div>
-                                <p class="text-xs text-zinc-500" x-text="health.hypertension.recommendation"></p>
+                                <div class="text-sm text-zinc-600 mb-2">
+                                    BP:
+                                    <span
+                                        class="font-medium"
+                                        :class="health.hypertension.systolic >= 140 ? 'text-amber-600' : ''"
+                                        x-text="health.hypertension.systolic + '/' + health.hypertension.diastolic + ' mmHg'"
+                                    ></span>
+                                </div>
+                                <p
+                                    class="text-xs text-zinc-500"
+                                    x-text="health.hypertension.recommendation"
+                                ></p>
                             </div>
 
-                            <div class="bg-white rounded-xl border border-zinc-200 p-5" :class="health.obesity.risk === 'High' ? 'border-orange-300 bg-orange-50/30' : ''">
+                            <div
+                                class="bg-white rounded-xl border border-zinc-200 p-5"
+                                :class="health.obesity.risk === 'High' ? 'border-orange-300 bg-orange-50/30' : ''"
+                            >
                                 <div class="flex items-center gap-3 mb-3">
-                                    <div class="w-10 h-10 rounded-lg flex items-center justify-center" :class="health.obesity.risk === 'High' ? 'bg-orange-100' : 'bg-zinc-100'">
-                                        <i data-lucide="scale" class="w-5 h-5" :class="health.obesity.risk === 'High' ? 'text-orange-600' : 'text-zinc-600'"></i>
+                                    <div
+                                        class="w-10 h-10 rounded-lg flex items-center justify-center"
+                                        :class="health.obesity.risk === 'High' ? 'bg-orange-100' : 'bg-zinc-100'"
+                                    >
+                                        <i
+                                            data-lucide="scale"
+                                            class="w-5 h-5"
+                                            :class="health.obesity.risk === 'High' ? 'text-orange-600' : 'text-zinc-600'"
+                                        ></i>
                                     </div>
                                     <div>
-                                        <h3 class="font-semibold text-zinc-900">Obesity</h3>
-                                        <p class="text-xs text-zinc-500">BMI Analysis</p>
+                                        <h3 class="font-semibold text-zinc-900">
+                                            Obesity
+                                        </h3>
+                                        <p class="text-xs text-zinc-500">
+                                            BMI Analysis
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <div class="flex items-center justify-between mb-1">
-                                        <span class="text-sm text-zinc-600">Risk Level</span>
-                                        <span class="text-sm font-medium" :class="health.obesity.risk === 'High' ? 'text-orange-600' : 'text-emerald-600'" x-text="health.obesity.risk"></span>
+                                    <div
+                                        class="flex items-center justify-between mb-1"
+                                    >
+                                        <span class="text-sm text-zinc-600"
+                                            >Risk Level</span
+                                        >
+                                        <span
+                                            class="text-sm font-medium"
+                                            :class="health.obesity.risk === 'High' ? 'text-orange-600' : 'text-emerald-600'"
+                                            x-text="health.obesity.risk"
+                                        ></span>
                                     </div>
-                                    <div class="h-2 bg-zinc-100 rounded-full overflow-hidden">
-                                        <div class="h-full rounded-full transition-all" :class="health.obesity.risk === 'High' ? 'bg-orange-500' : 'bg-emerald-500'" :style="`width: ${health.obesity.score}%`"></div>
+                                    <div
+                                        class="h-2 bg-zinc-100 rounded-full overflow-hidden"
+                                    >
+                                        <div
+                                            class="h-full rounded-full transition-all"
+                                            :class="health.obesity.risk === 'High' ? 'bg-orange-500' : 'bg-emerald-500'"
+                                            :style="`width: ${health.obesity.score}%`"
+                                        ></div>
                                     </div>
                                 </div>
-                                <div class="text-sm text-zinc-600 mb-2">BMI: <span class="font-medium" :class="health.obesity.bmi >= 30 ? 'text-orange-600' : 'text-amber-600'" x-text="health.obesity.bmi + ' (' + health.obesity.category + ')'"></span></div>
-                                <p class="text-xs text-zinc-500" x-text="health.obesity.recommendation"></p>
+                                <div class="text-sm text-zinc-600 mb-2">
+                                    BMI:
+                                    <span
+                                        class="font-medium"
+                                        :class="health.obesity.bmi >= 30 ? 'text-orange-600' : 'text-amber-600'"
+                                        x-text="health.obesity.bmi + ' (' + health.obesity.category + ')'"
+                                    ></span>
+                                </div>
+                                <p
+                                    class="text-xs text-zinc-500"
+                                    x-text="health.obesity.recommendation"
+                                ></p>
                             </div>
 
-                            <div class="bg-white rounded-xl border border-zinc-200 p-5" :class="health.heart.risk === 'High' ? 'border-rose-300 bg-rose-50/30' : ''">
+                            <div
+                                class="bg-white rounded-xl border border-zinc-200 p-5"
+                                :class="health.heart.risk === 'High' ? 'border-rose-300 bg-rose-50/30' : ''"
+                            >
                                 <div class="flex items-center gap-3 mb-3">
-                                    <div class="w-10 h-10 rounded-lg flex items-center justify-center" :class="health.heart.risk === 'High' ? 'bg-rose-100' : 'bg-zinc-100'">
-                                        <i data-lucide="heart-pulse" class="w-5 h-5" :class="health.heart.risk === 'High' ? 'text-rose-600' : 'text-zinc-600'"></i>
+                                    <div
+                                        class="w-10 h-10 rounded-lg flex items-center justify-center"
+                                        :class="health.heart.risk === 'High' ? 'bg-rose-100' : 'bg-zinc-100'"
+                                    >
+                                        <i
+                                            data-lucide="heart-pulse"
+                                            class="w-5 h-5"
+                                            :class="health.heart.risk === 'High' ? 'text-rose-600' : 'text-zinc-600'"
+                                        ></i>
                                     </div>
                                     <div>
-                                        <h3 class="font-semibold text-zinc-900">Heart Disease</h3>
-                                        <p class="text-xs text-zinc-500">Cardiovascular Risk</p>
+                                        <h3 class="font-semibold text-zinc-900">
+                                            Heart Disease
+                                        </h3>
+                                        <p class="text-xs text-zinc-500">
+                                            Cardiovascular Risk
+                                        </p>
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <div class="flex items-center justify-between mb-1">
-                                        <span class="text-sm text-zinc-600">Risk Level</span>
-                                        <span class="text-sm font-medium" :class="health.heart.risk === 'High' ? 'text-rose-600' : 'text-emerald-600'" x-text="health.heart.risk"></span>
+                                    <div
+                                        class="flex items-center justify-between mb-1"
+                                    >
+                                        <span class="text-sm text-zinc-600"
+                                            >Risk Level</span
+                                        >
+                                        <span
+                                            class="text-sm font-medium"
+                                            :class="health.heart.risk === 'High' ? 'text-rose-600' : 'text-emerald-600'"
+                                            x-text="health.heart.risk"
+                                        ></span>
                                     </div>
-                                    <div class="h-2 bg-zinc-100 rounded-full overflow-hidden">
-                                        <div class="h-full rounded-full transition-all" :class="health.heart.risk === 'High' ? 'bg-rose-500' : 'bg-emerald-500'" :style="`width: ${health.heart.score}%`"></div>
+                                    <div
+                                        class="h-2 bg-zinc-100 rounded-full overflow-hidden"
+                                    >
+                                        <div
+                                            class="h-full rounded-full transition-all"
+                                            :class="health.heart.risk === 'High' ? 'bg-rose-500' : 'bg-emerald-500'"
+                                            :style="`width: ${health.heart.score}%`"
+                                        ></div>
                                     </div>
                                 </div>
-                                <div class="text-sm text-zinc-600 mb-2">Cholesterol: <span class="font-medium" x-text="health.heart.cholesterol + ' mg/dL'"></span></div>
-                                <p class="text-xs text-zinc-500" x-text="health.heart.recommendation"></p>
+                                <div class="text-sm text-zinc-600 mb-2">
+                                    Cholesterol:
+                                    <span
+                                        class="font-medium"
+                                        x-text="health.heart.cholesterol + ' mg/dL'"
+                                    ></span>
+                                </div>
+                                <p
+                                    class="text-xs text-zinc-500"
+                                    x-text="health.heart.recommendation"
+                                ></p>
                             </div>
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <div class="bg-white rounded-xl border border-zinc-200 p-6">
-                            <h3 class="font-semibold text-zinc-900 mb-4">Health Trends (6 Months)</h3>
+                        <div
+                            class="bg-white rounded-xl border border-zinc-200 p-6"
+                        >
+                            <h3 class="font-semibold text-zinc-900 mb-4">
+                                Health Trends (6 Months)
+                            </h3>
                             <div class="relative h-64">
                                 <canvas id="healthTrendChart"></canvas>
                             </div>
                         </div>
-                        <div class="bg-white rounded-xl border border-zinc-200 p-6">
-                            <h3 class="font-semibold text-zinc-900 mb-4">Risk Distribution</h3>
+                        <div
+                            class="bg-white rounded-xl border border-zinc-200 p-6"
+                        >
+                            <h3 class="font-semibold text-zinc-900 mb-4">
+                                Risk Distribution
+                            </h3>
                             <div class="relative h-64">
                                 <canvas id="riskDistributionChart"></canvas>
                             </div>
@@ -260,34 +518,112 @@
             function employeeDetail() {
                 return {
                     health: {
-                        diabetes: { risk: 'High', score: 78, value: 142, recommendation: 'Diet modification and glucose monitoring recommended. Follow-up in 3 months.' },
-                        hypertension: { risk: 'High', score: 82, systolic: 145, diastolic: 92, recommendation: 'Lifestyle changes advised. Consider medication consultation.' },
-                        obesity: { risk: 'High', score: 65, bmi: 28.5, category: 'Overweight', recommendation: 'Weight management program recommended. Target BMI < 25.' },
-                        heart: { risk: 'Medium', score: 55, cholesterol: 195, recommendation: 'Continue monitoring. Dietary fat reduction suggested.' }
+                        diabetes: {
+                            risk: "High",
+                            score: 78,
+                            value: 142,
+                            recommendation:
+                                "Diet modification and glucose monitoring recommended. Follow-up in 3 months.",
+                        },
+                        hypertension: {
+                            risk: "High",
+                            score: 82,
+                            systolic: 145,
+                            diastolic: 92,
+                            recommendation:
+                                "Lifestyle changes advised. Consider medication consultation.",
+                        },
+                        obesity: {
+                            risk: "High",
+                            score: 65,
+                            bmi: 28.5,
+                            category: "Overweight",
+                            recommendation:
+                                "Weight management program recommended. Target BMI < 25.",
+                        },
+                        heart: {
+                            risk: "Medium",
+                            score: 55,
+                            cholesterol: 195,
+                            recommendation:
+                                "Continue monitoring. Dietary fat reduction suggested.",
+                        },
                     },
                     initCharts() {
-                        new Chart(document.getElementById('healthTrendChart'), {
-                            type: 'line',
+                        new Chart(document.getElementById("healthTrendChart"), {
+                            type: "line",
                             data: {
-                                labels: ['Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan'],
+                                labels: [
+                                    "Aug",
+                                    "Sep",
+                                    "Oct",
+                                    "Nov",
+                                    "Dec",
+                                    "Jan",
+                                ],
                                 datasets: [
-                                    { label: 'Glucose', data: [128, 132, 135, 138, 140, 142], borderColor: '#ef4444', tension: 0.4 },
-                                    { label: 'Systolic BP', data: [138, 140, 142, 143, 144, 145], borderColor: '#f59e0b', tension: 0.4 },
-                                    { label: 'BMI', data: [27.2, 27.5, 27.8, 28.0, 28.3, 28.5], borderColor: '#f97316', tension: 0.4 }
-                                ]
+                                    {
+                                        label: "Glucose",
+                                        data: [128, 132, 135, 138, 140, 142],
+                                        borderColor: "#ef4444",
+                                        tension: 0.4,
+                                    },
+                                    {
+                                        label: "Systolic BP",
+                                        data: [138, 140, 142, 143, 144, 145],
+                                        borderColor: "#f59e0b",
+                                        tension: 0.4,
+                                    },
+                                    {
+                                        label: "BMI",
+                                        data: [
+                                            27.2, 27.5, 27.8, 28.0, 28.3, 28.5,
+                                        ],
+                                        borderColor: "#f97316",
+                                        tension: 0.4,
+                                    },
+                                ],
                             },
-                            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
-                        });
-                        new Chart(document.getElementById('riskDistributionChart'), {
-                            type: 'doughnut',
-                            data: {
-                                labels: ['Diabetes', 'Hypertension', 'Obesity', 'Heart'],
-                                datasets: [{ data: [78, 82, 65, 55], backgroundColor: ['#ef4444', '#f59e0b', '#f97316', '#f43f5e'], borderWidth: 0 }]
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                plugins: { legend: { position: "bottom" } },
                             },
-                            options: { responsive: true, maintainAspectRatio: false, cutout: '70%', plugins: { legend: { position: 'bottom' } } }
                         });
-                    }
-                }
+                        new Chart(
+                            document.getElementById("riskDistributionChart"),
+                            {
+                                type: "doughnut",
+                                data: {
+                                    labels: [
+                                        "Diabetes",
+                                        "Hypertension",
+                                        "Obesity",
+                                        "Heart",
+                                    ],
+                                    datasets: [
+                                        {
+                                            data: [78, 82, 65, 55],
+                                            backgroundColor: [
+                                                "#ef4444",
+                                                "#f59e0b",
+                                                "#f97316",
+                                                "#f43f5e",
+                                            ],
+                                            borderWidth: 0,
+                                        },
+                                    ],
+                                },
+                                options: {
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    cutout: "70%",
+                                    plugins: { legend: { position: "bottom" } },
+                                },
+                            },
+                        );
+                    },
+                };
             }
         </script>
     </body>

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**TalentOps Aggregator Platform** - A static web platform acting as an aggregator marketplace and analytics hub for:
+**SolusiSDM Aggregator Platform** - A static web platform acting as an aggregator marketplace and analytics hub for:
 1. Medical Check Up (MCU)
 2. Man Power Supply
 3. Training
