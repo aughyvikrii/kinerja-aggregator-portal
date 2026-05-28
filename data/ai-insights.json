@@ -1,0 +1,99 @@
+{
+  "executive_summary": {
+    "workforce_health": {
+      "score": 78,
+      "trend": "up",
+      "summary": "Overall workforce health improved by 12% compared to last quarter. Hypertension cases decreased significantly."
+    },
+    "mental_readiness": {
+      "score": 82,
+      "trend": "stable",
+      "summary": "Mental readiness remains stable. Burnout risk detected in 15% of workforce, primarily in high-pressure departments."
+    },
+    "training_readiness": {
+      "score": 71,
+      "trend": "up",
+      "summary": "Training completion rates improved. Skill gaps identified in emerging technology areas."
+    },
+    "productivity_risk": {
+      "score": 65,
+      "trend": "down",
+      "summary": "Attrition risk elevated in manufacturing sector. Recommend immediate retention interventions."
+    }
+  },
+  "recommendations": [
+    {
+      "id": 1,
+      "type": "training",
+      "priority": "high",
+      "title": "Leadership Development Program",
+      "description": "Recommend implementing leadership training for 45 identified high-potential employees",
+      "confidence": 92,
+      "impact": "high",
+      "target_departments": ["Operations", "Technology"]
+    },
+    {
+      "id": 2,
+      "type": "health",
+      "priority": "medium",
+      "title": "Periodic MCU for High-Risk Employees",
+      "description": "150 employees show elevated health risk markers. Recommend quarterly monitoring.",
+      "confidence": 87,
+      "impact": "medium",
+      "target_employees": 150
+    },
+    {
+      "id": 3,
+      "type": "wellness",
+      "priority": "high",
+      "title": "Burnout Prevention Initiative",
+      "description": "Stress indicators suggest 23 employees at high burnout risk. Immediate intervention recommended.",
+      "confidence": 89,
+      "impact": "high",
+      "target_employees": 23
+    },
+    {
+      "id": 4,
+      "type": "workforce",
+      "priority": "medium",
+      "title": "Workforce Redistribution",
+      "description": "Consider reallocating 30 staff from underutilized departments to high-demand areas",
+      "confidence": 76,
+      "impact": "medium",
+      "target_departments": ["Sales", "Customer Support"]
+    }
+  ],
+  "predictions": {
+    "attrition": {
+      "risk_score": 35,
+      "high_risk_employees": 45,
+      "primary_factors": ["compensation", "workload", "career_growth"],
+      "departments_at_risk": ["Manufacturing", "Logistics"]
+    },
+    "productivity_trend": {
+      "forecast": "stable",
+      "next_quarter_prediction": 82,
+      "key_drivers": ["training_completion", "health_improvements"]
+    }
+  },
+  "correlations": [
+    {
+      "factor_a": "MCU Health Score",
+      "factor_b": "Productivity Rating",
+      "correlation": 0.73,
+      "insight": "Employees with good health scores show 23% higher productivity"
+    },
+    {
+      "factor_a": "Training Completion",
+      "factor_b": "Performance Review",
+      "correlation": 0.68,
+      "insight": "Strong correlation between training and performance ratings"
+    },
+    {
+      "factor_a": "Psych Test Score",
+      "factor_b": "Retention Rate",
+      "correlation": 0.54,
+      "insight": "Personality fit correlates with longer tenure"
+    }
+  ]
+}

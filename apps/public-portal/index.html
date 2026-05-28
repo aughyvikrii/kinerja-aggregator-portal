@@ -1,0 +1,1005 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>TalentOps - Pesan Layanan Workforce</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+        ></script>
+        <script src="https://unpkg.com/lucide@latest"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            sans: ['Inter', 'sans-serif'],
+                        },
+                        colors: {
+                            brand: {
+                                50: '#eff6ff',
+                                100: '#dbeafe',
+                                500: '#3b82f6',
+                                600: '#2563eb',
+                                700: '#1d4ed8',
+                            }
+                        }
+                    },
+                },
+            };
+        </script>
+        <style>
+            .step-enter { animation: slideIn 0.3s ease-out; }
+            @keyframes slideIn {
+                from { opacity: 0; transform: translateX(20px); }
+                to { opacity: 1; transform: translateX(0); }
+            }
+            .card-hover { transition: all 0.2s ease; }
+            .card-hover:hover { transform: translateY(-4px); box-shadow: 0 12px 24px -8px rgba(0,0,0,0.15); }
+            .selected-ring { ring: 2px solid #2563eb; ring-offset: 2px; }
+        </style>
+    </head>
+    <body class="bg-slate-50 font-sans min-h-screen" x-data="publicPortal()" x-init="lucide.createIcons()">
+
+        <!-- Header -->
+        <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-16">
+                    <a href="index.html" class="flex items-center gap-2">
+                        <div class="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center">
+                            <i data-lucide="hexagon" class="w-4 h-4 text-white"></i>
+                        </div>
+                        <span class="font-bold text-slate-900 text-xl">TalentOps</span>
+                    </a>
+                    <div class="flex items-center gap-4">
+                        <a href="track-order.html" class="text-sm text-slate-600 hover:text-brand-600 font-medium">Lacak Pesanan</a>
+                        <a href="../aggregator-platform/login.html" class="text-sm text-slate-600 hover:text-brand-600">Partner Login</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Progress Bar (shown after step 1) -->
+        <div x-show="step > 1 && step < 5" class="bg-white border-b border-slate-200" x-cloak>
+            <div class="max-w-3xl mx-auto px-4 py-4">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-sm font-medium text-slate-900" x-text="getStepTitle()"></span>
+                    <span class="text-sm text-slate-500">Langkah <span x-text="step - 1"></span> dari 4</span>
+                </div>
+                <div class="h-2 bg-slate-100 rounded-full overflow-hidden">
+                    <div class="h-full bg-brand-600 rounded-full transition-all duration-300"
+                         :style="`width: ${((step - 1) / 4) * 100}%`"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <main class="py-8 pb-20">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+                <!-- STEP 1: Category Selection -->
+                <div x-show="step === 1" class="step-enter" x-cloak>
+                    <div class="text-center max-w-2xl mx-auto mb-10">
+                        <h1 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+                            Pilih Layanan Workforce
+                        </h1>
+                        <p class="text-lg text-slate-600">
+                            Temukan layanan terbaik untuk kebutuhan tim Anda. Pilih kategori di bawah ini.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
+                        <!-- MCU -->
+                        <button @click="selectCategory('mcu')"
+                                class="card-hover bg-white rounded-2xl border-2 p-6 text-left transition-all"
+                                :class="category === 'mcu' ? 'border-brand-500 bg-brand-50' : 'border-slate-200 hover:border-brand-300'">
+                            <div class="w-14 h-14 bg-red-100 rounded-xl flex items-center justify-center mb-4">
+                                <i data-lucide="heart-pulse" class="w-7 h-7 text-red-600"></i>
+                            </div>
+                            <h3 class="font-semibold text-slate-900 text-lg mb-1">Medical Check Up</h3>
+                            <p class="text-sm text-slate-500">Pemeriksaan kesehatan lengkap untuk karyawan</p>
+                            <div class="mt-4 flex items-center text-brand-600 text-sm font-medium">
+                                <span>Pilih</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i>
+                            </div>
+                        </button>
+
+                        <!-- Training -->
+                        <button @click="selectCategory('training')"
+                                class="card-hover bg-white rounded-2xl border-2 p-6 text-left transition-all"
+                                :class="category === 'training' ? 'border-brand-500 bg-brand-50' : 'border-slate-200 hover:border-brand-300'">
+                            <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mb-4">
+                                <i data-lucide="graduation-cap" class="w-7 h-7 text-blue-600"></i>
+                            </div>
+                            <h3 class="font-semibold text-slate-900 text-lg mb-1">Training</h3>
+                            <p class="text-sm text-slate-500">Program pengembangan skill dan kompetensi</p>
+                            <div class="mt-4 flex items-center text-brand-600 text-sm font-medium">
+                                <span>Pilih</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i>
+                            </div>
+                        </button>
+
+                        <!-- Psych Test -->
+                        <button @click="selectCategory('psychological')"
+                                class="card-hover bg-white rounded-2xl border-2 p-6 text-left transition-all"
+                                :class="category === 'psychological' ? 'border-brand-500 bg-brand-50' : 'border-slate-200 hover:border-brand-300'">
+                            <div class="w-14 h-14 bg-violet-100 rounded-xl flex items-center justify-center mb-4">
+                                <i data-lucide="brain" class="w-7 h-7 text-violet-600"></i>
+                            </div>
+                            <h3 class="font-semibold text-slate-900 text-lg mb-1">Psychological Test</h3>
+                            <p class="text-sm text-slate-500">Tes psikologi dan penilaian mental</p>
+                            <div class="mt-4 flex items-center text-brand-600 text-sm font-medium">
+                                <span>Pilih</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i>
+                            </div>
+                        </button>
+
+                        <!-- Man Power -->
+                        <button @click="selectCategory('manpower')"
+                                class="card-hover bg-white rounded-2xl border-2 p-6 text-left transition-all"
+                                :class="category === 'manpower' ? 'border-brand-500 bg-brand-50' : 'border-slate-200 hover:border-brand-300'">
+                            <div class="w-14 h-14 bg-emerald-100 rounded-xl flex items-center justify-center mb-4">
+                                <i data-lucide="users" class="w-7 h-7 text-emerald-600"></i>
+                            </div>
+                            <h3 class="font-semibold text-slate-900 text-lg mb-1">Man Power Supply</h3>
+                            <p class="text-sm text-slate-500">Penyediaan tenaga kerja profesional</p>
+                            <div class="mt-4 flex items-center text-brand-600 text-sm font-medium">
+                                <span>Pilih</span>
+                                <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i>
+                            </div>
+                        </button>
+                    </div>
+
+                    <!-- Trust Badges -->
+                    <div class="mt-12 flex flex-wrap items-center justify-center gap-8 text-slate-400">
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="shield-check" class="w-5 h-5"></i>
+                            <span class="text-sm">Partner Terverifikasi</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="clock" class="w-5 h-5"></i>
+                            <span class="text-sm">Proses Cepat</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="badge-check" class="w-5 h-5"></i>
+                            <span class="text-sm">Bergaransi</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2: Subcategory Selection -->
+                <div x-show="step === 2" class="step-enter max-w-4xl mx-auto" x-cloak>
+                    <div class="mb-8">
+                        <button @click="step = 1; subcategory = ''" class="text-slate-500 hover:text-slate-700 flex items-center gap-1 mb-4">
+                            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                            <span class="text-sm">Kembali</span>
+                        </button>
+                        <h2 class="text-2xl font-bold text-slate-900 mb-2" x-text="getCategoryTitle()"></h2>
+                        <p class="text-slate-600">Pilih jenis layanan yang Anda butuhkan</p>
+                    </div>
+
+                    <!-- MCU Subcategories -->
+                    <div x-show="category === 'mcu'" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <button @click="selectSubcategory('mcu-new')"
+                                class="card-hover bg-white rounded-xl border-2 p-5 text-left"
+                                :class="subcategory === 'mcu-new' ? 'border-brand-500 ring-2 ring-brand-500 ring-offset-2' : 'border-slate-200'">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="user-plus" class="w-6 h-6 text-red-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="font-semibold text-slate-900 mb-1">MCU Karyawan Baru</h3>
+                                    <p class="text-sm text-slate-500 mb-3">Pemeriksaan kesehatan untuk karyawan baru sebelum bergabung</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">Tes Darah</span>
+                                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">X-Ray</span>
+                                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">ECG</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </button>
+
+                        <button @click="selectSubcategory('mcu-routine')"
+                                class="card-hover bg-white rounded-xl border-2 p-5 text-left"
+                                :class="subcategory === 'mcu-routine' ? 'border-brand-500 ring-2 ring-brand-500 ring-offset-2' : 'border-slate-200'">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="calendar-check" class="w-6 h-6 text-orange-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="font-semibold text-slate-900 mb-1">MCU Rutin Tahunan</h3>
+                                    <p class="text-sm text-slate-500 mb-3">Pemeriksaan kesehatan berkala untuk seluruh karyawan</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">Basic Panel</span>
+                                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">Fisik</span>
+                                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">Konsultasi</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </button>
+
+                        <button @click="selectSubcategory('mcu-executive')"
+                                class="card-hover bg-white rounded-xl border-2 p-5 text-left"
+                                :class="subcategory === 'mcu-executive' ? 'border-brand-500 ring-2 ring-brand-500 ring-offset-2' : 'border-slate-200'">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="crown" class="w-6 h-6 text-purple-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="font-semibold text-slate-900 mb-1">MCU Executive</h3>
+                                    <p class="text-sm text-slate-500 mb-3">Pemeriksaan komprehensif untuk level manajerial</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">Full Panel</span>
+                                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">Heart Check</span>
+                                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">Premium</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </button>
+
+                        <button @click="selectSubcategory('mcu-custom')"
+                                class="card-hover bg-white rounded-xl border-2 p-5 text-left"
+                                :class="subcategory === 'mcu-custom' ? 'border-brand-500 ring-2 ring-brand-500 ring-offset-2' : 'border-slate-200'">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="settings" class="w-6 h-6 text-blue-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="font-semibold text-slate-900 mb-1">MCU Custom</h3>
+                                    <p class="text-sm text-slate-500 mb-3">Paket pemeriksaan yang dapat disesuaikan kebutuhan</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">Flexible</span>
+                                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">Custom Panel</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </button>
+                    </div>
+
+                    <!-- Training Subcategories -->
+                    <div x-show="category === 'training'" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <button @click="selectSubcategory('training-leadership')"
+                                class="card-hover bg-white rounded-xl border-2 p-5 text-left"
+                                :class="subcategory === 'training-leadership' ? 'border-brand-500 ring-2 ring-brand-500 ring-offset-2' : 'border-slate-200'">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-amber-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="crown" class="w-6 h-6 text-amber-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="font-semibold text-slate-900 mb-1">Leadership Development</h3>
+                                    <p class="text-sm text-slate-500 mb-3">Program pengembangan kepemimpinan untuk manager dan supervisor</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">3-5 Hari</span>
+                                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">Sertifikat</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </button>
+
+                        <button @click="selectSubcategory('training-technical')"
+                                class="card-hover bg-white rounded-xl border-2 p-5 text-left"
+                                :class="subcategory === 'training-technical' ? 'border-brand-500 ring-2 ring-brand-500 ring-offset-2' : 'border-slate-200'">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="code" class="w-6 h-6 text-blue-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="font-semibold text-slate-900 mb-1">Technical Skills</h3>
+                                    <p class="text-sm text-slate-500 mb-3">Pelatihan skill teknis sesuai bidang pekerjaan</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">2-10 Hari</span>
+                                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">Hands-on</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </button>
+
+                        <button @click="selectSubcategory('training-soft')"
+                                class="card-hover bg-white rounded-xl border-2 p-5 text-left"
+                                :class="subcategory === 'training-soft' ? 'border-brand-500 ring-2 ring-brand-500 ring-offset-2' : 'border-slate-200'">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="heart-handshake" class="w-6 h-6 text-pink-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="font-semibold text-slate-900 mb-1">Soft Skills</h3>
+                                    <p class="text-sm text-slate-500 mb-3">Komunikasi, teamwork, problem solving, dan time management</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">1-3 Hari</span>
+                                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">Workshop</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </button>
+
+                        <button @click="selectSubcategory('training-compliance')"
+                                class="card-hover bg-white rounded-xl border-2 p-5 text-left"
+                                :class="subcategory === 'training-compliance' ? 'border-brand-500 ring-2 ring-brand-500 ring-offset-2' : 'border-slate-200'">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="shield-check" class="w-6 h-6 text-emerald-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="font-semibold text-slate-900 mb-1">Safety & Compliance</h3>
+                                    <p class="text-sm text-slate-500 mb-3">K3, compliance training, dan sertifikasi wajib</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">Sertifikasi</span>
+                                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">K3</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </button>
+                    </div>
+
+                    <!-- Psychological Test Subcategories -->
+                    <div x-show="category === 'psychological'" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <button @click="selectSubcategory('psych-recruitment')"
+                                class="card-hover bg-white rounded-xl border-2 p-5 text-left"
+                                :class="subcategory === 'psych-recruitment' ? 'border-brand-500 ring-2 ring-brand-500 ring-offset-2' : 'border-slate-200'">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-violet-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="user-search" class="w-6 h-6 text-violet-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="font-semibold text-slate-900 mb-1">Pre-Employment Screening</h3>
+                                    <p class="text-sm text-slate-500 mb-3">Tes psikologi untuk seleksi karyawan baru</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">Kepribadian</span>
+                                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">Aptitude</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </button>
+
+                        <button @click="selectSubcategory('psych-leadership')"
+                                class="card-hover bg-white rounded-xl border-2 p-5 text-left"
+                                :class="subcategory === 'psych-leadership' ? 'border-brand-500 ring-2 ring-brand-500 ring-offset-2' : 'border-slate-200'">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="trending-up" class="w-6 h-6 text-indigo-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="font-semibold text-slate-900 mb-1">Leadership Assessment</h3>
+                                    <p class="text-sm text-slate-500 mb-3">Penilaian potensi kepemimpinan dan manajerial</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">Assessment Center</span>
+                                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">360 Review</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </button>
+
+                        <button @click="selectSubcategory('psych-team')"
+                                class="card-hover bg-white rounded-xl border-2 p-5 text-left"
+                                :class="subcategory === 'psych-team' ? 'border-brand-500 ring-2 ring-brand-500 ring-offset-2' : 'border-slate-200'">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-cyan-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="users" class="w-6 h-6 text-cyan-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="font-semibold text-slate-900 mb-1">Team Compatibility</h3>
+                                    <p class="text-sm text-slate-500 mb-3">Analisis kompatibilitas tim dan work style</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">Team Building</span>
+                                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">Compatibility</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </button>
+
+                        <button @click="selectSubcategory('psych-wellness')"
+                                class="card-hover bg-white rounded-xl border-2 p-5 text-left"
+                                :class="subcategory === 'psych-wellness' ? 'border-brand-500 ring-2 ring-brand-500 ring-offset-2' : 'border-slate-200'">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-rose-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="heart" class="w-6 h-6 text-rose-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="font-semibold text-slate-900 mb-1">Wellness & Stress Check</h3>
+                                    <p class="text-sm text-slate-500 mb-3">Penilaian kesehatan mental dan tingkat stress</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">Burnout Check</span>
+                                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">Counseling</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </button>
+                    </div>
+
+                    <!-- Man Power Subcategories -->
+                    <div x-show="category === 'manpower'" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <button @click="selectSubcategory('mp-contract')"
+                                class="card-hover bg-white rounded-xl border-2 p-5 text-left"
+                                :class="subcategory === 'mp-contract' ? 'border-brand-500 ring-2 ring-brand-500 ring-offset-2' : 'border-slate-200'">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="file-signature" class="w-6 h-6 text-emerald-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="font-semibold text-slate-900 mb-1">Contract Staffing</h3>
+                                    <p class="text-sm text-slate-500 mb-3">Tenaga kerja kontrak untuk durasi tertentu</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">3-12 Bulan</span>
+                                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">Project</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </button>
+
+                        <button @click="selectSubcategory('mp-permanent')"
+                                class="card-hover bg-white rounded-xl border-2 p-5 text-left"
+                                :class="subcategory === 'mp-permanent' ? 'border-brand-500 ring-2 ring-brand-500 ring-offset-2' : 'border-slate-200'">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="badge-check" class="w-6 h-6 text-blue-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="font-semibold text-slate-900 mb-1">Permanent Placement</h3>
+                                    <p class="text-sm text-slate-500 mb-3">Rekrutmen karyawan tetap dengan headhunting</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">Full-time</span>
+                                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">Headhunt</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </button>
+
+                        <button @click="selectSubcategory('mp-outsourcing')"
+                                class="card-hover bg-white rounded-xl border-2 p-5 text-left"
+                                :class="subcategory === 'mp-outsourcing' ? 'border-brand-500 ring-2 ring-brand-500 ring-offset-2' : 'border-slate-200'">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="building" class="w-6 h-6 text-orange-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="font-semibold text-slate-900 mb-1">Outsourcing</h3>
+                                    <p class="text-sm text-slate-500 mb-3">Penyediaan tenaga kerja dengan manajemen lengkap</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">Payroll</span>
+                                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">Managed</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </button>
+
+                        <button @click="selectSubcategory('mp-mass')"
+                                class="card-hover bg-white rounded-xl border-2 p-5 text-left"
+                                :class="subcategory === 'mp-mass' ? 'border-brand-500 ring-2 ring-brand-500 ring-offset-2' : 'border-slate-200'">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                    <i data-lucide="users" class="w-6 h-6 text-purple-600"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="font-semibold text-slate-900 mb-1">Mass Recruitment</h3>
+                                    <p class="text-sm text-slate-500 mb-3">Rekrutmen dalam jumlah besar untuk operasional</p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">50+ Orang</span>
+                                        <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded">Batch</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- STEP 3: Partner Packages -->
+                <div x-show="step === 3" class="step-enter" x-cloak>
+                    <div class="mb-8">
+                        <button @click="step = 2; selectedPackage = null" class="text-slate-500 hover:text-slate-700 flex items-center gap-1 mb-4">
+                            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                            <span class="text-sm">Kembali</span>
+                        </button>
+                        <h2 class="text-2xl font-bold text-slate-900 mb-2">Pilih Paket & Partner</h2>
+                        <p class="text-slate-600">Bandingkan paket dari partner terpercaya kami</p>
+                    </div>
+
+                    <!-- Filters -->
+                    <div class="flex flex-wrap gap-3 mb-6">
+                        <button class="px-4 py-2 bg-brand-50 text-brand-700 rounded-full text-sm font-medium border border-brand-200">Semua</button>
+                        <button class="px-4 py-2 bg-white text-slate-600 rounded-full text-sm font-medium border border-slate-200 hover:border-slate-300">Harga Terendah</button>
+                        <button class="px-4 py-2 bg-white text-slate-600 rounded-full text-sm font-medium border border-slate-200 hover:border-slate-300">Rating Tertinggi</button>
+                        <button class="px-4 py-2 bg-white text-slate-600 rounded-full text-sm font-medium border border-slate-200 hover:border-slate-300">Terdekat</button>
+                    </div>
+
+                    <!-- Package Cards -->
+                    <div class="space-y-4">
+                        <template x-for="(pkg, index) in getPackages()" :key="index">
+                            <div @click="selectPackage(pkg)"
+                                 class="card-hover bg-white rounded-2xl border-2 p-6 cursor-pointer transition-all"
+                                 :class="selectedPackage === pkg ? 'border-brand-500 ring-2 ring-brand-500 ring-offset-2' : 'border-slate-200'">
+                                <div class="flex flex-col lg:flex-row lg:items-center gap-6">
+                                    <!-- Partner Info -->
+                                    <div class="flex items-center gap-4 lg:w-1/4">
+                                        <div class="w-16 h-16 bg-slate-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                                            <i data-lucide="building-2" class="w-8 h-8 text-slate-400"></i>
+                                        </div>
+                                        <div>
+                                            <div class="font-semibold text-slate-900" x-text="pkg.partner"></div>
+                                            <div class="flex items-center gap-1 text-sm text-amber-500">
+                                                <i data-lucide="star" class="w-4 h-4 fill-amber-500"></i>
+                                                <span class="font-medium" x-text="pkg.rating"></span>
+                                                <span class="text-slate-400" x-text="`(${pkg.reviews})`"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Package Details -->
+                                    <div class="lg:w-2/4">
+                                        <h3 class="font-semibold text-slate-900 text-lg mb-2" x-text="pkg.name"></h3>
+                                        <p class="text-sm text-slate-500 mb-3" x-text="pkg.description"></p>
+                                        <div class="flex flex-wrap gap-2">
+                                            <template x-for="feature in pkg.features">
+                                                <span class="inline-flex items-center gap-1 px-2.5 py-1 bg-slate-100 text-slate-600 text-xs rounded-md">
+                                                    <i data-lucide="check" class="w-3 h-3 text-emerald-500"></i>
+                                                    <span x-text="feature"></span>
+                                                </span>
+                                            </template>
+                                        </div>
+                                    </div>
+
+                                    <!-- Price & CTA -->
+                                    <div class="lg:w-1/4 lg:text-right">
+                                        <div class="text-sm text-slate-400 mb-1">Mulai dari</div>
+                                        <div class="text-2xl font-bold text-slate-900 mb-1" x-text="formatPrice(pkg.price)"></div>
+                                        <div class="text-sm text-slate-500 mb-4">per karyawan</div>
+                                        <button class="w-full lg:w-auto px-6 py-2.5 bg-brand-600 text-white font-medium rounded-lg hover:bg-brand-700 transition-colors">
+                                            Pilih Paket
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+
+                <!-- STEP 4: Order Details -->
+                <div x-show="step === 4" class="step-enter max-w-2xl mx-auto" x-cloak>
+                    <div class="mb-8">
+                        <button @click="step = 3" class="text-slate-500 hover:text-slate-700 flex items-center gap-1 mb-4">
+                            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                            <span class="text-sm">Kembali</span>
+                        </button>
+                        <h2 class="text-2xl font-bold text-slate-900 mb-2">Detail Pesanan</h2>
+                        <p class="text-slate-600">Lengkapi informasi untuk pemesanan Anda</p>
+                    </div>
+
+                    <!-- Selected Package Summary -->
+                    <div class="bg-brand-50 border border-brand-100 rounded-xl p-4 mb-6">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-brand-100 rounded-lg flex items-center justify-center">
+                                <i data-lucide="package" class="w-5 h-5 text-brand-600"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="text-sm text-slate-500">Paket Terpilih</div>
+                                <div class="font-semibold text-slate-900" x-text="selectedPackage?.name"></div>
+                                <div class="text-sm text-brand-600" x-text="selectedPackage?.partner"></div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-lg font-bold text-slate-900" x-text="formatPrice(selectedPackage?.price)"></div>
+                                <div class="text-xs text-slate-500">per karyawan</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form @submit.prevent="goToCompanyInfo()" class="space-y-5">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1.5">Jumlah Karyawan *</label>
+                                <input type="number" x-model="orderDetails.employeeCount" required min="1"
+                                    placeholder="Contoh: 50"
+                                    class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1.5">Departemen</label>
+                                <select x-model="orderDetails.department"
+                                    class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 bg-white">
+                                    <option value="">Pilih Departemen</option>
+                                    <option>Operasional</option>
+                                    <option>IT & Teknologi</option>
+                                    <option>Sales & Marketing</option>
+                                    <option>HR & GA</option>
+                                    <option>Finance & Accounting</option>
+                                    <option>Produksi</option>
+                                    <option>Lainnya</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1.5">Tanggal Pelaksanaan *</label>
+                                <input type="date" x-model="orderDetails.date" required
+                                    class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1.5">Lokasi</label>
+                                <select x-model="orderDetails.location"
+                                    class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 bg-white">
+                                    <option value="">Pilih Lokasi</option>
+                                    <option>Jakarta</option>
+                                    <option>Surabaya</option>
+                                    <option>Bandung</option>
+                                    <option>Medan</option>
+                                    <option>Yogyakarta</option>
+                                    <option>On-site Perusahaan</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1.5">Catatan Tambahan</label>
+                            <textarea x-model="orderDetails.notes" rows="3" placeholder="Informasi penting lainnya..."
+                                class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 resize-none"></textarea>
+                        </div>
+
+                        <div class="bg-slate-50 rounded-xl p-4">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-slate-600">Estimasi Biaya</span>
+                                <span class="text-2xl font-bold text-slate-900" x-text="calculateTotal()"></span>
+                            </div>
+                            <p class="text-xs text-slate-500">*Harga dapat berubah sesuai detail kebutuhan akhir</p>
+                        </div>
+
+                        <button type="submit"
+                            class="w-full py-4 bg-brand-600 text-white font-semibold rounded-xl hover:bg-brand-700 transition-colors flex items-center justify-center gap-2">
+                            <span>Lanjutkan ke Data Perusahaan</span>
+                            <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- STEP 5: Company Information -->
+                <div x-show="step === 5" class="step-enter max-w-2xl mx-auto" x-cloak>
+                    <div class="mb-8">
+                        <button @click="step = 4" class="text-slate-500 hover:text-slate-700 flex items-center gap-1 mb-4">
+                            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                            <span class="text-sm">Kembali</span>
+                        </button>
+                        <h2 class="text-2xl font-bold text-slate-900 mb-2">Data Perusahaan</h2>
+                        <p class="text-slate-600">Informasi kontak untuk follow-up pesanan</p>
+                    </div>
+
+                    <!-- Order Summary -->
+                    <div class="bg-slate-50 rounded-xl p-4 mb-6 space-y-2">
+                        <div class="flex justify-between text-sm">
+                            <span class="text-slate-500">Paket</span>
+                            <span class="font-medium text-slate-900" x-text="selectedPackage?.name"></span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-slate-500">Partner</span>
+                            <span class="font-medium text-slate-900" x-text="selectedPackage?.partner"></span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span class="text-slate-500">Jumlah Karyawan</span>
+                            <span class="font-medium text-slate-900" x-text="orderDetails.employeeCount || '-'"></span>
+                        </div>
+                        <div class="border-t border-slate-200 pt-2 mt-2">
+                            <div class="flex justify-between">
+                                <span class="text-slate-900 font-medium">Total Estimasi</span>
+                                <span class="text-xl font-bold text-brand-600" x-text="calculateTotal()"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <form @submit.prevent="submitOrder()" class="space-y-5">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1.5">Nama Perusahaan *</label>
+                            <input type="text" x-model="companyInfo.name" required
+                                placeholder="PT. Nama Perusahaan"
+                                class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition-all">
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1.5">Industri *</label>
+                                <select x-model="companyInfo.industry" required
+                                    class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 bg-white">
+                                    <option value="">Pilih Industri</option>
+                                    <option>Teknologi</option>
+                                    <option>Manufaktur</option>
+                                    <option>Keuangan / Banking</option>
+                                    <option>Retail / E-commerce</option>
+                                    <option>Logistik</option>
+                                    <option>Konstruksi</option>
+                                    <option>Energi / Mining</option>
+                                    <option>Healthcare</option>
+                                    <option>Lainnya</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1.5">Jumlah Karyawan</label>
+                                <select x-model="companyInfo.size"
+                                    class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 bg-white">
+                                    <option value="">Pilih Rentang</option>
+                                    <option>1-50</option>
+                                    <option>51-200</option>
+                                    <option>201-500</option>
+                                    <option>501-1000</option>
+                                    <option>1000+</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1.5">Nama PIC *</label>
+                                <input type="text" x-model="companyInfo.picName" required
+                                    placeholder="Nama lengkap"
+                                    class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1.5">Jabatan</label>
+                                <input type="text" x-model="companyInfo.picPosition"
+                                    placeholder="Contoh: HR Manager"
+                                    class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1.5">Email *</label>
+                                <input type="email" x-model="companyInfo.email" required
+                                    placeholder="email@perusahaan.com"
+                                    class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1.5">No. WhatsApp *</label>
+                                <input type="tel" x-model="companyInfo.phone" required
+                                    placeholder="0812-3456-7890"
+                                    class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1.5">Alamat Lengkap</label>
+                            <textarea x-model="companyInfo.address" rows="2" placeholder="Alamat kantor..."
+                                class="w-full px-4 py-3 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 resize-none"></textarea>
+                        </div>
+
+                        <div class="flex items-start gap-3 pt-2">
+                            <input type="checkbox" required id="terms" class="mt-1 w-4 h-4 rounded border-slate-300 text-brand-600 focus:ring-brand-500">
+                            <label for="terms" class="text-sm text-slate-600">
+                                Saya menyetujui <a href="#" class="text-brand-600 hover:underline">Syarat dan Ketentuan</a> serta
+                                <a href="#" class="text-brand-600 hover:underline">Kebijakan Privasi</a> TalentOps
+                            </label>
+                        </div>
+
+                        <button type="submit" :disabled="submitting"
+                            class="w-full py-4 bg-brand-600 text-white font-semibold rounded-xl hover:bg-brand-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2">
+                            <i x-show="submitting" data-lucide="loader-2" class="w-5 h-5 animate-spin"></i>
+                            <span x-text="submitting ? 'Mengirim...' : 'Kirim Pesanan'"></span>
+                        </button>
+
+                        <p class="text-center text-sm text-slate-500">
+                            Tim kami akan menghubungi Anda dalam 1x24 jam
+                        </p>
+                    </form>
+                </div>
+
+                <!-- Success State -->
+                <div x-show="step === 6" class="step-enter max-w-lg mx-auto text-center py-12" x-cloak>
+                    <div class="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i data-lucide="check" class="w-10 h-10 text-emerald-600"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-slate-900 mb-2">Pesanan Berhasil Dikirim!</h2>
+                    <p class="text-slate-600 mb-6">
+                        Terima kasih telah memilih TalentOps. Tim kami akan segera menghubungi Anda.
+                    </p>
+
+                    <div class="bg-slate-50 rounded-xl p-6 mb-6">
+                        <div class="text-sm text-slate-500 mb-1">Nomor Referensi</div>
+                        <div class="text-2xl font-bold text-slate-900 tracking-wider" x-text="referenceId"></div>
+                        <p class="text-xs text-slate-400 mt-2">Simpan nomor ini untuk cek status pesanan</p>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <button @click="resetForm()" class="flex-1 py-3 border border-slate-200 text-slate-700 font-medium rounded-xl hover:bg-slate-50 transition-colors">
+                            Pesan Lagi
+                        </button>
+                        <a href="track-order.html" class="flex-1 py-3 bg-brand-600 text-white font-medium rounded-xl hover:bg-brand-700 transition-colors flex items-center justify-center gap-2">
+                            <i data-lucide="search" class="w-4 h-4"></i>
+                            Lacak Pesanan
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-slate-900 text-slate-400 py-12">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                    <div>
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
+                                <i data-lucide="hexagon" class="w-4 h-4 text-slate-900"></i>
+                            </div>
+                            <span class="font-bold text-white text-lg">TalentOps</span>
+                        </div>
+                        <p class="text-sm">Platform workforce solutions terpercaya untuk perusahaan di Indonesia.</p>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-medium mb-4">Layanan</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li><a href="#" class="hover:text-white">Medical Check Up</a></li>
+                            <li><a href="#" class="hover:text-white">Training</a></li>
+                            <li><a href="#" class="hover:text-white">Psychological Test</a></li>
+                            <li><a href="#" class="hover:text-white">Man Power Supply</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-medium mb-4">Perusahaan</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li><a href="#" class="hover:text-white">Tentang Kami</a></li>
+                            <li><a href="#" class="hover:text-white">Partner</a></li>
+                            <li><a href="#" class="hover:text-white">Karir</a></li>
+                            <li><a href="#" class="hover:text-white">Kontak</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-medium mb-4">Bantuan</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li><a href="#" class="hover:text-white">FAQ</a></li>
+                            <li><a href="track-order.html" class="hover:text-white">Lacak Pesanan</a></li>
+                            <li><a href="#" class="hover:text-white">Hubungi Kami</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="border-t border-slate-800 pt-8 text-sm text-center">
+                    &copy; 2024 TalentOps. All rights reserved.
+                </div>
+            </div>
+        </footer>
+
+        <script>
+            function publicPortal() {
+                return {
+                    step: 1,
+                    category: '',
+                    subcategory: '',
+                    selectedPackage: null,
+                    submitting: false,
+                    referenceId: '',
+                    orderDetails: {
+                        employeeCount: '',
+                        department: '',
+                        date: '',
+                        location: '',
+                        notes: ''
+                    },
+                    companyInfo: {
+                        name: '',
+                        industry: '',
+                        size: '',
+                        picName: '',
+                        picPosition: '',
+                        email: '',
+                        phone: '',
+                        address: ''
+                    },
+
+                    selectCategory(cat) {
+                        this.category = cat;
+                        setTimeout(() => this.step = 2, 200);
+                    },
+
+                    selectSubcategory(sub) {
+                        this.subcategory = sub;
+                        setTimeout(() => this.step = 3, 200);
+                    },
+
+                    selectPackage(pkg) {
+                        this.selectedPackage = pkg;
+                        setTimeout(() => this.step = 4, 200);
+                    },
+
+                    goToCompanyInfo() {
+                        this.step = 5;
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    },
+
+                    submitOrder() {
+                        this.submitting = true;
+                        setTimeout(() => {
+                            this.submitting = false;
+                            this.referenceId = 'TRX-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+                            this.step = 6;
+                            lucide.createIcons();
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }, 1500);
+                    },
+
+                    resetForm() {
+                        this.step = 1;
+                        this.category = '';
+                        this.subcategory = '';
+                        this.selectedPackage = null;
+                        this.orderDetails = { employeeCount: '', department: '', date: '', location: '', notes: '' };
+                        this.companyInfo = { name: '', industry: '', size: '', picName: '', picPosition: '', email: '', phone: '', address: '' };
+                    },
+
+                    getCategoryTitle() {
+                        const titles = {
+                            'mcu': 'Pilih Jenis Medical Check Up',
+                            'training': 'Pilih Program Training',
+                            'psychological': 'Pilih Jenis Psychological Test',
+                            'manpower': 'Pilih Jenis Man Power Supply'
+                        };
+                        return titles[this.category] || 'Pilih Layanan';
+                    },
+
+                    getStepTitle() {
+                        const titles = {
+                            2: 'Pilih Jenis Layanan',
+                            3: 'Pilih Paket & Partner',
+                            4: 'Detail Pesanan',
+                            5: 'Data Perusahaan'
+                        };
+                        return titles[this.step] || '';
+                    },
+
+                    formatPrice(price) {
+                        if (!price) return 'Rp 0';
+                        return 'Rp ' + price.toLocaleString('id-ID');
+                    },
+
+                    calculateTotal() {
+                        if (!this.selectedPackage || !this.orderDetails.employeeCount) return 'Rp 0';
+                        const total = this.selectedPackage.price * parseInt(this.orderDetails.employeeCount || 0);
+                        return this.formatPrice(total);
+                    },
+
+                    getPackages() {
+                        const packages = {
+                            'mcu-new': [
+                                { partner: 'MediCheck Pro', rating: 4.9, reviews: 128, name: 'Paket Karyawan Baru Basic', description: 'Pemeriksaan standar untuk seleksi karyawan baru dengan tes darah lengkap', price: 350000, features: ['Tes Darah Lengkap', 'X-Ray Thorax', 'Urine Lengkap', 'Fisik & Vital Sign'] },
+                                { partner: 'SehatCorp', rating: 4.7, reviews: 89, name: 'Paket Karyawan Baru Plus', description: 'Pemeriksaan komprehensif dengan tambahan ECG dan fungsi hati', price: 550000, features: ['Semua Basic +', 'ECG', 'Fungsi Hati', 'Fungsi Ginjal', 'Konsultasi Dokter'] },
+                                { partner: 'HealthFirst', rating: 4.8, reviews: 156, name: 'Paket Karyawan Baru Premium', description: 'Pemeriksaan ekstensif termasuk screening narkoba dan psychological', price: 850000, features: ['Semua Plus +', 'Screening Narkoba', 'Tes Kejiwaan', 'Audiometri', 'Spirometri'] }
+                            ],
+                            'mcu-routine': [
+                                { partner: 'MediCheck Pro', rating: 4.9, reviews: 128, name: 'Paket MCU Tahunan Standard', description: 'Pemeriksaan kesehatan rutin tahunan untuk seluruh karyawan', price: 280000, features: ['Tes Darah Dasar', 'X-Ray', 'Fisik', 'Konsultasi'] },
+                                { partner: 'SehatCorp', rating: 4.7, reviews: 89, name: 'Paket MCU Tahunan Executive', description: 'Paket lengkap dengan screening penyakit degeneratif', price: 450000, features: ['Tes Darah Lengkap', 'ECG', 'Pap Smear', 'USG Abdomen'] }
+                            ],
+                            'training-leadership': [
+                                { partner: 'TalentHub', rating: 4.8, reviews: 203, name: 'Leadership Essentials', description: 'Program 3 hari untuk first-time managers', price: 2500000, features: ['3 Hari Training', 'Sertifikat', 'Materi Digital', 'Coaching 1on1'] },
+                                { partner: 'LeadX Institute', rating: 4.9, reviews: 167, name: 'Advanced Leadership Program', description: 'Program intensif 5 hari untuk senior leaders', price: 4500000, features: ['5 Hari Training', 'Assessment', 'Action Plan', 'Follow-up 3 Bulan'] }
+                            ],
+                            'training-soft': [
+                                { partner: 'TalentHub', rating: 4.8, reviews: 203, name: 'Communication Mastery', description: 'Workshop komunikasi efektif untuk tim', price: 1200000, features: ['1 Hari Workshop', 'Role Play', 'Assessment', 'Sertifikat'] },
+                                { partner: 'SkillUp Indonesia', rating: 4.6, reviews: 134, name: 'Team Building & Collaboration', description: 'Outbound dan indoor team building', price: 1800000, features: ['2 Hari Program', 'Outbound Activity', 'Facilitator', 'Report'] }
+                            ],
+                            'psych-recruitment': [
+                                { partner: 'PsychePro', rating: 4.9, reviews: 234, name: 'Paket Screening Karyawan', description: 'Tes kepribadian dan aptitide untuk rekrutmen', price: 350000, features: ['PAPI Kostick', 'CFIT', 'DISC', 'Laporan Detail'] },
+                                { partner: 'MindScan', rating: 4.7, reviews: 156, name: 'Paket Assessment Lengkap', description: 'Assessment komprehensif untuk seleksi', price: 550000, features: ['Kepribadian', 'Aptitude', 'Logical', 'Interview Guide'] }
+                            ],
+                            'mp-contract': [
+                                { partner: 'Workforce Solutions', rating: 4.7, reviews: 189, name: 'Contract Staffing Standard', description: 'Penyediaan tenaga kerja kontrak dengan payroll management', price: 2500000, features: ['Recruitment', 'Payroll', 'BPJS', 'Kontrak Management'] },
+                                { partner: 'HR Partner Indonesia', rating: 4.8, reviews: 145, name: 'Contract Staffing Premium', description: 'Layanan lengkap dengan training dan KPI tracking', price: 3500000, features: ['Semua Standard +', 'Onboarding Training', 'KPI Tracking', 'Replacement Guarantee'] }
+                            ]
+                        };
+
+                        // Default packages for subcategories without specific data
+                        const defaultPackages = [
+                            { partner: 'TalentOps Partner', rating: 4.8, reviews: 100, name: 'Paket Basic', description: 'Layanan standar dengan kualitas terjamin', price: 500000, features: ['Layanan Standard', 'Profesional', 'Bergaransi'] },
+                            { partner: 'TalentOps Partner Pro', rating: 4.9, reviews: 150, name: 'Paket Premium', description: 'Layanan lengkap dengan fitur tambahan', price: 800000, features: ['Layanan Lengkap', 'Priority Support', 'Custom Request'] }
+                        ];
+
+                        return packages[this.subcategory] || defaultPackages;
+                    }
+                }
+            }
+        </script>
+
+        <style>
+            [x-cloak] { display: none !important; }
+        </style>
+    </body>
+</html>

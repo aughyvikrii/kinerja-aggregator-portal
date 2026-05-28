@@ -1,0 +1,72 @@
+[
+  {
+    "id": "p1",
+    "name": "MediCheck Pro",
+    "categories": ["MCU"],
+    "branches": ["Jakarta", "Surabaya", "Bandung"],
+    "sla": "24 hours",
+    "rating": 4.8,
+    "certifications": ["ISO 9001", "Kemenkes Certified"],
+    "contact": {
+      "person": "Dr. Sarah Johnson",
+      "email": "contact@medicheckpro.com",
+      "phone": "+62 21 1234 5678"
+    }
+  },
+  {
+    "id": "p2",
+    "name": "TalentHub Training",
+    "categories": ["Training"],
+    "branches": ["Jakarta", "Singapore"],
+    "sla": "48 hours",
+    "rating": 4.6,
+    "certifications": ["BNP Certified", "ATD Member"],
+    "contact": {
+      "person": "Michael Chen",
+      "email": "info@talenthub.id",
+      "phone": "+62 21 8765 4321"
+    }
+  },
+  {
+    "id": "p3",
+    "name": "PsychePro Assessment",
+    "categories": ["Psychological Test"],
+    "branches": ["Jakarta", "Yogyakarta"],
+    "sla": "72 hours",
+    "rating": 4.9,
+    "certifications": ["HIMPSI Certified", "EFPA Member"],
+    "contact": {
+      "person": "Dr. Rina Susanto",
+      "email": "assessment@psychepro.com",
+      "phone": "+62 21 5555 9999"
+    }
+  },
+  {
+    "id": "p4",
+    "name": "Workforce Solutions",
+    "categories": ["Man Power Supply"],
+    "branches": ["Jakarta", "Surabaya", "Medan", "Makassar"],
+    "sla": "7 days",
+    "rating": 4.5,
+    "certifications": ["ISO 9001", "Licensed Agency"],
+    "contact": {
+      "person": "Ahmad Wijaya",
+      "email": "recruit@workforcesol.com",
+      "phone": "+62 21 7777 8888"
+    }
+  },
+  {
+    "id": "p5",
+    "name": "MultiService Indonesia",
+    "categories": ["MCU", "Training", "Psychological Test"],
+    "branches": ["Jakarta", "Bandung", "Surabaya"],
+    "sla": "48 hours",
+    "rating": 4.7,
+    "certifications": ["ISO 9001", "ISO 45001", "Kemenkes Certified"],
+    "contact": {
+      "person": "Lisa Tan",
+      "email": "hello@multiservice.id",
+      "phone": "+62 21 3333 4444"
+    }
+  }
+]

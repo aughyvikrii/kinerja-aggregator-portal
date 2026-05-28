@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Lacak Pesanan - TalentOps</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+        ></script>
+        <script src="https://unpkg.com/lucide@latest"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            sans: ['Inter', 'sans-serif'],
+                        },
+                        colors: {
+                            brand: {
+                                50: '#eff6ff',
+                                100: '#dbeafe',
+                                500: '#3b82f6',
+                                600: '#2563eb',
+                                700: '#1d4ed8',
+                            }
+                        }
+                    },
+                },
+            };
+        </script>
+    </head>
+    <body
+        class="bg-slate-50 font-sans min-h-screen"
+        x-data="trackOrder()"
+        x-init="lucide.createIcons()"
+    >
+        <!-- Header -->
+        <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-16">
+                    <a href="index.html" class="flex items-center gap-2">
+                        <div
+                            class="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center"
+                        >
+                            <i
+                                data-lucide="hexagon"
+                                class="w-4 h-4 text-white"
+                            ></i>
+                        </div>
+                        <span class="font-bold text-slate-900 text-xl"
+                            >TalentOps</span
+                        >
+                    </a>
+                    <a
+                        href="index.html"
+                        class="text-sm text-slate-600 hover:text-brand-600"
+                        >Kembali ke Beranda</a
+                    >
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="py-16">
+            <div class="max-w-xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-8">
+                    <div
+                        class="w-16 h-16 bg-brand-100 rounded-full flex items-center justify-center mx-auto mb-4"
+                    >
+                        <i
+                            data-lucide="search"
+                            class="w-8 h-8 text-brand-600"
+                        ></i>
+                    </div>
+                    <h1 class="text-2xl font-bold text-slate-900 mb-2">
+                        Lacak Pesanan Anda
+                    </h1>
+                    <p class="text-slate-500">
+                        Masukkan nomor referensi untuk melihat status pesanan
+                    </p>
+                </div>
+
+                <!-- Search Form -->
+                <div
+                    x-show="!searched"
+                    class="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm"
+                >
+                    <form @submit.prevent="searchOrder" class="space-y-4">
+                        <div>
+                            <label
+                                class="block text-sm font-medium text-slate-700 mb-1.5"
+                                >Nomor Referensi</label
+                            >
+                            <input
+                                type="text"
+                                x-model="referenceId"
+                                placeholder="Contoh: TRX-ABC123XYZ"
+                                class="w-full px-4 py-4 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 text-center text-lg tracking-wider uppercase font-medium"
+                            />
+                            <p class="text-xs text-slate-400 mt-2 text-center">
+                                Nomor referensi dikirim ke email Anda saat pemesanan
+                            </p>
+                        </div>
+                        <button
+                            type="submit"
+                            :disabled="!referenceId || searching"
+                            class="w-full py-4 bg-brand-600 text-white font-semibold rounded-xl hover:bg-brand-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
+                        >
+                            <i
+                                x-show="searching"
+                                data-lucide="loader-2"
+                                class="w-5 h-5 animate-spin"
+                            ></i>
+                            <span
+                                x-text="searching ? 'Mencari...' : 'Cek Status'"
+                            ></span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Order Status -->
+                <div
+                    x-show="searched && order"
+                    class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm"
+                    style="display: none"
+                >
+                    <!-- Order Header -->
+                    <div class="bg-brand-50 p-6 border-b border-brand-100">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <div class="text-sm text-slate-500 mb-1">
+                                    Nomor Referensi
+                                </div>
+                                <div
+                                    class="text-xl font-bold text-slate-900 tracking-wider"
+                                    x-text="order?.id"
+                                ></div>
+                            </div>
+                            <span
+                                class="px-4 py-2 rounded-full text-sm font-medium"
+                                :class="getStatusClass(order?.status)"
+                                x-text="order?.status"
+                            ></span>
+                        </div>
+                    </div>
+
+                    <!-- Order Details -->
+                    <div class="p-6">
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div class="bg-slate-50 rounded-lg p-3">
+                                <div class="text-xs text-slate-500 mb-1">Layanan</div>
+                                <div
+                                    class="font-medium text-slate-900 text-sm"
+                                    x-text="order?.service"
+                                ></div>
+                            </div>
+                            <div class="bg-slate-50 rounded-lg p-3">
+                                <div class="text-xs text-slate-500 mb-1">Partner</div>
+                                <div
+                                    class="font-medium text-slate-900 text-sm"
+                                    x-text="order?.partner"
+                                ></div>
+                            </div>
+                            <div class="bg-slate-50 rounded-lg p-3">
+                                <div class="text-xs text-slate-500 mb-1">Jumlah</div>
+                                <div
+                                    class="font-medium text-slate-900 text-sm"
+                                    x-text="order?.employees + ' Karyawan'"
+                                ></div>
+                            </div>
+                            <div class="bg-slate-50 rounded-lg p-3">
+                                <div class="text-xs text-slate-500 mb-1">Tanggal</div>
+                                <div
+                                    class="font-medium text-slate-900 text-sm"
+                                    x-text="order?.schedule"
+                                ></div>
+                            </div>
+                        </div>
+
+                        <!-- Progress Timeline -->
+                        <div class="border-t border-slate-100 pt-6">
+                            <h3 class="font-medium text-slate-900 mb-4">
+                                Status Pesanan
+                            </h3>
+                            <div class="space-y-4">
+                                <template
+                                    x-for="(step, index) in order?.timeline"
+                                    :key="index"
+                                >
+                                    <div class="flex items-start gap-3">
+                                        <div
+                                            class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"
+                                            :class="step.completed ? 'bg-emerald-100' : 'bg-slate-100'"
+                                        >
+                                            <i
+                                                data-lucide="check"
+                                                class="w-4 h-4"
+                                                :class="step.completed ? 'text-emerald-600' : 'text-slate-300'"
+                                            ></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div
+                                                class="font-medium text-sm"
+                                                :class="step.completed ? 'text-slate-900' : 'text-slate-400'"
+                                                x-text="step.title"
+                                            ></div>
+                                            <div
+                                                class="text-xs text-slate-500"
+                                                x-text="step.date"
+                                            ></div>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="bg-slate-50 p-6 border-t border-slate-100">
+                        <button
+                            @click="searched = false; order = null; referenceId = ''"
+                            class="w-full py-3 border border-slate-200 text-slate-700 font-medium rounded-xl hover:bg-white transition-colors"
+                        >
+                            Lacak Pesanan Lain
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Not Found -->
+                <div
+                    x-show="searched && !order && !searching"
+                    class="bg-white rounded-2xl border border-slate-200 p-8 text-center"
+                    style="display: none"
+                >
+                    <div
+                        class="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-4"
+                    >
+                        <i
+                            data-lucide="alert-circle"
+                            class="w-8 h-8 text-red-500"
+                        ></i>
+                    </div>
+                    <h3 class="font-semibold text-slate-900 mb-2">
+                        Pesanan Tidak Ditemukan
+                    </h3>
+                    <p class="text-slate-500 mb-4">
+                        Kami tidak menemukan pesanan dengan nomor referensi tersebut.
+                        Pastikan nomor sudah benar.
+                    </p>
+                    <button
+                        @click="searched = false; referenceId = ''"
+                        class="text-brand-600 font-medium hover:underline"
+                    >
+                        Coba Lagi
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-slate-900 text-slate-400 py-8 mt-auto">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <p class="text-sm">&copy; 2024 TalentOps. All rights reserved.</p>
+            </div>
+        </footer>
+
+        <script>
+            function trackOrder() {
+                return {
+                    referenceId: '',
+                    searching: false,
+                    searched: false,
+                    order: null,
+
+                    searchOrder() {
+                        this.searching = true;
+                        setTimeout(() => {
+                            this.searching = false;
+                            this.searched = true;
+
+                            // Mock order data
+                            if (this.referenceId.toUpperCase().startsWith('TRX-') ||
+                                this.referenceId.toUpperCase().startsWith('PUB-')) {
+                                this.order = {
+                                    id: this.referenceId.toUpperCase(),
+                                    service: 'Medical Check Up',
+                                    partner: 'MediCheck Pro',
+                                    employees: 50,
+                                    schedule: '15 Feb 2024',
+                                    status: 'Processing',
+                                    timeline: [
+                                        {
+                                            title: 'Pesanan Diterima',
+                                            date: '28 Jan 2024 - 09:30',
+                                            completed: true,
+                                        },
+                                        {
+                                            title: 'Dalam Review',
+                                            date: '28 Jan 2024 - 14:15',
+                                            completed: true,
+                                        },
+                                        {
+                                            title: 'Partner Ditugaskan',
+                                            date: '29 Jan 2024 - 10:00',
+                                            completed: true,
+                                        },
+                                        {
+                                            title: 'Sedang Berjalan',
+                                            date: 'Sedang Proses',
+                                            completed: false,
+                                        },
+                                        {
+                                            title: 'Selesai',
+                                            date: 'Menunggu',
+                                            completed: false,
+                                        },
+                                    ],
+                                };
+                            } else {
+                                this.order = null;
+                            }
+                            this.$nextTick(() => lucide.createIcons());
+                        }, 1000);
+                    },
+
+                    getStatusClass(status) {
+                        const classes = {
+                            Pending: 'bg-amber-50 text-amber-700 border border-amber-200',
+                            Processing: 'bg-brand-50 text-brand-700 border border-brand-200',
+                            Completed: 'bg-emerald-50 text-emerald-700 border border-emerald-200',
+                        };
+                        return classes[status] || 'bg-slate-50 text-slate-700';
+                    },
+                };
+            }
+        </script>
+    </body>
+</html>

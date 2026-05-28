@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Order Management - TalentOps</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+        ></script>
+        <script src="https://unpkg.com/lucide@latest"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            sans: ['Inter', 'sans-serif'],
+                        },
+                        colors: {
+                            zinc: {
+                                50: '#fafafa',
+                                100: '#f4f4f5',
+                                200: '#e4e4e7',
+                                300: '#d4d4d8',
+                                400: '#a1a1aa',
+                                500: '#71717a',
+                                600: '#52525b',
+                                700: '#3f3f46',
+                                800: '#27272a',
+                                900: '#18181b',
+                            },
+                        },
+                    },
+                },
+            };
+        </script>
+    </head>
+    <body
+        class="bg-zinc-50 font-sans"
+        x-data="ordersData()"
+        x-init="lucide.createIcons()"
+    >
+        <div class="flex h-screen">
+            <!-- Sidebar -->
+            <aside class="w-64 bg-white border-r border-zinc-200 flex flex-col">
+                <div class="p-6 border-b border-zinc-100">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-8 h-8 bg-zinc-900 rounded-lg flex items-center justify-center"
+                        >
+                            <i
+                                data-lucide="hexagon"
+                                class="w-4 h-4 text-white"
+                            ></i>
+                        </div>
+                        <span class="font-semibold text-zinc-900"
+                            >TalentOps</span
+                        >
+                    </div>
+                </div>
+
+                <nav class="flex-1 p-4 space-y-1 overflow-y-auto">
+                    <div
+                        class="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2 px-3"
+                    >
+                        Overview
+                    </div>
+                    <a
+                        href="dashboard.html"
+                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                    >
+                        <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                        Dashboard
+                    </a>
+                    <a
+                        href="orders.html"
+                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium bg-zinc-100 text-zinc-900 rounded-lg"
+                    >
+                        <i data-lucide="clipboard-list" class="w-4 h-4"></i>
+                        Orders
+                    </a>
+                    <a
+                        href="ai-analytics.html"
+                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                    >
+                        <i data-lucide="sparkles" class="w-4 h-4"></i>
+                        AI Analytics
+                    </a>
+
+                    <div
+                        class="text-xs font-semibold text-zinc-400 uppercase tracking-wider mt-6 mb-2 px-3"
+                    >
+                        Management
+                    </div>
+                    <a
+                        href="#"
+                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                    >
+                        <i data-lucide="building-2" class="w-4 h-4"></i>
+                        Partners
+                    </a>
+                    <a
+                        href="#"
+                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                    >
+                        <i data-lucide="users" class="w-4 h-4"></i>
+                        Companies
+                    </a>
+
+                    <div
+                        class="text-xs font-semibold text-zinc-400 uppercase tracking-wider mt-6 mb-2 px-3"
+                    >
+                        Account
+                    </div>
+                    <a
+                        href="../login.html"
+                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                    >
+                        <i data-lucide="log-out" class="w-4 h-4"></i>
+                        Sign Out
+                    </a>
+                </nav>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="flex-1 overflow-y-auto">
+                <header class="bg-white border-b border-zinc-200 px-8 py-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h1 class="text-xl font-semibold text-zinc-900">
+                                Order Management
+                            </h1>
+                            <p class="text-sm text-zinc-500">
+                                Manage all orders across the platform
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <button
+                                class="p-2 text-zinc-400 hover:text-zinc-600 relative"
+                            >
+                                <i data-lucide="bell" class="w-5 h-5"></i>
+                            </button>
+                            <div class="flex items-center gap-3">
+                                <div
+                                    class="w-8 h-8 bg-zinc-200 rounded-full flex items-center justify-center"
+                                >
+                                    <i
+                                        data-lucide="user"
+                                        class="w-4 h-4 text-zinc-600"
+                                    ></i>
+                                </div>
+                                <div class="text-sm">
+                                    <div class="font-medium text-zinc-900">
+                                        Admin User
+                                    </div>
+                                    <div class="text-zinc-500">
+                                        Aggregator Admin
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="p-8">
+                    <!-- Filters -->
+                    <div
+                        class="bg-white rounded-xl border border-zinc-200 p-4 mb-6"
+                    >
+                        <div
+                            class="flex flex-wrap items-center gap-4"
+                        >
+                            <div class="flex items-center gap-2">
+                                <i
+                                    data-lucide="search"
+                                    class="w-4 h-4 text-zinc-400"
+                                ></i>
+                                <input
+                                    type="text"
+                                    placeholder="Search orders..."
+                                    class="text-sm border-none focus:ring-0 p-0 w-64"
+                                    x-model="search"
+                                />
+                            </div>
+                            <div class="h-6 w-px bg-zinc-200"></div>
+                            <select
+                                x-model="filterCategory"
+                                class="text-sm border border-zinc-200 rounded-lg px-3 py-1.5 bg-zinc-50"
+                            >
+                                <option value="">All Categories</option>
+                                <option value="mcu">MCU</option>
+                                <option value="training">Training</option>
+                                <option value="psychological">Psych Test</option>
+                                <option value="manpower">Man Power</option>
+                            </select>
+                            <select
+                                x-model="filterStatus"
+                                class="text-sm border border-zinc-200 rounded-lg px-3 py-1.5 bg-zinc-50"
+                            >
+                                <option value="">All Status</option>
+                                <option value="pending">Pending</option>
+                                <option value="processing">Processing</option>
+                                <option value="completed">Completed</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                            <select
+                                x-model="filterSync"
+                                class="text-sm border border-zinc-200 rounded-lg px-3 py-1.5 bg-zinc-50"
+                            >
+                                <option value="">All Sources</option>
+                                <option value="hr_app">HR App</option>
+                                <option value="manual">Manual</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Orders Table -->
+                    <div
+                        class="bg-white rounded-xl border border-zinc-200 overflow-hidden"
+                    >
+                        <table class="w-full">
+                            <thead class="bg-zinc-50 border-b border-zinc-200">
+                                <tr>
+                                    <th
+                                        class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider"
+                                    >
+                                        Order ID
+                                    </th>
+                                    <th
+                                        class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider"
+                                    >
+                                        Company
+                                    </th>
+                                    <th
+                                        class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider"
+                                    >
+                                        Partner
+                                    </th>
+                                    <th
+                                        class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider"
+                                    >
+                                        Category
+                                    </th>
+                                    <th
+                                        class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider"
+                                    >
+                                        Status
+                                    </th>
+                                    <th
+                                        class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider"
+                                    >
+                                        SLA
+                                    </th>
+                                    <th
+                                        class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider"
+                                    >
+                                        Sync Source
+                                    </th>
+                                    <th
+                                        class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider"
+                                    >
+                                        AI Flag
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-zinc-100">
+                                <template
+                                    x-for="order in filteredOrders"
+                                    :key="order.id"
+                                >
+                                    <tr class="hover:bg-zinc-50">
+                                        <td
+                                            class="py-3 px-4 text-sm font-medium text-zinc-900"
+                                            x-text="order.id"
+                                        ></td>
+                                        <td
+                                            class="py-3 px-4 text-sm text-zinc-600"
+                                            x-text="order.company"
+                                        ></td>
+                                        <td
+                                            class="py-3 px-4 text-sm text-zinc-600"
+                                            x-text="order.partner"
+                                        ></td>
+                                        <td class="py-3 px-4">
+                                            <span
+                                                class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium"
+                                                :class="getCategoryClass(order.category)"
+                                                x-text="order.category"
+                                            ></span>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <span
+                                                class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium"
+                                                :class="getStatusClass(order.status)"
+                                                x-text="order.status"
+                                            ></span>
+                                        </td>
+                                        <td
+                                            class="py-3 px-4 text-sm"
+                                            :class="getSlaClass(order.sla)"
+                                            x-text="order.sla"
+                                        ></td>
+                                        <td class="py-3 px-4 text-sm">
+                                            <span
+                                                class="inline-flex items-center gap-1"
+                                                :class="order.sync_source === 'HR App' ? 'text-emerald-600' : 'text-zinc-500'"
+                                            >
+                                                <i
+                                                    data-lucide="check-circle"
+                                                    class="w-3.5 h-3.5"
+                                                    x-show="order.sync_source === 'HR App'"
+                                                ></i>
+                                                <span
+                                                    x-text="order.sync_source"
+                                                ></span>
+                                            </span>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <span
+                                                x-show="order.ai_flag"
+                                                class="inline-flex items-center gap-1 px-2 py-1 rounded text-xs font-medium bg-violet-50 text-violet-700"
+                                            >
+                                                <i
+                                                    data-lucide="sparkles"
+                                                    class="w-3 h-3"
+                                                ></i>
+                                                AI Insight
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <script>
+            function ordersData() {
+                return {
+                    search: '',
+                    filterCategory: '',
+                    filterStatus: '',
+                    filterSync: '',
+                    orders: [
+                        {
+                            id: 'ORD-2024-008',
+                            company: 'TechCorp Indonesia',
+                            partner: 'MediCheck Pro',
+                            category: 'MCU',
+                            status: 'Processing',
+                            sla: 'On Track',
+                            sync_source: 'HR App',
+                            ai_flag: false,
+                        },
+                        {
+                            id: 'ORD-2024-007',
+                            company: 'FinanceFirst Bank',
+                            partner: 'PsychePro Assessment',
+                            category: 'Psych Test',
+                            status: 'Completed',
+                            sla: 'Met',
+                            sync_source: 'HR App',
+                            ai_flag: true,
+                        },
+                        {
+                            id: 'ORD-2024-006',
+                            company: 'TechCorp Indonesia',
+                            partner: 'TalentHub Training',
+                            category: 'Training',
+                            status: 'Pending',
+                            sla: 'On Track',
+                            sync_source: 'HR App',
+                            ai_flag: false,
+                        },
+                        {
+                            id: 'ORD-2024-004',
+                            company: 'RetailGiant',
+                            partner: 'Workforce Solutions',
+                            category: 'Man Power',
+                            status: 'Processing',
+                            sla: 'At Risk',
+                            sync_source: 'HR App',
+                            ai_flag: true,
+                        },
+                        {
+                            id: 'ORD-2024-003',
+                            company: 'ManufacturePro',
+                            partner: 'PsychePro Assessment',
+                            category: 'Psych Test',
+                            status: 'Pending',
+                            sla: 'On Track',
+                            sync_source: 'HR App',
+                            ai_flag: false,
+                        },
+                        {
+                            id: 'ORD-2024-002',
+                            company: 'FinanceFirst Bank',
+                            partner: 'TalentHub Training',
+                            category: 'Training',
+                            status: 'Processing',
+                            sla: 'On Track',
+                            sync_source: 'HR App',
+                            ai_flag: false,
+                        },
+                        {
+                            id: 'ORD-2024-001',
+                            company: 'TechCorp Indonesia',
+                            partner: 'MediCheck Pro',
+                            category: 'MCU',
+                            status: 'Completed',
+                            sla: 'Met',
+                            sync_source: 'HR App',
+                            ai_flag: true,
+                        },
+                    ],
+                    get filteredOrders() {
+                        return this.orders.filter((order) => {
+                            const matchSearch =
+                                !this.search ||
+                                order.id
+                                    .toLowerCase()
+                                    .includes(this.search.toLowerCase()) ||
+                                order.company
+                                    .toLowerCase()
+                                    .includes(this.search.toLowerCase()) ||
+                                order.partner
+                                    .toLowerCase()
+                                    .includes(this.search.toLowerCase());
+                            const matchCategory =
+                                !this.filterCategory ||
+                                order.category
+                                    .toLowerCase()
+                                    .includes(this.filterCategory);
+                            const matchStatus =
+                                !this.filterStatus ||
+                                order.status
+                                    .toLowerCase() ===
+                                    this.filterStatus;
+                            return matchSearch && matchCategory && matchStatus;
+                        });
+                    },
+                    getCategoryClass(category) {
+                        const classes = {
+                            MCU: 'bg-red-50 text-red-700',
+                            Training: 'bg-blue-50 text-blue-700',
+                            'Psych Test': 'bg-violet-50 text-violet-700',
+                            'Man Power': 'bg-emerald-50 text-emerald-700',
+                        };
+                        return classes[category] || 'bg-zinc-50 text-zinc-700';
+                    },
+                    getStatusClass(status) {
+                        const classes = {
+                            Pending: 'bg-amber-50 text-amber-700',
+                            Processing: 'bg-blue-50 text-blue-700',
+                            Completed: 'bg-emerald-50 text-emerald-700',
+                            Cancelled: 'bg-red-50 text-red-700',
+                        };
+                        return classes[status] || 'bg-zinc-50 text-zinc-700';
+                    },
+                    getSlaClass(sla) {
+                        const classes = {
+                            'On Track': 'text-emerald-600',
+                            Met: 'text-zinc-500',
+                            'At Risk': 'text-amber-600',
+                            Breached: 'text-red-600',
+                        };
+                        return classes[sla] || 'text-zinc-500';
+                    },
+                };
+            }
+        </script>
+    </body>
+</html>

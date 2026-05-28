@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>AI Analytics Center - TalentOps</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+        ></script>
+        <script src="https://unpkg.com/lucide@latest"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            sans: ['Inter', 'sans-serif'],
+                        },
+                    },
+                },
+            };
+        </script>
+    </head>
+    <body
+        class="bg-zinc-50 font-sans"
+        x-data="aiAnalytics()"
+        x-init="initCharts(); lucide.createIcons();"
+    >
+        <div class="flex h-screen">
+            <!-- Sidebar -->
+            <aside class="w-64 bg-white border-r border-zinc-200 flex flex-col">
+                <div class="p-6 border-b border-zinc-100">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-8 h-8 bg-zinc-900 rounded-lg flex items-center justify-center"
+                        >
+                            <i
+                                data-lucide="hexagon"
+                                class="w-4 h-4 text-white"
+                            ></i>
+                        </div>
+                        <span class="font-semibold text-zinc-900"
+                            >TalentOps</span
+                        >
+                    </div>
+                </div>
+
+                <nav class="flex-1 p-4 space-y-1 overflow-y-auto">
+                    <div
+                        class="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2 px-3"
+                    >
+                        Overview
+                    </div>
+                    <a
+                        href="dashboard.html"
+                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                    >
+                        <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                        Dashboard
+                    </a>
+                    <a
+                        href="orders.html"
+                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                    >
+                        <i data-lucide="clipboard-list" class="w-4 h-4"></i>
+                        Orders
+                    </a>
+                    <a
+                        href="ai-analytics.html"
+                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium bg-zinc-100 text-zinc-900 rounded-lg"
+                    >
+                        <i data-lucide="sparkles" class="w-4 h-4"></i>
+                        AI Analytics
+                    </a>
+
+                    <div
+                        class="text-xs font-semibold text-zinc-400 uppercase tracking-wider mt-6 mb-2 px-3"
+                    >
+                        Management
+                    </div>
+                    <a
+                        href="#"
+                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                    >
+                        <i data-lucide="building-2" class="w-4 h-4"></i>
+                        Partners
+                    </a>
+                    <a
+                        href="#"
+                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                    >
+                        <i data-lucide="users" class="w-4 h-4"></i>
+                        Companies
+                    </a>
+
+                    <div
+                        class="text-xs font-semibold text-zinc-400 uppercase tracking-wider mt-6 mb-2 px-3"
+                    >
+                        Account
+                    </div>
+                    <a
+                        href="../login.html"
+                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                    >
+                        <i data-lucide="log-out" class="w-4 h-4"></i>
+                        Sign Out
+                    </a>
+                </nav>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="flex-1 overflow-y-auto">
+                <header class="bg-white border-b border-zinc-200 px-8 py-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h1 class="text-xl font-semibold text-zinc-900">
+                                AI Analytics Center
+                            </h1>
+                            <p class="text-sm text-zinc-500">
+                                Enterprise intelligence dashboard
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <button
+                                class="flex items-center gap-2 px-4 py-2 bg-violet-600 text-white text-sm font-medium rounded-lg hover:bg-violet-700 transition-colors"
+                            >
+                                <i data-lucide="download" class="w-4 h-4"></i>
+                                Export Report
+                            </button>
+                            <div class="flex items-center gap-3">
+                                <div
+                                    class="w-8 h-8 bg-zinc-200 rounded-full flex items-center justify-center"
+                                >
+                                    <i
+                                        data-lucide="user"
+                                        class="w-4 h-4 text-zinc-600"
+                                    ></i>
+                                </div>
+                                <div class="text-sm">
+                                    <div class="font-medium text-zinc-900">
+                                        Admin User
+                                    </div>
+                                    <div class="text-zinc-500">
+                                        Aggregator Admin
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="p-8">
+                    <!-- Executive Summary -->
+                    <div
+                        class="bg-gradient-to-r from-violet-600 to-indigo-600 rounded-xl p-6 text-white mb-8"
+                    >
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="p-2 bg-white/20 rounded-lg">
+                                <i
+                                    data-lucide="brain-circuit"
+                                    class="w-5 h-5"
+                                ></i>
+                            </div>
+                            <h2 class="font-semibold">AI Executive Summary</h2>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                            <div>
+                                <div class="text-3xl font-bold">78</div>
+                                <div class="text-violet-200">Workforce Health</div>
+                            </div>
+                            <div>
+                                <div class="text-3xl font-bold">82</div>
+                                <div class="text-violet-200">Mental Readiness</div>
+                            </div>
+                            <div>
+                                <div class="text-3xl font-bold">71</div>
+                                <div class="text-violet-200">Training Readiness</div>
+                            </div>
+                            <div>
+                                <div class="text-3xl font-bold">65</div>
+                                <div class="text-violet-200">Productivity Risk</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI Recommendations -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-white rounded-xl border border-zinc-200 p-6">
+                            <div class="flex items-center gap-3 mb-6">
+                                <div class="p-2 bg-blue-50 rounded-lg">
+                                    <i
+                                        data-lucide="lightbulb"
+                                        class="w-5 h-5 text-blue-600"
+                                    ></i>
+                                </div>
+                                <h3 class="font-semibold text-zinc-900">
+                                    AI Recommendation Engine
+                                </h3>
+                            </div>
+                            <div class="space-y-4">
+                                <div
+                                    class="p-4 border border-zinc-200 rounded-lg hover:border-blue-300 transition-colors"
+                                >
+                                    <div class="flex items-start gap-3">
+                                        <div
+                                            class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0"
+                                        >
+                                            <i
+                                                data-lucide="graduation-cap"
+                                                class="w-4 h-4 text-emerald-600"
+                                            ></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="font-medium text-zinc-900">
+                                                Leadership Training Recommended
+                                            </div>
+                                            <p class="text-sm text-zinc-500 mt-1">
+                                                45 high-potential employees identified. 92% confidence.
+                                            </p>
+                                            <div class="flex items-center gap-4 mt-2">
+                                                <span class="text-xs text-zinc-400">Impact: High</span>
+                                                <span class="text-xs text-zinc-400">Confidence: 92%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="p-4 border border-zinc-200 rounded-lg hover:border-blue-300 transition-colors"
+                                >
+                                    <div class="flex items-start gap-3">
+                                        <div
+                                            class="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0"
+                                        >
+                                            <i
+                                                data-lucide="heart-pulse"
+                                                class="w-4 h-4 text-red-600"
+                                            ></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="font-medium text-zinc-900">
+                                                Periodic MCU for High-Risk
+                                            </div>
+                                            <p class="text-sm text-zinc-500 mt-1">
+                                                150 employees need monitoring. 87% confidence.
+                                            </p>
+                                            <div class="flex items-center gap-4 mt-2">
+                                                <span class="text-xs text-zinc-400">Impact: Medium</span>
+                                                <span class="text-xs text-zinc-400">Confidence: 87%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="p-4 border border-zinc-200 rounded-lg hover:border-blue-300 transition-colors"
+                                >
+                                    <div class="flex items-start gap-3">
+                                        <div
+                                            class="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center flex-shrink-0"
+                                        >
+                                            <i
+                                                data-lucide="shield-alert"
+                                                class="w-4 h-4 text-amber-600"
+                                            ></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="font-medium text-zinc-900">
+                                                Burnout Prevention Initiative
+                                            </div>
+                                            <p class="text-sm text-zinc-500 mt-1">
+                                                23 employees at high burnout risk. 89% confidence.
+                                            </p>
+                                            <div class="flex items-center gap-4 mt-2">
+                                                <span class="text-xs text-zinc-400">Impact: High</span>
+                                                <span class="text-xs text-zinc-400">Confidence: 89%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Predictive Analytics -->
+                        <div class="bg-white rounded-xl border border-zinc-200 p-6">
+                            <div class="flex items-center gap-3 mb-6">
+                                <div class="p-2 bg-violet-50 rounded-lg">
+                                    <i
+                                        data-lucide="trending-up"
+                                        class="w-5 h-5 text-violet-600"
+                                    ></i>
+                                </div>
+                                <h3 class="font-semibold text-zinc-900">
+                                    Predictive Analytics
+                                </h3>
+                            </div>
+                            <div class="space-y-6">
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-sm font-medium text-zinc-700">Attrition Risk</span>
+                                        <span class="text-sm font-bold text-amber-600">35%</span>
+                                    </div>
+                                    <div class="h-2 bg-zinc-100 rounded-full overflow-hidden">
+                                        <div class="h-full bg-amber-500 rounded-full" style="width: 35%"></div>
+                                    </div>
+                                    <p class="text-xs text-zinc-500 mt-1">45 employees flagged as high risk</p>
+                                </div>
+
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-sm font-medium text-zinc-700">Productivity Trend</span>
+                                        <span class="text-sm font-bold text-emerald-600">+8%</span>
+                                    </div>
+                                    <div class="h-2 bg-zinc-100 rounded-full overflow-hidden">
+                                        <div class="h-full bg-emerald-500 rounded-full" style="width: 68%"></div>
+                                    </div>
+                                    <p class="text-xs text-zinc-500 mt-1">Next quarter forecast: 82/100</p>
+                                </div>
+
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-sm font-medium text-zinc-700">Health Stability</span>
+                                        <span class="text-sm font-bold text-emerald-600">Stable</span>
+                                    </div>
+                                    <div class="h-2 bg-zinc-100 rounded-full overflow-hidden">
+                                        <div class="h-full bg-emerald-500 rounded-full" style="width: 78%"></div>
+                                    </div>
+                                    <p class="text-xs text-zinc-500 mt-1">Workforce health index improving</p>
+                                </div>
+
+                                <div>
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-sm font-medium text-zinc-700">Mental Health</span>
+                                        <span class="text-sm font-bold text-blue-600">Good</span>
+                                    </div>
+                                    <div class="h-2 bg-zinc-100 rounded-full overflow-hidden">
+                                        <div class="h-full bg-blue-500 rounded-full" style="width: 82%"></div>
+                                    </div>
+                                    <p class="text-xs text-zinc-500 mt-1">15% showing stress indicators</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Correlation Engine & Charts -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div class="lg:col-span-2 bg-white rounded-xl border border-zinc-200 p-6">
+                            <div class="flex items-center gap-3 mb-6">
+                                <div class="p-2 bg-indigo-50 rounded-lg">
+                                    <i
+                                        data-lucide="git-compare"
+                                        class="w-5 h-5 text-indigo-600"
+                                    ></i>
+                                </div>
+                                <h3 class="font-semibold text-zinc-900">
+                                    Correlation Engine
+                                </h3>
+                            </div>
+                            <div class="relative h-64">
+                                <canvas id="correlationChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-xl border border-zinc-200 p-6">
+                            <h3 class="font-semibold text-zinc-900 mb-4">Key Correlations</h3>
+                            <div class="space-y-4">
+                                <div class="p-3 bg-zinc-50 rounded-lg">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm font-medium text-zinc-700">MCU & Productivity</span>
+                                        <span class="text-sm font-bold text-emerald-600">0.73</span>
+                                    </div>
+                                    <p class="text-xs text-zinc-500 mt-1">Strong positive correlation</p>
+                                </div>
+                                <div class="p-3 bg-zinc-50 rounded-lg">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm font-medium text-zinc-700">Training & Performance</span>
+                                        <span class="text-sm font-bold text-emerald-600">0.68</span>
+                                    </div>
+                                    <p class="text-xs text-zinc-500 mt-1">Strong positive correlation</p>
+                                </div>
+                                <div class="p-3 bg-zinc-50 rounded-lg">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm font-medium text-zinc-700">Psych Test & Retention</span>
+                                        <span class="text-sm font-bold text-blue-600">0.54</span>
+                                    </div>
+                                    <p class="text-xs text-zinc-500 mt-1">Moderate correlation</p>
+                                </div>
+                                <div class="p-3 bg-zinc-50 rounded-lg">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm font-medium text-zinc-700">Health & Attendance</span>
+                                        <span class="text-sm font-bold text-emerald-600">0.71</span>
+                                    </div>
+                                    <p class="text-xs text-zinc-500 mt-1">Strong positive correlation</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <script>
+            function aiAnalytics() {
+                return {
+                    initCharts() {
+                        const ctx = document.getElementById('correlationChart').getContext('2d');
+                        new Chart(ctx, {
+                            type: 'radar',
+                            data: {
+                                labels: ['MCU Results', 'Psych Test', 'Training', 'Performance', 'Attendance', 'Retention'],
+                                datasets: [{
+                                    label: 'Correlation Strength',
+                                    data: [0.85, 0.72, 0.78, 0.90, 0.82, 0.68],
+                                    backgroundColor: 'rgba(139, 92, 246, 0.2)',
+                                    borderColor: '#8b5cf6',
+                                    pointBackgroundColor: '#8b5cf6',
+                                    pointBorderColor: '#fff',
+                                    pointHoverBackgroundColor: '#fff',
+                                    pointHoverBorderColor: '#8b5cf6'
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                scales: {
+                                    r: {
+                                        beginAtZero: true,
+                                        max: 1,
+                                        ticks: {
+                                            stepSize: 0.2
+                                        }
+                                    }
+                                }
+                            }
+                        });
+                    }
+                };
+            }
+        </script>
+    </body>
+</html>

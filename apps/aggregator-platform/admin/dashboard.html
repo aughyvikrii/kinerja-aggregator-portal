@@ -1,0 +1,683 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Admin Dashboard - TalentOps</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+        ></script>
+        <script src="https://unpkg.com/lucide@latest"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            sans: ['Inter', 'sans-serif'],
+                        },
+                        colors: {
+                            zinc: {
+                                50: '#fafafa',
+                                100: '#f4f4f5',
+                                200: '#e4e4e7',
+                                300: '#d4d4d8',
+                                400: '#a1a1aa',
+                                500: '#71717a',
+                                600: '#52525b',
+                                700: '#3f3f46',
+                                800: '#27272a',
+                                900: '#18181b',
+                            },
+                        },
+                    },
+                },
+            };
+        </script>
+    </head>
+    <body
+        class="bg-zinc-50 font-sans"
+        x-data="adminDashboard()"
+        x-init="initCharts(); lucide.createIcons();"
+    >
+        <div class="flex h-screen">
+            <!-- Sidebar -->
+            <aside class="w-64 bg-white border-r border-zinc-200 flex flex-col">
+                <div class="p-6 border-b border-zinc-100">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-8 h-8 bg-zinc-900 rounded-lg flex items-center justify-center"
+                        >
+                            <i
+                                data-lucide="hexagon"
+                                class="w-4 h-4 text-white"
+                            ></i>
+                        </div>
+                        <span class="font-semibold text-zinc-900"
+                            >TalentOps</span
+                        >
+                    </div>
+                </div>
+
+                <nav class="flex-1 p-4 space-y-1 overflow-y-auto">
+                    <div
+                        class="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2 px-3"
+                    >
+                        Overview
+                    </div>
+                    <a
+                        href="dashboard.html"
+                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium bg-zinc-100 text-zinc-900 rounded-lg"
+                    >
+                        <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                        Dashboard
+                    </a>
+                    <a
+                        href="orders.html"
+                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                    >
+                        <i data-lucide="clipboard-list" class="w-4 h-4"></i>
+                        Orders
+                    </a>
+                    <a
+                        href="ai-analytics.html"
+                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                    >
+                        <i data-lucide="sparkles" class="w-4 h-4"></i>
+                        AI Analytics
+                    </a>
+
+                    <div
+                        class="text-xs font-semibold text-zinc-400 uppercase tracking-wider mt-6 mb-2 px-3"
+                    >
+                        Management
+                    </div>
+                    <a
+                        href="#"
+                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                    >
+                        <i data-lucide="building-2" class="w-4 h-4"></i>
+                        Partners
+                    </a>
+                    <a
+                        href="#"
+                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                    >
+                        <i data-lucide="users" class="w-4 h-4"></i>
+                        Companies
+                    </a>
+
+                    <div
+                        class="text-xs font-semibold text-zinc-400 uppercase tracking-wider mt-6 mb-2 px-3"
+                    >
+                        Account
+                    </div>
+                    <a
+                        href="../login.html"
+                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                    >
+                        <i data-lucide="log-out" class="w-4 h-4"></i>
+                        Sign Out
+                    </a>
+                </nav>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="flex-1 overflow-y-auto">
+                <header class="bg-white border-b border-zinc-200 px-8 py-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h1 class="text-xl font-semibold text-zinc-900">
+                                Admin Dashboard
+                            </h1>
+                            <p class="text-sm text-zinc-500">
+                                Global platform overview
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <button
+                                class="p-2 text-zinc-400 hover:text-zinc-600 relative"
+                            >
+                                <i data-lucide="bell" class="w-5 h-5"></i>
+                                <span
+                                    class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full"
+                                ></span>
+                            </button>
+                            <div class="flex items-center gap-3">
+                                <div
+                                    class="w-8 h-8 bg-zinc-200 rounded-full flex items-center justify-center"
+                                >
+                                    <i
+                                        data-lucide="user"
+                                        class="w-4 h-4 text-zinc-600"
+                                    ></i>
+                                </div>
+                                <div class="text-sm">
+                                    <div class="font-medium text-zinc-900">
+                                        Admin User
+                                    </div>
+                                    <div class="text-zinc-500">
+                                        Aggregator Admin
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="p-8">
+                    <!-- KPI Cards -->
+                    <div
+                        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8"
+                    >
+                        <div
+                            class="bg-white rounded-xl border border-zinc-200 p-6"
+                        >
+                            <div
+                                class="flex items-center justify-between mb-4"
+                            >
+                                <div class="p-2 bg-blue-50 rounded-lg">
+                                    <i
+                                        data-lucide="clipboard-list"
+                                        class="w-5 h-5 text-blue-600"
+                                    ></i>
+                                </div>
+                                <span
+                                    class="flex items-center gap-1 text-sm font-medium text-emerald-600"
+                                >
+                                    <i
+                                        data-lucide="trending-up"
+                                        class="w-4 h-4"
+                                    ></i>
+                                    +18%
+                                </span>
+                            </div>
+                            <div class="text-2xl font-semibold text-zinc-900">
+                                1,247
+                            </div>
+                            <div class="text-sm text-zinc-500">
+                                Total Orders
+                            </div>
+                        </div>
+
+                        <div
+                            class="bg-white rounded-xl border border-zinc-200 p-6"
+                        >
+                            <div
+                                class="flex items-center justify-between mb-4"
+                            >
+                                <div class="p-2 bg-emerald-50 rounded-lg">
+                                    <i
+                                        data-lucide="building-2"
+                                        class="w-5 h-5 text-emerald-600"
+                                    ></i>
+                                </div>
+                                <span
+                                    class="flex items-center gap-1 text-sm font-medium text-emerald-600"
+                                >
+                                    <i
+                                        data-lucide="trending-up"
+                                        class="w-4 h-4"
+                                    ></i>
+                                    +7%
+                                </span>
+                            </div>
+                            <div class="text-2xl font-semibold text-zinc-900">
+                                42
+                            </div>
+                            <div class="text-sm text-zinc-500">
+                                Active Partners
+                            </div>
+                        </div>
+
+                        <div
+                            class="bg-white rounded-xl border border-zinc-200 p-6"
+                        >
+                            <div
+                                class="flex items-center justify-between mb-4"
+                            >
+                                <div class="p-2 bg-indigo-50 rounded-lg">
+                                    <i
+                                        data-lucide="users"
+                                        class="w-5 h-5 text-indigo-600"
+                                    ></i>
+                                </div>
+                                <span
+                                    class="flex items-center gap-1 text-sm font-medium text-emerald-600"
+                                >
+                                    <i
+                                        data-lucide="trending-up"
+                                        class="w-4 h-4"
+                                    ></i>
+                                    +12%
+                                </span>
+                            </div>
+                            <div class="text-2xl font-semibold text-zinc-900">
+                                156
+                            </div>
+                            <div class="text-sm text-zinc-500">
+                                Companies
+                            </div>
+                        </div>
+
+                        <div
+                            class="bg-white rounded-xl border border-zinc-200 p-6"
+                        >
+                            <div
+                                class="flex items-center justify-between mb-4"
+                            >
+                                <div class="p-2 bg-violet-50 rounded-lg">
+                                    <i
+                                        data-lucide="dollar-sign"
+                                        class="w-5 h-5 text-violet-600"
+                                    ></i>
+                                </div>
+                                <span
+                                    class="flex items-center gap-1 text-sm font-medium text-emerald-600"
+                                >
+                                    <i
+                                        data-lucide="trending-up"
+                                        class="w-4 h-4"
+                                    ></i>
+                                    +28%
+                                </span>
+                            </div>
+                            <div class="text-2xl font-semibold text-zinc-900">
+                                Rp 12.4B
+                            </div>
+                            <div class="text-sm text-zinc-500">
+                                Total Revenue
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts Section -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                        <div
+                            class="lg:col-span-2 bg-white rounded-xl border border-zinc-200 p-6"
+                        >
+                            <div
+                                class="flex items-center justify-between mb-6"
+                            >
+                                <h3 class="font-semibold text-zinc-900">
+                                    Order Trends (All Categories)
+                                </h3>
+                                <select
+                                    class="text-sm border border-zinc-200 rounded-lg px-3 py-1.5 bg-zinc-50"
+                                >
+                                    <option>Last 30 days</option>
+                                    <option>Last 3 months</option>
+                                    <option>Last year</option>
+                                </select>
+                            </div>
+                            <div class="relative h-72">
+                                <canvas id="adminOrdersChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div
+                            class="bg-white rounded-xl border border-zinc-200 p-6"
+                        >
+                            <h3 class="font-semibold text-zinc-900 mb-6">
+                                Category Distribution
+                            </h3>
+                            <div class="relative h-72">
+                                <canvas id="categoryChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI Insights -->
+                    <div
+                        class="bg-gradient-to-br from-violet-900 to-zinc-900 rounded-xl p-8 text-white mb-8"
+                    >
+                        <div class="flex items-center gap-3 mb-6">
+                            <div
+                                class="p-2 bg-white/10 rounded-lg backdrop-blur"
+                            >
+                                <i
+                                    data-lucide="sparkles"
+                                    class="w-5 h-5 text-violet-300"
+                                ></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold">
+                                    AI Industry Insights
+                                </h3>
+                                <p class="text-sm text-zinc-300">
+                                    Cross-domain intelligence
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div
+                                class="p-4 bg-white/10 rounded-lg backdrop-blur"
+                            >
+                                <div
+                                    class="flex items-center gap-2 mb-2 text-amber-300"
+                                >
+                                    <i
+                                        data-lucide="activity"
+                                        class="w-4 h-4"
+                                    ></i>
+                                    <span class="font-medium"
+                                        >Health & Productivity</span
+                                    >
+                                </div>
+                                <p class="text-sm text-zinc-200">
+                                    Companies with regular MCU programs show
+                                    23% lower absenteeism and 15% higher
+                                    productivity scores.
+                                </p>
+                            </div>
+
+                            <div
+                                class="p-4 bg-white/10 rounded-lg backdrop-blur"
+                            >
+                                <div
+                                    class="flex items-center gap-2 mb-2 text-emerald-300"
+                                >
+                                    <i
+                                        data-lucide="trending-up"
+                                        class="w-4 h-4"
+                                    ></i>
+                                    <span class="font-medium"
+                                        >Training Effectiveness</span
+                                    >
+                                </div>
+                                <p class="text-sm text-zinc-200">
+                                    Leadership training correlates with 34%
+                                    reduction in turnover among high-potential
+                                    employees.
+                                </p>
+                            </div>
+
+                            <div
+                                class="p-4 bg-white/10 rounded-lg backdrop-blur"
+                            >
+                                <div
+                                    class="flex items-center gap-2 mb-2 text-blue-300"
+                                >
+                                    <i
+                                        data-lucide="brain"
+                                        class="w-4 h-4"
+                                    ></i>
+                                    <span class="font-medium"
+                                        >Burnout Prediction</span
+                                    >
+                                </div>
+                                <p class="text-sm text-zinc-200">
+                                    Early warning system identified 89 at-risk
+                                    employees this month. Intervention
+                                    recommended.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Orders -->
+                    <div
+                        class="bg-white rounded-xl border border-zinc-200 p-6"
+                    >
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-semibold text-zinc-900">
+                                Recent Orders
+                            </h3>
+                            <a
+                                href="orders.html"
+                                class="text-sm font-medium text-zinc-600 hover:text-zinc-900"
+                                >View All</a
+                            >
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="border-b border-zinc-100">
+                                        <th
+                                            class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider"
+                                        >
+                                            Order ID
+                                        </th>
+                                        <th
+                                            class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider"
+                                        >
+                                            Company
+                                        </th>
+                                        <th
+                                            class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider"
+                                        >
+                                            Partner
+                                        </th>
+                                        <th
+                                            class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider"
+                                        >
+                                            Category
+                                        </th>
+                                        <th
+                                            class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider"
+                                        >
+                                            Status
+                                        </th>
+                                        <th
+                                            class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase tracking-wider"
+                                        >
+                                            SLA
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-zinc-100">
+                                    <tr>
+                                        <td
+                                            class="py-3 px-4 text-sm font-medium text-zinc-900"
+                                        >
+                                            ORD-2024-008
+                                        </td>
+                                        <td class="py-3 px-4 text-sm text-zinc-600">
+                                            TechCorp Indonesia
+                                        </td>
+                                        <td class="py-3 px-4 text-sm text-zinc-600">
+                                            MediCheck Pro
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <span
+                                                class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-red-50 text-red-700"
+                                            >
+                                                MCU
+                                            </span>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <span
+                                                class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700"
+                                            >
+                                                Processing
+                                            </span>
+                                        </td>
+                                        <td
+                                            class="py-3 px-4 text-sm text-emerald-600"
+                                        >
+                                            On Track
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            class="py-3 px-4 text-sm font-medium text-zinc-900"
+                                        >
+                                            ORD-2024-007
+                                        </td>
+                                        <td class="py-3 px-4 text-sm text-zinc-600">
+                                            FinanceFirst Bank
+                                        </td>
+                                        <td class="py-3 px-4 text-sm text-zinc-600">
+                                            PsychePro Assessment
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <span
+                                                class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-violet-50 text-violet-700"
+                                            >
+                                                Psych Test
+                                            </span>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <span
+                                                class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700"
+                                            >
+                                                Completed
+                                            </span>
+                                        </td>
+                                        <td
+                                            class="py-3 px-4 text-sm text-zinc-500"
+                                        >
+                                            Met
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            class="py-3 px-4 text-sm font-medium text-zinc-900"
+                                        >
+                                            ORD-2024-004
+                                        </td>
+                                        <td class="py-3 px-4 text-sm text-zinc-600">
+                                            RetailGiant
+                                        </td>
+                                        <td class="py-3 px-4 text-sm text-zinc-600">
+                                            Workforce Solutions
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <span
+                                                class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700"
+                                            >
+                                                Man Power
+                                            </span>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <span
+                                                class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700"
+                                            >
+                                                Processing
+                                            </span>
+                                        </td>
+                                        <td
+                                            class="py-3 px-4 text-sm text-amber-600"
+                                        >
+                                            At Risk
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <script>
+            function adminDashboard() {
+                return {
+                    initCharts() {
+                        // Orders Chart
+                        const ordersCtx = document
+                            .getElementById('adminOrdersChart')
+                            .getContext('2d');
+                        new Chart(ordersCtx, {
+                            type: 'line',
+                            data: {
+                                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                                datasets: [
+                                    {
+                                        label: 'MCU',
+                                        data: [45, 52, 48, 61],
+                                        borderColor: '#ef4444',
+                                        backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                                        tension: 0.4,
+                                    },
+                                    {
+                                        label: 'Training',
+                                        data: [32, 38, 42, 35],
+                                        borderColor: '#3b82f6',
+                                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                                        tension: 0.4,
+                                    },
+                                    {
+                                        label: 'Psych Test',
+                                        data: [18, 22, 19, 25],
+                                        borderColor: '#8b5cf6',
+                                        backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                                        tension: 0.4,
+                                    },
+                                    {
+                                        label: 'Man Power',
+                                        data: [25, 28, 32, 30],
+                                        borderColor: '#10b981',
+                                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                                        tension: 0.4,
+                                    },
+                                ],
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                plugins: {
+                                    legend: {
+                                        position: 'bottom',
+                                    },
+                                },
+                                scales: {
+                                    y: {
+                                        beginAtZero: true,
+                                        grid: { color: '#f4f4f5' },
+                                    },
+                                    x: {
+                                        grid: { display: false },
+                                    },
+                                },
+                            },
+                        });
+
+                        // Category Chart
+                        const categoryCtx = document
+                            .getElementById('categoryChart')
+                            .getContext('2d');
+                        new Chart(categoryCtx, {
+                            type: 'doughnut',
+                            data: {
+                                labels: ['MCU', 'Training', 'Psych Test', 'Man Power'],
+                                datasets: [
+                                    {
+                                        data: [206, 147, 84, 115],
+                                        backgroundColor: [
+                                            '#ef4444',
+                                            '#3b82f6',
+                                            '#8b5cf6',
+                                            '#10b981',
+                                        ],
+                                        borderWidth: 0,
+                                    },
+                                ],
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                cutout: '70%',
+                                plugins: {
+                                    legend: {
+                                        position: 'bottom',
+                                    },
+                                },
+                            },
+                        });
+                    },
+                };
+            }
+        </script>
+    </body>
+</html>

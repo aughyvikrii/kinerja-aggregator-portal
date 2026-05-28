@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>MCU Analytics - TalentOps</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+        ></script>
+        <script src="https://unpkg.com/lucide@latest"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            sans: ['Inter', 'sans-serif'],
+                        },
+                    },
+                },
+            };
+        </script>
+    </head>
+    <body class="bg-zinc-50 font-sans" x-data="mcuAnalytics()" x-init="initCharts(); lucide.createIcons();">
+        <div class="flex h-screen">
+            <!-- Sidebar -->
+            <aside class="w-64 bg-white border-r border-zinc-200 flex flex-col">
+                <div class="p-6 border-b border-zinc-100">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 bg-zinc-900 rounded-lg flex items-center justify-center">
+                            <i data-lucide="hexagon" class="w-4 h-4 text-white"></i>
+                        </div>
+                        <span class="font-semibold text-zinc-900">TalentOps</span>
+                    </div>
+                </div>
+
+                <nav class="flex-1 p-4 space-y-1 overflow-y-auto">
+                    <div class="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2 px-3">Overview</div>
+                    <a href="dashboard.html" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg">
+                        <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                        Dashboard
+                    </a>
+
+                    <div class="text-xs font-semibold text-zinc-400 uppercase tracking-wider mt-6 mb-2 px-3">Services</div>
+
+                    <div x-data="{ open: true }">
+                        <button @click="open = !open" class="w-full flex items-center justify-between px-3 py-2 text-sm font-medium bg-zinc-100 text-zinc-900 rounded-lg">
+                            <span class="flex items-center gap-3">
+                                <i data-lucide="heart-pulse" class="w-4 h-4"></i>
+                                MCU
+                            </span>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform" :class="open ? 'rotate-180' : ''"></i>
+                        </button>
+                        <div x-show="open" class="ml-4 mt-1 space-y-1">
+                            <a href="mcu-orders.html" class="block px-3 py-2 text-sm text-zinc-600 hover:text-zinc-900 rounded-lg">Orders</a>
+                            <a href="mcu-analytics.html" class="block px-3 py-2 text-sm text-zinc-900 bg-zinc-50 rounded-lg font-medium">Analytics</a>
+                        </div>
+                    </div>
+
+                    <div x-data="{ open: false }">
+                        <button @click="open = !open" class="w-full flex items-center justify-between px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg">
+                            <span class="flex items-center gap-3">
+                                <i data-lucide="graduation-cap" class="w-4 h-4"></i>
+                                Training
+                            </span>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform" :class="open ? 'rotate-180' : ''"></i>
+                        </button>
+                        <div x-show="open" class="ml-4 mt-1 space-y-1">
+                            <a href="training-programs.html" class="block px-3 py-2 text-sm text-zinc-600 hover:text-zinc-900 rounded-lg">Programs</a>
+                            <a href="training-analytics.html" class="block px-3 py-2 text-sm text-zinc-600 hover:text-zinc-900 rounded-lg">Analytics</a>
+                        </div>
+                    </div>
+
+                    <div x-data="{ open: false }">
+                        <button @click="open = !open" class="w-full flex items-center justify-between px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg">
+                            <span class="flex items-center gap-3">
+                                <i data-lucide="brain" class="w-4 h-4"></i>
+                                Psych Test
+                            </span>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform" :class="open ? 'rotate-180' : ''"></i>
+                        </button>
+                        <div x-show="open" class="ml-4 mt-1 space-y-1">
+                            <a href="psychological-orders.html" class="block px-3 py-2 text-sm text-zinc-600 hover:text-zinc-900 rounded-lg">Orders</a>
+                            <a href="psychological-analytics.html" class="block px-3 py-2 text-sm text-zinc-600 hover:text-zinc-900 rounded-lg">Analytics</a>
+                        </div>
+                    </div>
+
+                    <div x-data="{ open: false }">
+                        <button @click="open = !open" class="w-full flex items-center justify-between px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg">
+                            <span class="flex items-center gap-3">
+                                <i data-lucide="users" class="w-4 h-4"></i>
+                                Man Power
+                            </span>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform" :class="open ? 'rotate-180' : ''"></i>
+                        </button>
+                        <div x-show="open" class="ml-4 mt-1 space-y-1">
+                            <a href="workforce-requests.html" class="block px-3 py-2 text-sm text-zinc-600 hover:text-zinc-900 rounded-lg">Requests</a>
+                            <a href="workforce-analytics.html" class="block px-3 py-2 text-sm text-zinc-600 hover:text-zinc-900 rounded-lg">Analytics</a>
+                        </div>
+                    </div>
+
+                    <div class="text-xs font-semibold text-zinc-400 uppercase tracking-wider mt-6 mb-2 px-3">Account</div>
+                    <a href="profile.html" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg">
+                        <i data-lucide="user" class="w-4 h-4"></i>
+                        Profile
+                    </a>
+                    <a href="../login.html" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg">
+                        <i data-lucide="log-out" class="w-4 h-4"></i>
+                        Sign Out
+                    </a>
+                </nav>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="flex-1 overflow-y-auto">
+                <header class="bg-white border-b border-zinc-200 px-8 py-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h1 class="text-xl font-semibold text-zinc-900">MCU Analytics</h1>
+                            <p class="text-sm text-zinc-500">Medical checkup insights and trends</p>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <button class="p-2 text-zinc-400 hover:text-zinc-600 relative">
+                                <i data-lucide="bell" class="w-5 h-5"></i>
+                                <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full"></span>
+                            </button>
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 bg-zinc-200 rounded-full flex items-center justify-center">
+                                    <i data-lucide="user" class="w-4 h-4 text-zinc-600"></i>
+                                </div>
+                                <div class="text-sm">
+                                    <div class="font-medium text-zinc-900">Dr. Sarah Johnson</div>
+                                    <div class="text-zinc-500">Partner</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="p-8">
+                    <!-- AI Insights Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                        <div class="bg-red-50 border border-red-100 rounded-xl p-6">
+                            <div class="flex items-center gap-2 mb-2">
+                                <i data-lucide="activity" class="w-4 h-4 text-red-600"></i>
+                                <span class="font-medium text-red-900">Hypertension Trend</span>
+                            </div>
+                            <div class="text-2xl font-bold text-red-700">15%</div>
+                            <p class="text-sm text-red-600 mt-1">Elevated BP detected</p>
+                        </div>
+
+                        <div class="bg-amber-50 border border-amber-100 rounded-xl p-6">
+                            <div class="flex items-center gap-2 mb-2">
+                                <i data-lucide="flame" class="w-4 h-4 text-amber-600"></i>
+                                <span class="font-medium text-amber-900">Smoking Risk</span>
+                            </div>
+                            <div class="text-2xl font-bold text-amber-700">23</div>
+                            <p class="text-sm text-amber-600 mt-1">High-risk employees</p>
+                        </div>
+
+                        <div class="bg-emerald-50 border border-emerald-100 rounded-xl p-6">
+                            <div class="flex items-center gap-2 mb-2">
+                                <i data-lucide="heart" class="w-4 h-4 text-emerald-600"></i>
+                                <span class="font-medium text-emerald-900">Fitness Score</span>
+                            </div>
+                            <div class="text-2xl font-bold text-emerald-700">+8%</div>
+                            <p class="text-sm text-emerald-600 mt-1">vs last quarter</p>
+                        </div>
+
+                        <div class="bg-blue-50 border border-blue-100 rounded-xl p-6">
+                            <div class="flex items-center gap-2 mb-2">
+                                <i data-lucide="shield-check" class="w-4 h-4 text-blue-600"></i>
+                                <span class="font-medium text-blue-900">Health Index</span>
+                            </div>
+                            <div class="text-2xl font-bold text-blue-700">78/100</div>
+                            <p class="text-sm text-blue-600 mt-1">Above industry avg</p>
+                        </div>
+                    </div>
+
+                    <!-- Charts -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-white rounded-xl border border-zinc-200 p-6">
+                            <h3 class="font-semibold text-zinc-900 mb-4">Health Trends</h3>
+                            <div class="relative h-64">
+                                <canvas id="healthTrendChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="bg-white rounded-xl border border-zinc-200 p-6">
+                            <h3 class="font-semibold text-zinc-900 mb-4">Risk Distribution</h3>
+                            <div class="relative h-64">
+                                <canvas id="riskChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI Recommendations -->
+                    <div class="bg-white rounded-xl border border-zinc-200 p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="p-2 bg-violet-50 rounded-lg">
+                                <i data-lucide="sparkles" class="w-5 h-5 text-violet-600"></i>
+                            </div>
+                            <h3 class="font-semibold text-zinc-900">AI Recommendations</h3>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="p-4 bg-zinc-50 rounded-lg">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <i data-lucide="alert-circle" class="w-4 h-4 text-amber-600"></i>
+                                    <span class="font-medium text-zinc-900">Follow-up Required</span>
+                                </div>
+                                <p class="text-sm text-zinc-600">15% of screened employees show elevated BP. Recommend follow-up within 2 weeks for detailed cardiovascular assessment.</p>
+                            </div>
+                            <div class="p-4 bg-zinc-50 rounded-lg">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <i data-lucide="target" class="w-4 h-4 text-emerald-600"></i>
+                                    <span class="font-medium text-zinc-900">Wellness Program</span>
+                                </div>
+                                <p class="text-sm text-zinc-600">23 employees identified as high-risk smokers. Smoking cessation program recommended with quarterly monitoring.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <script>
+            function mcuAnalytics() {
+                return {
+                    initCharts() {
+                        // Health Trends Chart
+                        const healthCtx = document.getElementById('healthTrendChart').getContext('2d');
+                        new Chart(healthCtx, {
+                            type: 'line',
+                            data: {
+                                labels: ['Q1 2023', 'Q2 2023', 'Q3 2023', 'Q4 2023', 'Q1 2024'],
+                                datasets: [{
+                                    label: 'Avg Health Score',
+                                    data: [72, 74, 73, 76, 78],
+                                    borderColor: '#10b981',
+                                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                                    fill: true,
+                                    tension: 0.4
+                                }, {
+                                    label: 'Hypertension %',
+                                    data: [18, 17, 16, 15, 15],
+                                    borderColor: '#ef4444',
+                                    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                                    fill: true,
+                                    tension: 0.4
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                plugins: {
+                                    legend: { position: 'bottom' }
+                                },
+                                scales: {
+                                    y: { beginAtZero: true, grid: { color: '#f4f4f5' } },
+                                    x: { grid: { display: false } }
+                                }
+                            }
+                        });
+
+                        // Risk Distribution Chart
+                        const riskCtx = document.getElementById('riskChart').getContext('2d');
+                        new Chart(riskCtx, {
+                            type: 'bar',
+                            data: {
+                                labels: ['Low', 'Moderate', 'High', 'Critical'],
+                                datasets: [{
+                                    label: 'Employees',
+                                    data: [850, 320, 145, 32],
+                                    backgroundColor: ['#10b981', '#f59e0b', '#ef4444', '#7f1d1d'],
+                                    borderRadius: 6
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: false,
+                                plugins: {
+                                    legend: { display: false }
+                                },
+                                scales: {
+                                    y: { beginAtZero: true, grid: { color: '#f4f4f5' } },
+                                    x: { grid: { display: false } }
+                                }
+                            }
+                        });
+                    }
+                };
+            }
+        </script>
+    </body>
+</html>

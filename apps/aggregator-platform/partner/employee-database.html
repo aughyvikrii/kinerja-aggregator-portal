@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Employee Database - TalentOps</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+        ></script>
+        <script src="https://unpkg.com/lucide@latest"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            sans: ['Inter', 'sans-serif'],
+                        },
+                        colors: {
+                            zinc: {
+                                50: '#fafafa',
+                                100: '#f4f4f5',
+                                200: '#e4e4e7',
+                                300: '#d4d4d8',
+                                400: '#a1a1aa',
+                                500: '#71717a',
+                                600: '#52525b',
+                                700: '#3f3f46',
+                                800: '#27272a',
+                                900: '#18181b',
+                            }
+                        }
+                    }
+                },
+            };
+        </script>
+    </head>
+    <body class="bg-zinc-50 font-sans" x-data="employeeDatabase()" x-init="lucide.createIcons()">
+        <div class="flex h-screen">
+            <!-- Sidebar -->
+            <aside class="w-64 bg-white border-r border-zinc-200 flex flex-col">
+                <div class="p-6 border-b border-zinc-100">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 bg-zinc-900 rounded-lg flex items-center justify-center">
+                            <i data-lucide="hexagon" class="w-4 h-4 text-white"></i>
+                        </div>
+                        <span class="font-semibold text-zinc-900">TalentOps</span>
+                    </div>
+                </div>
+
+                <nav class="flex-1 p-4 space-y-1 overflow-y-auto">
+                    <div class="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2 px-3">Overview</div>
+                    <a href="dashboard.html" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg">
+                        <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                        Dashboard
+                    </a>
+                    <a href="employee-database.html" class="flex items-center gap-3 px-3 py-2 text-sm font-medium bg-zinc-100 text-zinc-900 rounded-lg">
+                        <i data-lucide="users" class="w-4 h-4"></i>
+                        Employee Database
+                    </a>
+
+                    <div class="text-xs font-semibold text-zinc-400 uppercase tracking-wider mt-6 mb-2 px-3">Services</div>
+                    <div x-data="{ open: false }">
+                        <button @click="open = !open" class="w-full flex items-center justify-between px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg">
+                            <span class="flex items-center gap-3">
+                                <i data-lucide="heart-pulse" class="w-4 h-4"></i>
+                                MCU
+                            </span>
+                            <i data-lucide="chevron-down" class="w-4 h-4 transition-transform" :class="open ? 'rotate-180' : ''"></i>
+                        </button>
+                        <div x-show="open" class="ml-4 mt-1 space-y-1">
+                            <a href="mcu-orders.html" class="block px-3 py-2 text-sm text-zinc-600 hover:text-zinc-900 rounded-lg">Orders</a>
+                            <a href="mcu-analytics.html" class="block px-3 py-2 text-sm text-zinc-600 hover:text-zinc-900 rounded-lg">Analytics</a>
+                        </div>
+                    </div>
+
+                    <div class="text-xs font-semibold text-zinc-400 uppercase tracking-wider mt-6 mb-2 px-3">Account</div>
+                    <a href="profile.html" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg">
+                        <i data-lucide="user" class="w-4 h-4"></i>
+                        Profile
+                    </a>
+                    <a href="../login.html" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg">
+                        <i data-lucide="log-out" class="w-4 h-4"></i>
+                        Sign Out
+                    </a>
+                </nav>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="flex-1 overflow-y-auto">
+                <header class="bg-white border-b border-zinc-200 px-8 py-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h1 class="text-xl font-semibold text-zinc-900">Employee Database</h1>
+                            <p class="text-sm text-zinc-500">AI-extracted employee health data from MCU results</p>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <button class="p-2 text-zinc-400 hover:text-zinc-600 relative">
+                                <i data-lucide="bell" class="w-5 h-5"></i>
+                                <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full"></span>
+                            </button>
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 bg-zinc-200 rounded-full flex items-center justify-center">
+                                    <i data-lucide="user" class="w-4 h-4 text-zinc-600"></i>
+                                </div>
+                                <div class="text-sm">
+                                    <div class="font-medium text-zinc-900">Dr. Sarah Johnson</div>
+                                    <div class="text-zinc-500">Partner</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="p-8">
+                    <!-- Health Overview Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                        <div class="bg-white rounded-xl border border-zinc-200 p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="p-2 bg-red-50 rounded-lg">
+                                    <i data-lucide="activity" class="w-5 h-5 text-red-600"></i>
+                                </div>
+                                <span class="text-sm font-medium text-red-600">12 at risk</span>
+                            </div>
+                            <div class="text-2xl font-semibold text-zinc-900">45</div>
+                            <div class="text-sm text-zinc-500">Diabetes Mellitus Risk</div>
+                        </div>
+
+                        <div class="bg-white rounded-xl border border-zinc-200 p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="p-2 bg-amber-50 rounded-lg">
+                                    <i data-lucide="heart" class="w-5 h-5 text-amber-600"></i>
+                                </div>
+                                <span class="text-sm font-medium text-amber-600">28 elevated</span>
+                            </div>
+                            <div class="text-2xl font-semibold text-zinc-900">89</div>
+                            <div class="text-sm text-zinc-500">Hypertension Cases</div>
+                        </div>
+
+                        <div class="bg-white rounded-xl border border-zinc-200 p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="p-2 bg-orange-50 rounded-lg">
+                                    <i data-lucide="scale" class="w-5 h-5 text-orange-600"></i>
+                                </div>
+                                <span class="text-sm font-medium text-orange-600">35 obese</span>
+                            </div>
+                            <div class="text-2xl font-semibold text-zinc-900">67</div>
+                            <div class="text-sm text-zinc-500">Obesity Cases</div>
+                        </div>
+
+                        <div class="bg-white rounded-xl border border-zinc-200 p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="p-2 bg-rose-50 rounded-lg">
+                                    <i data-lucide="heart-pulse" class="w-5 h-5 text-rose-600"></i>
+                                </div>
+                                <span class="text-sm font-medium text-rose-600">8 critical</span>
+                            </div>
+                            <div class="text-2xl font-semibold text-zinc-900">23</div>
+                            <div class="text-sm text-zinc-500">Heart Disease Risk</div>
+                        </div>
+                    </div>
+
+                    <!-- Filters & Search -->
+                    <div class="bg-white rounded-xl border border-zinc-200 p-4 mb-6">
+                        <div class="flex flex-wrap items-center gap-4">
+                            <div class="flex items-center gap-2 flex-1 min-w-[200px]">
+                                <i data-lucide="search" class="w-4 h-4 text-zinc-400"></i>
+                                <input type="text" placeholder="Search employees..." x-model="search" class="text-sm border-none focus:ring-0 p-0 w-full">
+                            </div>
+                            <div class="h-6 w-px bg-zinc-200"></div>
+                            <select x-model="filterCompany" class="text-sm border border-zinc-200 rounded-lg px-3 py-1.5 bg-zinc-50">
+                                <option value="">All Companies</option>
+                                <option value="techcorp">TechCorp Indonesia</option>
+                                <option value="financefirst">FinanceFirst Bank</option>
+                                <option value="manufacturepro">ManufacturePro</option>
+                            </select>
+                            <select x-model="filterRisk" class="text-sm border border-zinc-200 rounded-lg px-3 py-1.5 bg-zinc-50">
+                                <option value="">All Risk Levels</option>
+                                <option value="high">High Risk</option>
+                                <option value="medium">Medium Risk</option>
+                                <option value="low">Low Risk</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Employee Table -->
+                    <div class="bg-white rounded-xl border border-zinc-200 overflow-hidden">
+                        <table class="w-full">
+                            <thead class="bg-zinc-50 border-b border-zinc-200">
+                                <tr>
+                                    <th class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase">Employee</th>
+                                    <th class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase">Company</th>
+                                    <th class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase">Age/Gender</th>
+                                    <th class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase">BMI</th>
+                                    <th class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase">Blood Pressure</th>
+                                    <th class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase">Glucose</th>
+                                    <th class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase">Risk Score</th>
+                                    <th class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-zinc-100">
+                                <template x-for="emp in filteredEmployees" :key="emp.id">
+                                    <tr class="hover:bg-zinc-50">
+                                        <td class="py-3 px-4">
+                                            <div class="flex items-center gap-3">
+                                                <div class="w-9 h-9 bg-zinc-200 rounded-full flex items-center justify-center">
+                                                    <i data-lucide="user" class="w-4 h-4 text-zinc-500"></i>
+                                                </div>
+                                                <div>
+                                                    <div class="font-medium text-zinc-900" x-text="emp.name"></div>
+                                                    <div class="text-xs text-zinc-500" x-text="emp.employeeId"></div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="py-3 px-4 text-sm text-zinc-600" x-text="emp.company"></td>
+                                        <td class="py-3 px-4 text-sm text-zinc-600">
+                                            <span x-text="emp.age"></span> th / <span x-text="emp.gender"></span>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <span class="text-sm" :class="getBMIColor(emp.bmi)" x-text="emp.bmi"></span>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <span class="text-sm" :class="getBPColor(emp.bloodPressure.systolic)" x-text="emp.bloodPressure.systolic + '/' + emp.bloodPressure.diastolic"></span>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <span class="text-sm" :class="getGlucoseColor(emp.glucose)" x-text="emp.glucose + ' mg/dL'"></span>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium"
+                                                :class="getRiskBadgeClass(emp.riskLevel)" x-text="emp.riskLevel">
+                                            </span>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <a :href="'employee-detail.html?id=' + emp.id" class="text-brand-600 hover:text-brand-700 text-sm font-medium">View</a>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <script>
+            function employeeDatabase() {
+                return {
+                    search: '',
+                    filterCompany: '',
+                    filterRisk: '',
+                    employees: [
+                        { id: 'EMP001', employeeId: 'TC-2024-001', name: 'Ahmad Wijaya', company: 'TechCorp Indonesia', age: 34, gender: 'M', bmi: 28.5, bloodPressure: { systolic: 145, diastolic: 92 }, glucose: 142, riskLevel: 'High' },
+                        { id: 'EMP002', employeeId: 'TC-2024-002', name: 'Budi Santoso', company: 'TechCorp Indonesia', age: 29, gender: 'M', bmi: 24.2, bloodPressure: { systolic: 118, diastolic: 78 }, glucose: 95, riskLevel: 'Low' },
+                        { id: 'EMP003', employeeId: 'TC-2024-003', name: 'Citra Dewi', company: 'TechCorp Indonesia', age: 31, gender: 'F', bmi: 26.8, bloodPressure: { systolic: 135, diastolic: 88 }, glucose: 110, riskLevel: 'Medium' },
+                        { id: 'EMP004', employeeId: 'FFB-2024-015', name: 'Diana Kusuma', company: 'FinanceFirst Bank', age: 42, gender: 'F', bmi: 31.2, bloodPressure: { systolic: 155, diastolic: 98 }, glucose: 168, riskLevel: 'High' },
+                        { id: 'EMP005', employeeId: 'FFB-2024-016', name: 'Eko Prasetyo', company: 'FinanceFirst Bank', age: 38, gender: 'M', bmi: 27.3, bloodPressure: { systolic: 142, diastolic: 90 }, glucose: 125, riskLevel: 'High' },
+                        { id: 'EMP006', employeeId: 'MP-2024-089', name: 'Fajar Nugroho', company: 'ManufacturePro', age: 45, gender: 'M', bmi: 29.1, bloodPressure: { systolic: 148, diastolic: 95 }, glucose: 155, riskLevel: 'High' },
+                        { id: 'EMP007', employeeId: 'MP-2024-090', name: 'Gita Permata', company: 'ManufacturePro', age: 27, gender: 'F', bmi: 22.5, bloodPressure: { systolic: 112, diastolic: 72 }, glucose: 88, riskLevel: 'Low' },
+                        { id: 'EMP008', employeeId: 'TC-2024-004', name: 'Hadi Sucipto', company: 'TechCorp Indonesia', age: 52, gender: 'M', bmi: 27.8, bloodPressure: { systolic: 160, diastolic: 102 }, glucose: 178, riskLevel: 'High' },
+                    ],
+                    get filteredEmployees() {
+                        return this.employees.filter(emp => {
+                            const matchSearch = !this.search || emp.name.toLowerCase().includes(this.search.toLowerCase()) || emp.employeeId.toLowerCase().includes(this.search.toLowerCase());
+                            const matchRisk = !this.filterRisk || emp.riskLevel.toLowerCase() === this.filterRisk;
+                            return matchSearch && matchRisk;
+                        });
+                    },
+                    getBMIColor(bmi) {
+                        if (bmi >= 30) return 'text-red-600 font-medium';
+                        if (bmi >= 25) return 'text-amber-600 font-medium';
+                        if (bmi >= 18.5) return 'text-emerald-600';
+                        return 'text-zinc-600';
+                    },
+                    getBPColor(systolic) {
+                        if (systolic >= 140) return 'text-red-600 font-medium';
+                        if (systolic >= 120) return 'text-amber-600 font-medium';
+                        return 'text-emerald-600';
+                    },
+                    getGlucoseColor(glucose) {
+                        if (glucose >= 126) return 'text-red-600 font-medium';
+                        if (glucose >= 100) return 'text-amber-600 font-medium';
+                        return 'text-emerald-600';
+                    },
+                    getRiskBadgeClass(level) {
+                        const classes = {
+                            'High': 'bg-red-50 text-red-700',
+                            'Medium': 'bg-amber-50 text-amber-700',
+                            'Low': 'bg-emerald-50 text-emerald-700'
+                        };
+                        return classes[level] || 'bg-zinc-50 text-zinc-700';
+                    }
+                }
+            }
+        </script>
+    </body>
+</html>

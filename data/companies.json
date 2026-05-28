@@ -1,0 +1,37 @@
+[
+  {
+    "id": "c1",
+    "name": "TechCorp Indonesia",
+    "industry": "Technology",
+    "size": "500-1000",
+    "location": "Jakarta"
+  },
+  {
+    "id": "c2",
+    "name": "FinanceFirst Bank",
+    "industry": "Financial Services",
+    "size": "1000-5000",
+    "location": "Jakarta"
+  },
+  {
+    "id": "c3",
+    "name": "ManufacturePro",
+    "industry": "Manufacturing",
+    "size": "2000-5000",
+    "location": "Surabaya"
+  },
+  {
+    "id": "c4",
+    "name": "RetailGiant",
+    "industry": "Retail",
+    "size": "5000+",
+    "location": "Jakarta"
+  },
+  {
+    "id": "c5",
+    "name": "LogisticsPlus",
+    "industry": "Logistics",
+    "size": "500-1000",
+    "location": "Bandung"
+  }
+]
