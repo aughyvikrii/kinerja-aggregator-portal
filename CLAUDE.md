@@ -62,23 +62,29 @@ The platform connects **Partners** (vendors/providers) with **Companies** (clien
 ## Design System
 
 ### Visual Style
-- Clean, minimal, spacious layouts
-- White/neutral background with soft borders
-- Rounded-xl corners throughout
-- Enterprise SaaS aesthetic (similar to shadcn/ui, Vercel Dashboard, Linear)
-- Low contrast borders, soft shadows
+- Modern gradient backgrounds (warm orange to cool blue transitions)
+- Glassmorphism effects with backdrop-blur
+- Floating card animations and hover effects
+- Rounded-2xl/rounded-3xl corners throughout
+- Lifestyle-inspired aesthetic (similar to ilovelife.co.id)
+- Animated blobs and decorative elements
+- Smooth transitions and micro-interactions
 - Responsive: Desktop first, tablet responsive, mobile adaptive
 
 ### Color Palette
-- **Primary**: Zinc, Slate, White
-- **Accent**: Indigo, Blue, Emerald
+- **Primary**: Brand Orange (#f97316), Ocean Blue (#0ea5e9), White
+- **Gradients**: Orange-to-blue transitions for hero sections
+- **Background**: Warm cream (#fff7ed) to cool blue gradients
+- **Accent**: Violet, Emerald, Rose for category differentiation
 - **Risk Colors**: Red (high), Amber (medium), Green (low)
-- Avoid oversaturated colors, heavy gradients, bright neons
+- **Glass Effect**: White with 85% opacity + backdrop blur
 
 ### Typography
-- Modern sans-serif
-- Strong hierarchy with large headings
-- Small muted descriptions
+- **Display Font**: Plus Jakarta Sans (bold, modern headers)
+- **Body Font**: Inter (clean, readable body text)
+- Gradient text effects for highlights
+- Strong hierarchy with large display headings
+- Small muted descriptions with good contrast
 
 ### Key Components
 - Cards with soft shadows
