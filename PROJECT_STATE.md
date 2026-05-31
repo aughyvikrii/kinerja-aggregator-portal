@@ -48,7 +48,11 @@
 - [x] Order history view
 - [x] AI summary cards
 - [x] **Employee Database** - Readonly view of company employee health data
-- [x] **Employee Detail** - Individual employee health analytics
+- [x] **Employee Detail** - Individual employee health analytics with categorized tabs (Medical, Training, MPS)
+- [x] **Medical Analytic Dashboard** - Health & MCU analytics with charts
+- [x] **Training Analytic Dashboard** - Training & competency analytics
+- [x] **MPS Analytic Dashboard** - Man Power Supply workforce analytics
+- [x] **Sidebar Submenu** - Employee Database expanded with 3 analytic submenus
 
 ### 3. HR Application (`/apps/hr-app/`)
 - [x] Dashboard with quick actions

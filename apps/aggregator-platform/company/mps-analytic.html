@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Company Dashboard - SolusiSDM</title>
+        <title>MPS Analytic - SolusiSDM</title>
         <script src="https://cdn.tailwindcss.com"></script>
         <script
             defer
@@ -21,9 +21,7 @@
             tailwind.config = {
                 theme: {
                     extend: {
-                        fontFamily: {
-                            sans: ["Inter", "sans-serif"],
-                        },
+                        fontFamily: { sans: ["Inter", "sans-serif"] },
                         colors: {
                             zinc: {
                                 50: "#fafafa",
@@ -45,8 +43,8 @@
     </head>
     <body
         class="bg-zinc-50 font-sans"
-        x-data="companyDashboard()"
-        x-init="initCharts(); lucide.createIcons();"
+        x-data="mpsAnalytic()"
+        x-init="initCharts(); lucide.createIcons()"
     >
         <div class="flex h-screen">
             <!-- Sidebar -->
@@ -78,16 +76,17 @@
                     </div>
                     <a
                         href="dashboard.html"
-                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium bg-zinc-100 text-zinc-900 rounded-lg"
+                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
                     >
                         <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
                         Dashboard
                     </a>
+
                     <!-- Employee Database with Submenu -->
-                    <div x-data="{ open: false }" x-init="open = false">
+                    <div x-data="{ open: true }">
                         <button
                             @click="open = !open"
-                            class="w-full flex items-center justify-between px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                            class="w-full flex items-center justify-between px-3 py-2 text-sm font-medium bg-zinc-100 text-zinc-900 rounded-lg"
                         >
                             <div class="flex items-center gap-3">
                                 <i data-lucide="users" class="w-4 h-4"></i>
@@ -133,13 +132,14 @@
                             </a>
                             <a
                                 href="mps-analytic.html"
-                                class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                                class="flex items-center gap-3 px-3 py-2 text-sm font-medium bg-emerald-50 text-emerald-700 rounded-lg"
                             >
                                 <i data-lucide="users-2" class="w-4 h-4"></i>
                                 MPS Analytic
                             </a>
                         </div>
                     </div>
+
                     <a
                         href="orders.html"
                         class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
@@ -177,16 +177,15 @@
                 </nav>
             </aside>
 
-            <!-- Main Content -->
             <main class="flex-1 overflow-y-auto">
                 <header class="bg-white border-b border-zinc-200 px-8 py-4">
                     <div class="flex items-center justify-between">
                         <div>
                             <h1 class="text-xl font-semibold text-zinc-900">
-                                Company Dashboard
+                                MPS Analytic
                             </h1>
                             <p class="text-sm text-zinc-500">
-                                View your workforce services overview
+                                Man Power Supply & workforce analytics
                             </p>
                         </div>
                         <div class="flex items-center gap-4">
@@ -225,13 +224,9 @@
                             class="w-5 h-5 text-blue-600 flex-shrink-0"
                         ></i>
                         <p class="text-sm text-blue-700">
-                            This is a read-only view. To create new orders,
-                            please use your
-                            <a
-                                href="../../hr-app/dashboard.html"
-                                class="font-medium underline"
-                                >HR Application</a
-                            >.
+                            This is a read-only view. Contact your partner for
+                            data corrections or questions about workforce
+                            supply records.
                         </p>
                     </div>
 
@@ -243,18 +238,65 @@
                             class="bg-white rounded-xl border border-zinc-200 p-6"
                         >
                             <div class="flex items-center justify-between mb-4">
+                                <div class="p-2 bg-emerald-50 rounded-lg">
+                                    <i
+                                        data-lucide="users-2"
+                                        class="w-5 h-5 text-emerald-600"
+                                    ></i>
+                                </div>
+                                <span class="text-xs text-zinc-500"
+                                    >Total Workforce</span
+                                >
+                            </div>
+                            <div class="text-2xl font-semibold text-zinc-900">
+                                245
+                            </div>
+                            <div class="text-sm text-zinc-500">
+                                Active personnel
+                            </div>
+                        </div>
+
+                        <div
+                            class="bg-white rounded-xl border border-zinc-200 p-6"
+                        >
+                            <div class="flex items-center justify-between mb-4">
                                 <div class="p-2 bg-blue-50 rounded-lg">
                                     <i
-                                        data-lucide="clipboard-list"
+                                        data-lucide="briefcase"
                                         class="w-5 h-5 text-blue-600"
                                     ></i>
                                 </div>
+                                <span class="text-xs text-zinc-500"
+                                    >Contract Types</span
+                                >
                             </div>
                             <div class="text-2xl font-semibold text-zinc-900">
-                                12
+                                4
                             </div>
                             <div class="text-sm text-zinc-500">
-                                Total Orders
+                                Categories
+                            </div>
+                        </div>
+
+                        <div
+                            class="bg-white rounded-xl border border-zinc-200 p-6"
+                        >
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="p-2 bg-violet-50 rounded-lg">
+                                    <i
+                                        data-lucide="refresh-cw"
+                                        class="w-5 h-5 text-violet-600"
+                                    ></i>
+                                </div>
+                                <span class="text-xs text-zinc-500"
+                                    >Turnover Rate</span
+                                >
+                            </div>
+                            <div class="text-2xl font-semibold text-zinc-900">
+                                8.5%
+                            </div>
+                            <div class="text-sm text-emerald-600">
+                                -2% from last year
                             </div>
                         </div>
 
@@ -264,92 +306,77 @@
                             <div class="flex items-center justify-between mb-4">
                                 <div class="p-2 bg-amber-50 rounded-lg">
                                     <i
-                                        data-lucide="clock"
+                                        data-lucide="user-check"
                                         class="w-5 h-5 text-amber-600"
                                     ></i>
                                 </div>
+                                <span class="text-xs text-zinc-500"
+                                    >Attendance</span
+                                >
                             </div>
                             <div class="text-2xl font-semibold text-zinc-900">
-                                3
+                                94%
                             </div>
-                            <div class="text-sm text-zinc-500">Pending</div>
-                        </div>
-
-                        <div
-                            class="bg-white rounded-xl border border-zinc-200 p-6"
-                        >
-                            <div class="flex items-center justify-between mb-4">
-                                <div class="p-2 bg-blue-50 rounded-lg">
-                                    <i
-                                        data-lucide="loader"
-                                        class="w-5 h-5 text-blue-600"
-                                    ></i>
-                                </div>
+                            <div class="text-sm text-zinc-500">
+                                Monthly average
                             </div>
-                            <div class="text-2xl font-semibold text-zinc-900">
-                                4
-                            </div>
-                            <div class="text-sm text-zinc-500">Processing</div>
-                        </div>
-
-                        <div
-                            class="bg-white rounded-xl border border-zinc-200 p-6"
-                        >
-                            <div class="flex items-center justify-between mb-4">
-                                <div class="p-2 bg-emerald-50 rounded-lg">
-                                    <i
-                                        data-lucide="check-circle"
-                                        class="w-5 h-5 text-emerald-600"
-                                    ></i>
-                                </div>
-                            </div>
-                            <div class="text-2xl font-semibold text-zinc-900">
-                                5
-                            </div>
-                            <div class="text-sm text-zinc-500">Completed</div>
                         </div>
                     </div>
 
-                    <!-- Charts Section -->
+                    <!-- Workforce Distribution & Trends -->
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                        <div
+                            class="bg-white rounded-xl border border-zinc-200 p-6"
+                        >
+                            <h3 class="font-semibold text-zinc-900 mb-6">
+                                Workforce by Contract Type
+                            </h3>
+                            <div class="relative h-64">
+                                <canvas id="contractTypeChart"></canvas>
+                            </div>
+                        </div>
+
                         <div
                             class="bg-white rounded-xl border border-zinc-200 p-6"
                         >
                             <div class="flex items-center justify-between mb-6">
                                 <h3 class="font-semibold text-zinc-900">
-                                    Order History
+                                    Workforce Trends (6 Months)
                                 </h3>
                                 <select
                                     class="text-sm border border-zinc-200 rounded-lg px-3 py-1.5 bg-zinc-50"
                                 >
-                                    <option>Last 6 months</option>
-                                    <option>Last year</option>
+                                    <option>All Types</option>
+                                    <option>Permanent</option>
+                                    <option>Contract</option>
+                                    <option>Outsourced</option>
                                 </select>
                             </div>
                             <div class="relative h-64">
-                                <canvas id="companyOrdersChart"></canvas>
-                            </div>
-                        </div>
-
-                        <div
-                            class="bg-white rounded-xl border border-zinc-200 p-6"
-                        >
-                            <h3 class="font-semibold text-zinc-900 mb-6">
-                                Service Distribution
-                            </h3>
-                            <div class="relative h-64">
-                                <canvas id="companyDistributionChart"></canvas>
+                                <canvas id="workforceTrendChart"></canvas>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Active Orders -->
+                    <!-- Department Workforce Distribution -->
+                    <div
+                        class="bg-white rounded-xl border border-zinc-200 p-6 mb-8"
+                    >
+                        <h3 class="font-semibold text-zinc-900 mb-6">
+                            Workforce Distribution by Department
+                        </h3>
+                        <div class="relative h-72">
+                            <canvas id="departmentWorkforceChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Active Manpower Requests Table -->
                     <div
                         class="bg-white rounded-xl border border-zinc-200 p-6 mb-8"
                     >
                         <div class="flex items-center justify-between mb-4">
                             <h3 class="font-semibold text-zinc-900">
-                                Active Orders
+                                Active Manpower Requests
                             </h3>
                             <a
                                 href="orders.html"
@@ -365,22 +392,27 @@
                                         <th
                                             class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase"
                                         >
-                                            Order ID
+                                            Request ID
                                         </th>
                                         <th
                                             class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase"
                                         >
-                                            Type
+                                            Position
                                         </th>
                                         <th
                                             class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase"
                                         >
-                                            Partner
+                                            Department
                                         </th>
                                         <th
                                             class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase"
                                         >
-                                            Schedule
+                                            Quantity
+                                        </th>
+                                        <th
+                                            class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase"
+                                        >
+                                            Contract Type
                                         </th>
                                         <th
                                             class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase"
@@ -390,7 +422,7 @@
                                         <th
                                             class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase"
                                         >
-                                            Progress
+                                            Fulfillment
                                         </th>
                                     </tr>
                                 </thead>
@@ -399,89 +431,53 @@
                                         <td
                                             class="py-3 px-4 text-sm font-medium text-zinc-900"
                                         >
-                                            ORD-2024-008
+                                            MPS-2024-015
                                         </td>
                                         <td class="py-3 px-4">
-                                            <span
-                                                class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-red-50 text-red-700"
-                                            >
-                                                <i
-                                                    data-lucide="heart-pulse"
-                                                    class="w-3 h-3"
-                                                ></i>
-                                                MCU
-                                            </span>
+                                            <div class="font-medium text-zinc-900">
+                                                Production Supervisor
+                                            </div>
+                                            <div class="text-xs text-zinc-500">
+                                                Senior level
+                                            </div>
                                         </td>
                                         <td
                                             class="py-3 px-4 text-sm text-zinc-600"
                                         >
-                                            MediCheck Pro
+                                            Operations
                                         </td>
                                         <td
                                             class="py-3 px-4 text-sm text-zinc-600"
                                         >
-                                            Feb 5, 2024
+                                            5
                                         </td>
                                         <td class="py-3 px-4">
                                             <span
                                                 class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700"
                                             >
-                                                Processing
+                                                Contract
                                             </span>
-                                        </td>
-                                        <td class="py-3 px-4">
-                                            <div
-                                                class="w-24 h-2 bg-zinc-100 rounded-full overflow-hidden"
-                                            >
-                                                <div
-                                                    class="h-full bg-blue-500 rounded-full"
-                                                    style="width: 45%"
-                                                ></div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="hover:bg-zinc-50">
-                                        <td
-                                            class="py-3 px-4 text-sm font-medium text-zinc-900"
-                                        >
-                                            ORD-2024-006
-                                        </td>
-                                        <td class="py-3 px-4">
-                                            <span
-                                                class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700"
-                                            >
-                                                <i
-                                                    data-lucide="graduation-cap"
-                                                    class="w-3 h-3"
-                                                ></i>
-                                                Training
-                                            </span>
-                                        </td>
-                                        <td
-                                            class="py-3 px-4 text-sm text-zinc-600"
-                                        >
-                                            TalentHub Training
-                                        </td>
-                                        <td
-                                            class="py-3 px-4 text-sm text-zinc-600"
-                                        >
-                                            Feb 15, 2024
                                         </td>
                                         <td class="py-3 px-4">
                                             <span
                                                 class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-700"
                                             >
-                                                Pending
+                                                Processing
                                             </span>
                                         </td>
                                         <td class="py-3 px-4">
-                                            <div
-                                                class="w-24 h-2 bg-zinc-100 rounded-full overflow-hidden"
-                                            >
+                                            <div class="flex items-center gap-2">
                                                 <div
-                                                    class="h-full bg-zinc-300 rounded-full"
-                                                    style="width: 0%"
-                                                ></div>
+                                                    class="w-20 h-2 bg-zinc-100 rounded-full overflow-hidden"
+                                                >
+                                                    <div
+                                                        class="h-full bg-amber-500 rounded-full"
+                                                        style="width: 60%"
+                                                    ></div>
+                                                </div>
+                                                <span class="text-sm text-zinc-600"
+                                                    >3/5</span
+                                                >
                                             </div>
                                         </td>
                                     </tr>
@@ -489,44 +485,107 @@
                                         <td
                                             class="py-3 px-4 text-sm font-medium text-zinc-900"
                                         >
-                                            ORD-2024-002
+                                            MPS-2024-014
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <div class="font-medium text-zinc-900">
+                                                Warehouse Staff
+                                            </div>
+                                            <div class="text-xs text-zinc-500">
+                                                Entry level
+                                            </div>
+                                        </td>
+                                        <td
+                                            class="py-3 px-4 text-sm text-zinc-600"
+                                        >
+                                            Logistics
+                                        </td>
+                                        <td
+                                            class="py-3 px-4 text-sm text-zinc-600"
+                                        >
+                                            12
                                         </td>
                                         <td class="py-3 px-4">
                                             <span
-                                                class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700"
+                                                class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700"
                                             >
-                                                <i
-                                                    data-lucide="graduation-cap"
-                                                    class="w-3 h-3"
-                                                ></i>
-                                                Training
+                                                Outsourced
                                             </span>
-                                        </td>
-                                        <td
-                                            class="py-3 px-4 text-sm text-zinc-600"
-                                        >
-                                            TalentHub Training
-                                        </td>
-                                        <td
-                                            class="py-3 px-4 text-sm text-zinc-600"
-                                        >
-                                            Feb 1, 2024
                                         </td>
                                         <td class="py-3 px-4">
                                             <span
                                                 class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700"
                                             >
-                                                Processing
+                                                In Progress
                                             </span>
                                         </td>
                                         <td class="py-3 px-4">
-                                            <div
-                                                class="w-24 h-2 bg-zinc-100 rounded-full overflow-hidden"
-                                            >
+                                            <div class="flex items-center gap-2">
                                                 <div
-                                                    class="h-full bg-blue-500 rounded-full"
-                                                    style="width: 70%"
-                                                ></div>
+                                                    class="w-20 h-2 bg-zinc-100 rounded-full overflow-hidden"
+                                                >
+                                                    <div
+                                                        class="h-full bg-blue-500 rounded-full"
+                                                        style="width: 75%"
+                                                    ></div>
+                                                </div>
+                                                <span class="text-sm text-zinc-600"
+                                                    >9/12</span
+                                                >
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-zinc-50">
+                                        <td
+                                            class="py-3 px-4 text-sm font-medium text-zinc-900"
+                                        >
+                                            MPS-2024-012
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <div class="font-medium text-zinc-900">
+                                                Customer Support
+                                            </div>
+                                            <div class="text-xs text-zinc-500">
+                                                Mid level
+                                            </div>
+                                        </td>
+                                        <td
+                                            class="py-3 px-4 text-sm text-zinc-600"
+                                        >
+                                            Sales
+                                        </td>
+                                        <td
+                                            class="py-3 px-4 text-sm text-zinc-600"
+                                        >
+                                            8
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <span
+                                                class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-purple-50 text-purple-700"
+                                            >
+                                                Permanent
+                                            </span>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <span
+                                                class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700"
+                                            >
+                                                Completed
+                                            </span>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <div class="flex items-center gap-2">
+                                                <div
+                                                    class="w-20 h-2 bg-zinc-100 rounded-full overflow-hidden"
+                                                >
+                                                    <div
+                                                        class="h-full bg-emerald-500 rounded-full"
+                                                        style="width: 100%"
+                                                    ></div>
+                                                </div>
+                                                <span class="text-sm text-emerald-600"
+                                                    >8/8</span
+                                                >
                                             </div>
                                         </td>
                                     </tr>
@@ -535,122 +594,75 @@
                         </div>
                     </div>
 
-                    <!-- AI Summary -->
+                    <!-- AI MPS Insights -->
                     <div
-                        class="bg-gradient-to-br from-violet-50 to-indigo-50 rounded-xl border border-violet-100 p-6"
+                        class="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-xl border border-emerald-100 p-6"
                     >
                         <div class="flex items-center gap-3 mb-4">
                             <div class="p-2 bg-white rounded-lg shadow-sm">
                                 <i
                                     data-lucide="sparkles"
-                                    class="w-5 h-5 text-violet-600"
+                                    class="w-5 h-5 text-emerald-600"
                                 ></i>
                             </div>
                             <div>
                                 <h3 class="font-semibold text-zinc-900">
-                                    AI Summary for TechCorp
+                                    AI Workforce Insights
                                 </h3>
                                 <p class="text-sm text-zinc-500">
-                                    Based on your workforce data
+                                    Based on supply analytics
                                 </p>
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div class="bg-white rounded-lg p-4 shadow-sm">
-                                <div class="flex items-center gap-2 mb-1">
+                                <div class="flex items-center gap-2 mb-2">
                                     <i
-                                        data-lucide="heart"
+                                        data-lucide="trending-up"
                                         class="w-4 h-4 text-emerald-600"
                                     ></i>
-                                    <span
-                                        class="text-sm font-medium text-zinc-900"
-                                        >Health Score</span
+                                    <span class="text-sm font-medium text-zinc-900"
+                                        >Demand Forecast</span
                                     >
                                 </div>
-                                <div class="text-2xl font-bold text-zinc-900">
-                                    82/100
-                                </div>
-                                <div class="text-xs text-emerald-600">
-                                    +5 from last quarter
-                                </div>
+                                <p class="text-sm text-zinc-600">
+                                    Operations department projected to need 15%
+                                    additional workforce in Q3 due to seasonal
+                                    demand.
+                                </p>
                             </div>
 
                             <div class="bg-white rounded-lg p-4 shadow-sm">
-                                <div class="flex items-center gap-2 mb-1">
+                                <div class="flex items-center gap-2 mb-2">
                                     <i
-                                        data-lucide="brain"
-                                        class="w-4 h-4 text-blue-600"
-                                    ></i>
-                                    <span
-                                        class="text-sm font-medium text-zinc-900"
-                                        >Mental Readiness</span
-                                    >
-                                </div>
-                                <div class="text-2xl font-bold text-zinc-900">
-                                    85/100
-                                </div>
-                                <div class="text-xs text-zinc-500">Stable</div>
-                            </div>
-
-                            <div class="bg-white rounded-lg p-4 shadow-sm">
-                                <div class="flex items-center gap-2 mb-1">
-                                    <i
-                                        data-lucide="zap"
+                                        data-lucide="alert-circle"
                                         class="w-4 h-4 text-amber-600"
                                     ></i>
-                                    <span
-                                        class="text-sm font-medium text-zinc-900"
-                                        >Training Score</span
+                                    <span class="text-sm font-medium text-zinc-900"
+                                        >Retention Alert</span
                                     >
                                 </div>
-                                <div class="text-2xl font-bold text-zinc-900">
-                                    76/100
-                                </div>
-                                <div class="text-xs text-emerald-600">
-                                    +12% improvement
-                                </div>
+                                <p class="text-sm text-zinc-600">
+                                    Engineering department showing 12% higher
+                                    turnover. Recommend retention program review.
+                                </p>
                             </div>
 
                             <div class="bg-white rounded-lg p-4 shadow-sm">
-                                <div class="flex items-center gap-2 mb-1">
+                                <div class="flex items-center gap-2 mb-2">
                                     <i
-                                        data-lucide="shield"
-                                        class="w-4 h-4 text-emerald-600"
+                                        data-lucide="check-circle"
+                                        class="w-4 h-4 text-blue-600"
                                     ></i>
-                                    <span
-                                        class="text-sm font-medium text-zinc-900"
-                                        >Risk Level</span
+                                    <span class="text-sm font-medium text-zinc-900"
+                                        >Optimization</span
                                     >
                                 </div>
-                                <div class="text-2xl font-bold text-zinc-900">
-                                    Low
-                                </div>
-                                <div class="text-xs text-emerald-600">
-                                    28/100 score
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mt-4 bg-white rounded-lg p-4 shadow-sm">
-                            <div class="flex items-start gap-3">
-                                <i
-                                    data-lucide="lightbulb"
-                                    class="w-5 h-5 text-violet-600 flex-shrink-0 mt-0.5"
-                                ></i>
-                                <div>
-                                    <div class="font-medium text-zinc-900">
-                                        Recommendation
-                                    </div>
-                                    <p class="text-sm text-zinc-600 mt-1">
-                                        Your workforce health has improved
-                                        significantly. Consider scheduling the
-                                        next MCU for Q3 to maintain this
-                                        positive trend. Three employees in the
-                                        Operations department may benefit from
-                                        stress management training.
-                                    </p>
-                                </div>
+                                <p class="text-sm text-zinc-600">
+                                    Consider converting 5 high-performing contract
+                                    staff in Finance to permanent positions.
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -659,103 +671,164 @@
         </div>
 
         <script>
-            function companyDashboard() {
+            function mpsAnalytic() {
                 return {
                     initCharts() {
-                        // Orders Chart
-                        const ordersCtx = document
-                            .getElementById("companyOrdersChart")
-                            .getContext("2d");
-                        new Chart(ordersCtx, {
-                            type: "bar",
-                            data: {
-                                labels: [
-                                    "Aug",
-                                    "Sep",
-                                    "Oct",
-                                    "Nov",
-                                    "Dec",
-                                    "Jan",
-                                ],
-                                datasets: [
-                                    {
-                                        label: "Completed",
-                                        data: [2, 1, 3, 2, 1, 2],
-                                        backgroundColor: "#10b981",
-                                        borderRadius: 4,
-                                    },
-                                    {
-                                        label: "New",
-                                        data: [1, 2, 1, 2, 1, 2],
-                                        backgroundColor: "#3b82f6",
-                                        borderRadius: 4,
-                                    },
-                                ],
-                            },
-                            options: {
-                                responsive: true,
-                                maintainAspectRatio: false,
-                                plugins: {
-                                    legend: {
-                                        position: "bottom",
-                                    },
+                        // Contract Type Distribution Chart
+                        new Chart(
+                            document.getElementById("contractTypeChart"),
+                            {
+                                type: "doughnut",
+                                data: {
+                                    labels: [
+                                        "Permanent",
+                                        "Contract",
+                                        "Outsourced",
+                                        "Part-time",
+                                    ],
+                                    datasets: [
+                                        {
+                                            data: [145, 65, 28, 7],
+                                            backgroundColor: [
+                                                "#10b981",
+                                                "#3b82f6",
+                                                "#8b5cf6",
+                                                "#f59e0b",
+                                            ],
+                                            borderWidth: 0,
+                                        },
+                                    ],
                                 },
-                                scales: {
-                                    y: {
-                                        beginAtZero: true,
-                                        grid: { color: "#f4f4f5" },
-                                        ticks: {
-                                            stepSize: 1,
+                                options: {
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    cutout: "70%",
+                                    plugins: {
+                                        legend: {
+                                            position: "bottom",
                                         },
                                     },
-                                    x: {
-                                        grid: { display: false },
-                                    },
                                 },
                             },
-                        });
+                        );
 
-                        // Distribution Chart
-                        const distributionCtx = document
-                            .getElementById("companyDistributionChart")
-                            .getContext("2d");
-                        new Chart(distributionCtx, {
-                            type: "doughnut",
-                            data: {
-                                labels: [
-                                    "MCU",
-                                    "Training",
-                                    "Psych Test",
-                                    "Man Power",
-                                ],
-                                datasets: [
-                                    {
-                                        data: [4, 5, 2, 1],
-                                        backgroundColor: [
-                                            "#ef4444",
-                                            "#3b82f6",
-                                            "#8b5cf6",
-                                            "#10b981",
-                                        ],
-                                        borderWidth: 0,
-                                    },
-                                ],
-                            },
-                            options: {
-                                responsive: true,
-                                maintainAspectRatio: false,
-                                cutout: "70%",
-                                plugins: {
-                                    legend: {
-                                        position: "bottom",
-                                        labels: {
-                                            usePointStyle: true,
-                                            padding: 15,
+                        // Workforce Trends Chart
+                        new Chart(
+                            document.getElementById("workforceTrendChart"),
+                            {
+                                type: "line",
+                                data: {
+                                    labels: [
+                                        "Aug",
+                                        "Sep",
+                                        "Oct",
+                                        "Nov",
+                                        "Dec",
+                                        "Jan",
+                                    ],
+                                    datasets: [
+                                        {
+                                            label: "Total Workforce",
+                                            data: [225, 230, 232, 235, 240, 245],
+                                            borderColor: "#10b981",
+                                            backgroundColor:
+                                                "rgba(16, 185, 129, 0.1)",
+                                            tension: 0.4,
+                                            fill: true,
+                                        },
+                                        {
+                                            label: "New Hires",
+                                            data: [8, 12, 5, 8, 10, 15],
+                                            borderColor: "#3b82f6",
+                                            backgroundColor:
+                                                "rgba(59, 130, 246, 0.1)",
+                                            tension: 0.4,
+                                            fill: true,
+                                        },
+                                        {
+                                            label: "Terminations",
+                                            data: [3, 5, 7, 5, 3, 5],
+                                            borderColor: "#ef4444",
+                                            backgroundColor:
+                                                "rgba(239, 68, 68, 0.1)",
+                                            tension: 0.4,
+                                            fill: true,
+                                        },
+                                    ],
+                                },
+                                options: {
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    plugins: { legend: { position: "bottom" } },
+                                    scales: {
+                                        y: {
+                                            beginAtZero: true,
+                                            grid: { color: "#f4f4f5" },
+                                        },
+                                        x: {
+                                            grid: { display: false },
                                         },
                                     },
                                 },
                             },
-                        });
+                        );
+
+                        // Department Workforce Chart
+                        new Chart(
+                            document.getElementById("departmentWorkforceChart"),
+                            {
+                                type: "bar",
+                                data: {
+                                    labels: [
+                                        "Operations",
+                                        "Engineering",
+                                        "Finance",
+                                        "HR",
+                                        "Sales",
+                                        "Marketing",
+                                        "Logistics",
+                                    ],
+                                    datasets: [
+                                        {
+                                            label: "Permanent",
+                                            data: [45, 52, 18, 8, 12, 6, 4],
+                                            backgroundColor: "#10b981",
+                                            borderRadius: 4,
+                                        },
+                                        {
+                                            label: "Contract",
+                                            data: [25, 8, 8, 2, 10, 4, 8],
+                                            backgroundColor: "#3b82f6",
+                                            borderRadius: 4,
+                                        },
+                                        {
+                                            label: "Outsourced",
+                                            data: [12, 0, 2, 0, 8, 2, 4],
+                                            backgroundColor: "#8b5cf6",
+                                            borderRadius: 4,
+                                        },
+                                    ],
+                                },
+                                options: {
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    plugins: {
+                                        legend: { position: "bottom" },
+                                    },
+                                    scales: {
+                                        x: {
+                                            stacked: true,
+                                            grid: { display: false },
+                                        },
+                                        y: {
+                                            stacked: true,
+                                            beginAtZero: true,
+                                            grid: { color: "#f4f4f5" },
+                                        },
+                                    },
+                                },
+                            },
+                        );
                     },
                 };
             }

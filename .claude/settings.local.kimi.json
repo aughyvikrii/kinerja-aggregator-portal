@@ -1,0 +1,12 @@
+{
+  "apiKeyHelper": "echo sk-MkRqmxlP3AMJH1897AvuonPeCE8xyWIkJFZ3LQ0MdKqaeAAW",
+  "env": {
+    "ANTHROPIC_BASE_URL": "https://api.moonshot.ai/anthropic",
+    "ANTHROPIC_MODEL": "kimi-k2.5",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "kimi-k2.5",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "kimi-k2.5",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "kimi-k2.5",
+    "CLAUDE_CODE_SUBAGENT_MODEL": "kimi-k2.5",
+    "ENABLE_TOOL_SEARCH": "false"
+  }
+}

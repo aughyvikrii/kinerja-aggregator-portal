@@ -81,13 +81,63 @@
                         <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
                         Dashboard
                     </a>
-                    <a
-                        href="employee-database.html"
-                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium bg-zinc-100 text-zinc-900 rounded-lg"
-                    >
-                        <i data-lucide="users" class="w-4 h-4"></i>
-                        Employee Database
-                    </a>
+                    <!-- Employee Database with Submenu -->
+                    <div x-data="{ open: true }" x-init="open = true">
+                        <button
+                            @click="open = !open"
+                            class="w-full flex items-center justify-between px-3 py-2 text-sm font-medium bg-zinc-100 text-zinc-900 rounded-lg"
+                        >
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="users" class="w-4 h-4"></i>
+                                Employee Database
+                            </div>
+                            <i
+                                data-lucide="chevron-down"
+                                class="w-4 h-4 transition-transform"
+                                :class="open ? '' : '-rotate-90'"
+                            ></i>
+                        </button>
+                        <div
+                            x-show="open"
+                            x-transition
+                            class="mt-1 ml-4 space-y-1"
+                        >
+                            <a
+                                href="employee-database.html"
+                                class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                            >
+                                <i data-lucide="list" class="w-4 h-4"></i>
+                                All Employees
+                            </a>
+                            <a
+                                href="medical-analytic.html"
+                                class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                            >
+                                <i
+                                    data-lucide="heart-pulse"
+                                    class="w-4 h-4"
+                                ></i>
+                                Medical Analytic
+                            </a>
+                            <a
+                                href="training-analytic.html"
+                                class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                            >
+                                <i
+                                    data-lucide="graduation-cap"
+                                    class="w-4 h-4"
+                                ></i>
+                                Training Analytic
+                            </a>
+                            <a
+                                href="mps-analytic.html"
+                                class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                            >
+                                <i data-lucide="users-2" class="w-4 h-4"></i>
+                                MPS Analytic
+                            </a>
+                        </div>
+                    </div>
                     <a
                         href="orders.html"
                         class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
@@ -488,25 +538,576 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Categorized Detail Tabs -->
+                    <div
+                        class="bg-white rounded-xl border border-zinc-200 mb-8"
+                        x-data="{ activeTab: 'medical' }"
+                    >
+                        <!-- Tab Navigation -->
                         <div
-                            class="bg-white rounded-xl border border-zinc-200 p-6"
+                            class="border-b border-zinc-200 px-6 flex items-center gap-6"
                         >
-                            <h3 class="font-semibold text-zinc-900 mb-4">
-                                Health Trends (6 Months)
-                            </h3>
-                            <div class="relative h-64">
-                                <canvas id="healthTrendChart"></canvas>
+                            <button
+                                @click="activeTab = 'medical'"
+                                class="flex items-center gap-2 py-4 text-sm font-medium border-b-2 transition-colors"
+                                :class="activeTab === 'medical' ? 'border-red-500 text-red-600' : 'border-transparent text-zinc-500 hover:text-zinc-700'"
+                            >
+                                <i data-lucide="heart-pulse" class="w-4 h-4"></i>
+                                Medical Details
+                            </button>
+                            <button
+                                @click="activeTab = 'training'"
+                                class="flex items-center gap-2 py-4 text-sm font-medium border-b-2 transition-colors"
+                                :class="activeTab === 'training' ? 'border-blue-500 text-blue-600' : 'border-transparent text-zinc-500 hover:text-zinc-700'"
+                            >
+                                <i data-lucide="graduation-cap" class="w-4 h-4"></i>
+                                Training Records
+                            </button>
+                            <button
+                                @click="activeTab = 'mps'"
+                                class="flex items-center gap-2 py-4 text-sm font-medium border-b-2 transition-colors"
+                                :class="activeTab === 'mps' ? 'border-emerald-500 text-emerald-600' : 'border-transparent text-zinc-500 hover:text-zinc-700'"
+                            >
+                                <i data-lucide="users-2" class="w-4 h-4"></i>
+                                MPS Details
+                            </button>
+                        </div>
+
+                        <!-- Medical Tab Content -->
+                        <div
+                            x-show="activeTab === 'medical'"
+                            class="p-6"
+                            x-transition
+                        >
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                <div>
+                                    <h4 class="font-medium text-zinc-900 mb-4">
+                                        Health Trends (6 Months)
+                                    </h4>
+                                    <div class="relative h-64">
+                                        <canvas id="healthTrendChart"></canvas>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-zinc-900 mb-4">
+                                        Risk Distribution
+                                    </h4>
+                                    <div class="relative h-64">
+                                        <canvas id="riskDistributionChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-6 pt-6 border-t border-zinc-100">
+                                <h4 class="font-medium text-zinc-900 mb-4">
+                                    MCU History
+                                </h4>
+                                <div class="overflow-x-auto">
+                                    <table class="w-full">
+                                        <thead class="bg-zinc-50">
+                                            <tr>
+                                                <th
+                                                    class="text-left py-2 px-4 text-xs font-semibold text-zinc-500 uppercase"
+                                                >
+                                                    Date
+                                                </th>
+                                                <th
+                                                    class="text-left py-2 px-4 text-xs font-semibold text-zinc-500 uppercase"
+                                                >
+                                                    Provider
+                                                </th>
+                                                <th
+                                                    class="text-left py-2 px-4 text-xs font-semibold text-zinc-500 uppercase"
+                                                >
+                                                    Result
+                                                </th>
+                                                <th
+                                                    class="text-left py-2 px-4 text-xs font-semibold text-zinc-500 uppercase"
+                                                >
+                                                    Status
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-zinc-100"
+                                        >
+                                            <tr>
+                                                <td
+                                                    class="py-3 px-4 text-sm text-zinc-900"
+                                                >
+                                                    Jan 15, 2024
+                                                </td>
+                                                <td
+                                                    class="py-3 px-4 text-sm text-zinc-600"
+                                                >
+                                                    MediCheck Pro
+                                                </td>
+                                                <td
+                                                    class="py-3 px-4 text-sm text-zinc-600"
+                                                >
+                                                    High BP, Elevated Glucose
+                                                </td>
+                                                <td class="py-3 px-4">
+                                                    <span
+                                                        class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-700"
+                                                    >
+                                                        Follow-up Required
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td
+                                                    class="py-3 px-4 text-sm text-zinc-900"
+                                                >
+                                                    Jul 10, 2023
+                                                </td>
+                                                <td
+                                                    class="py-3 px-4 text-sm text-zinc-600"
+                                                >
+                                                    MediCheck Pro
+                                                </td>
+                                                <td
+                                                    class="py-3 px-4 text-sm text-zinc-600"
+                                                >
+                                                    Slightly Elevated BP
+                                                </td>
+                                                <td class="py-3 px-4">
+                                                    <span
+                                                        class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700"
+                                                    >
+                                                        Normal
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
+
+                        <!-- Training Tab Content -->
                         <div
-                            class="bg-white rounded-xl border border-zinc-200 p-6"
+                            x-show="activeTab === 'training'"
+                            class="p-6"
+                            x-transition
                         >
-                            <h3 class="font-semibold text-zinc-900 mb-4">
-                                Risk Distribution
-                            </h3>
-                            <div class="relative h-64">
-                                <canvas id="riskDistributionChart"></canvas>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6"
+                            >
+                                <div
+                                    class="bg-blue-50 rounded-lg p-4 border border-blue-100"
+                                >
+                                    <div class="text-sm text-blue-600 mb-1">
+                                        Total Trainings
+                                    </div>
+                                    <div
+                                        class="text-2xl font-semibold text-zinc-900"
+                                    >
+                                        12
+                                    </div>
+                                </div>
+                                <div
+                                    class="bg-emerald-50 rounded-lg p-4 border border-emerald-100"
+                                >
+                                    <div class="text-sm text-emerald-600 mb-1"
+                                    >
+                                        Completed
+                                    </div>
+                                    <div
+                                        class="text-2xl font-semibold text-zinc-900"
+                                    >
+                                        10
+                                    </div>
+                                </div>
+                                <div
+                                    class="bg-amber-50 rounded-lg p-4 border border-amber-100"
+                                >
+                                    <div class="text-sm text-amber-600 mb-1"
+                                    >
+                                        In Progress
+                                    </div>
+                                    <div
+                                        class="text-2xl font-semibold text-zinc-900"
+                                    >
+                                        2
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h4 class="font-medium text-zinc-900 mb-4">
+                                Training Records
+                            </h4>
+                            <div class="overflow-x-auto">
+                                <table class="w-full">
+                                    <thead class="bg-zinc-50">
+                                        <tr>
+                                            <th
+                                                class="text-left py-2 px-4 text-xs font-semibold text-zinc-500 uppercase"
+                                            >
+                                                Program Name
+                                            </th>
+                                            <th
+                                                class="text-left py-2 px-4 text-xs font-semibold text-zinc-500 uppercase"
+                                            >
+                                                Category
+                                            </th>
+                                            <th
+                                                class="text-left py-2 px-4 text-xs font-semibold text-zinc-500 uppercase"
+                                            >
+                                                Date
+                                            </th>
+                                            <th
+                                                class="text-left py-2 px-4 text-xs font-semibold text-zinc-500 uppercase"
+                                            >
+                                                Score
+                                            </th>
+                                            <th
+                                                class="text-left py-2 px-4 text-xs font-semibold text-zinc-500 uppercase"
+                                            >
+                                                Status
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-zinc-100"
+                                    >
+                                        <tr>
+                                            <td
+                                                class="py-3 px-4 text-sm font-medium text-zinc-900"
+                                            >
+                                                Safety Compliance 2024
+                                            </td>
+                                            <td class="py-3 px-4"
+                                            >
+                                                <span
+                                                    class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-700"
+                                                >
+                                                    Compliance
+                                                </span>
+                                            </td>
+                                            <td
+                                                class="py-3 px-4 text-sm text-zinc-600"
+                                            >
+                                                Jan 5, 2024
+                                            </td>
+                                            <td
+                                                class="py-3 px-4 text-sm font-medium text-zinc-900"
+                                            >
+                                                88/100
+                                            </td>
+                                            <td class="py-3 px-4"
+                                            >
+                                                <span
+                                                    class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700"
+                                                >
+                                                    Completed
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td
+                                                class="py-3 px-4 text-sm font-medium text-zinc-900"
+                                            >
+                                                First Aid Certification
+                                            </td>
+                                            <td class="py-3 px-4"
+                                            >
+                                                <span
+                                                    class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-red-50 text-red-700"
+                                                >
+                                                    Safety
+                                                </span>
+                                            </td>
+                                            <td
+                                                class="py-3 px-4 text-sm text-zinc-600"
+                                            >
+                                                Dec 12, 2023
+                                            </td>
+                                            <td
+                                                class="py-3 px-4 text-sm font-medium text-zinc-900"
+                                            >
+                                                92/100
+                                            </td>
+                                            <td class="py-3 px-4"
+                                            >
+                                                <span
+                                                    class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700"
+                                                >
+                                                    Completed
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td
+                                                class="py-3 px-4 text-sm font-medium text-zinc-900"
+                                            >
+                                                Team Leadership Basics
+                                            </td>
+                                            <td class="py-3 px-4"
+                                            >
+                                                <span
+                                                    class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-violet-50 text-violet-700"
+                                                >
+                                                    Soft Skills
+                                                </span>
+                                            </td>
+                                            <td
+                                                class="py-3 px-4 text-sm text-zinc-600"
+                                            >
+                                                Nov 20, 2023
+                                            </td>
+                                            <td
+                                                class="py-3 px-4 text-sm font-medium text-zinc-900"
+                                            >
+                                                85/100
+                                            </td>
+                                            <td class="py-3 px-4"
+                                            >
+                                                <span
+                                                    class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700"
+                                                >
+                                                    Completed
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td
+                                                class="py-3 px-4 text-sm font-medium text-zinc-900"
+                                            >
+                                                Equipment Operation Advanced
+                                            </td>
+                                            <td class="py-3 px-4"
+                                            >
+                                                <span
+                                                    class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700"
+                                                >
+                                                    Technical
+                                                </span>
+                                            </td>
+                                            <td
+                                                class="py-3 px-4 text-sm text-zinc-600"
+                                            >
+                                                Ongoing
+                                            </td>
+                                            <td
+                                                class="py-3 px-4 text-sm text-zinc-500"
+                                            >
+                                                -
+                                            </td>
+                                            <td class="py-3 px-4"
+                                            >
+                                                <span
+                                                    class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700"
+                                                >
+                                                    In Progress
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- MPS Tab Content -->
+                        <div
+                            x-show="activeTab === 'mps'"
+                            class="p-6"
+                            x-transition
+                        >
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6"
+                            >
+                                <div
+                                    class="bg-emerald-50 rounded-lg p-4 border border-emerald-100"
+                                >
+                                    <div class="text-sm text-emerald-600 mb-1"
+                                    >
+                                        Employment Type
+                                    </div>
+                                    <div
+                                        class="text-lg font-semibold text-zinc-900"
+                                    >
+                                        Permanent Employee
+                                    </div>
+                                </div>
+                                <div
+                                    class="bg-blue-50 rounded-lg p-4 border border-blue-100"
+                                >
+                                    <div class="text-sm text-blue-600 mb-1"
+                                    >
+                                        Years of Service
+                                    </div>
+                                    <div
+                                        class="text-lg font-semibold text-zinc-900"
+                                    >
+                                        3.5 Years
+                                    </div>
+                                </div>
+                                <div
+                                    class="bg-violet-50 rounded-lg p-4 border border-violet-100"
+                                >
+                                    <div class="text-sm text-violet-600 mb-1"
+                                    >
+                                        Monthly Attendance
+                                    </div>
+                                    <div
+                                        class="text-lg font-semibold text-zinc-900"
+                                    >
+                                        96.5%
+                                    </div>
+                                </div>
+                                <div
+                                    class="bg-amber-50 rounded-lg p-4 border border-amber-100"
+                                >
+                                    <div class="text-sm text-amber-600 mb-1"
+                                    >
+                                        Performance Rating
+                                    </div>
+                                    <div
+                                        class="text-lg font-semibold text-zinc-900"
+                                    >
+                                        Exceeds Expectations
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h4 class="font-medium text-zinc-900 mb-4">
+                                Workforce History
+                            </h4>
+                            <div class="overflow-x-auto"
+003e
+                                <table class="w-full">
+                                    <thead class="bg-zinc-50">
+                                        <tr>
+                                            <th
+                                                class="text-left py-2 px-4 text-xs font-semibold text-zinc-500 uppercase"
+                                            >
+                                                Period
+                                            </th>
+                                            <th
+                                                class="text-left py-2 px-4 text-xs font-semibold text-zinc-500 uppercase"
+                                            >
+                                                Position
+                                            </th>
+                                            <th
+                                                class="text-left py-2 px-4 text-xs font-semibold text-zinc-500 uppercase"
+                                            >
+                                                Department
+                                            </th>
+                                            <th
+                                                class="text-left py-2 px-4 text-xs font-semibold text-zinc-500 uppercase"
+                                            >
+                                                Contract Type
+                                            </th>
+                                            <th
+                                                class="text-left py-2 px-4 text-xs font-semibold text-zinc-500 uppercase"
+                                            >
+                                                Provider
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-zinc-100"
+                                    >
+                                        <tr>
+                                            <td
+                                                class="py-3 px-4 text-sm text-zinc-900"
+                                            >
+                                                Jul 2022 - Present
+                                            </td>
+                                            <td
+                                                class="py-3 px-4 text-sm font-medium text-zinc-900"
+                                            >
+                                                Operations Supervisor
+                                            </td>
+                                            <td
+                                                class="py-3 px-4 text-sm text-zinc-600"
+                                            >
+                                                Operations
+                                            </td>
+                                            <td class="py-3 px-4"
+                                            >
+                                                <span
+                                                    class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700"
+                                                >
+                                                    Permanent
+                                                </span>
+                                            </td>
+                                            <td
+                                                class="py-3 px-4 text-sm text-zinc-600"
+                                            >
+                                                Direct Hire
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td
+                                                class="py-3 px-4 text-sm text-zinc-900"
+                                            >
+                                                Jan 2021 - Jun 2022
+                                            </td>
+                                            <td
+                                                class="py-3 px-4 text-sm font-medium text-zinc-900"
+                                            >
+                                                Operations Staff
+                                            </td>
+                                            <td
+                                                class="py-3 px-4 text-sm text-zinc-600"
+                                            >
+                                                Operations
+                                            </td>
+                                            <td class="py-3 px-4"
+                                            >
+                                                <span
+                                                    class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700"
+                                                >
+                                                    Contract
+                                                </span>
+                                            </td>
+                                            <td
+                                                class="py-3 px-4 text-sm text-zinc-600"
+                                            >
+                                                PT Mandiri Sejahtera
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="mt-6 pt-6 border-t border-zinc-100"
+                            >
+                                <h4 class="font-medium text-zinc-900 mb-4"
+                                >
+                                    Assignment History
+                                </h4>
+                                <div class="space-y-4"
+                                >
+                                    <div
+                                        class="flex items-start gap-4 p-4 bg-zinc-50 rounded-lg"
+                                    >
+                                        <div
+                                            class="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center flex-shrink-0"
+                                        >
+                                            <i
+                                                data-lucide="building-2"
+                                                class="w-5 h-5 text-emerald-600"
+                                            ></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <div
+                                                class="font-medium text-zinc-900"
+                                            >
+                                                Site A - Manufacturing Plant
+                                            </div>
+                                            <div class="text-sm text-zinc-500"
+                                            >
+                                                Jul 2022 - Present · Jakarta
+                                            </div>
+                                            <div class="mt-2"
+                                            >
+                                                <span
+                                                    class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700"
+                                                >
+                                                    Primary Assignment
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

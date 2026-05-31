@@ -1,0 +1,895 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Medical Analytic - SolusiSDM</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+        ></script>
+        <script src="https://unpkg.com/lucide@latest"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: { sans: ["Inter", "sans-serif"] },
+                        colors: {
+                            zinc: {
+                                50: "#fafafa",
+                                100: "#f4f4f5",
+                                200: "#e4e4e7",
+                                300: "#d4d4d8",
+                                400: "#a1a1aa",
+                                500: "#71717a",
+                                600: "#52525b",
+                                700: "#3f3f46",
+                                800: "#27272a",
+                                900: "#18181b",
+                            },
+                        },
+                    },
+                },
+            };
+        </script>
+    </head>
+    <body
+        class="bg-zinc-50 font-sans"
+        x-data="medicalAnalytic()"
+        x-init="initCharts(); lucide.createIcons()"
+    >
+        <div class="flex h-screen">
+            <!-- Sidebar -->
+            <aside class="w-64 bg-white border-r border-zinc-200 flex flex-col">
+                <div class="p-6 border-b border-zinc-100">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center"
+                        >
+                            <i
+                                data-lucide="building-2"
+                                class="w-4 h-4 text-white"
+                            ></i>
+                        </div>
+                        <div>
+                            <span class="font-semibold text-zinc-900"
+                                >TechCorp</span
+                            >
+                            <p class="text-xs text-zinc-500">Company View</p>
+                        </div>
+                    </div>
+                </div>
+
+                <nav class="flex-1 p-4 space-y-1 overflow-y-auto">
+                    <div
+                        class="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2 px-3"
+                    >
+                        Overview
+                    </div>
+                    <a
+                        href="dashboard.html"
+                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                    >
+                        <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                        Dashboard
+                    </a>
+
+                    <!-- Employee Database with Submenu -->
+                    <div x-data="{ open: true }">
+                        <button
+                            @click="open = !open"
+                            class="w-full flex items-center justify-between px-3 py-2 text-sm font-medium bg-zinc-100 text-zinc-900 rounded-lg"
+                        >
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="users" class="w-4 h-4"></i>
+                                Employee Database
+                            </div>
+                            <i
+                                data-lucide="chevron-down"
+                                class="w-4 h-4 transition-transform"
+                                :class="open ? '' : '-rotate-90'"
+                            ></i>
+                        </button>
+                        <div
+                            x-show="open"
+                            x-transition
+                            class="mt-1 ml-4 space-y-1"
+                        >
+                            <a
+                                href="employee-database.html"
+                                class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                            >
+                                <i data-lucide="list" class="w-4 h-4"></i>
+                                All Employees
+                            </a>
+                            <a
+                                href="medical-analytic.html"
+                                class="flex items-center gap-3 px-3 py-2 text-sm font-medium bg-red-50 text-red-700 rounded-lg"
+                            >
+                                <i
+                                    data-lucide="heart-pulse"
+                                    class="w-4 h-4"
+                                ></i>
+                                Medical Analytic
+                            </a>
+                            <a
+                                href="training-analytic.html"
+                                class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                            >
+                                <i
+                                    data-lucide="graduation-cap"
+                                    class="w-4 h-4"
+                                ></i>
+                                Training Analytic
+                            </a>
+                            <a
+                                href="mps-analytic.html"
+                                class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                            >
+                                <i data-lucide="users-2" class="w-4 h-4"></i>
+                                MPS Analytic
+                            </a>
+                        </div>
+                    </div>
+
+                    <a
+                        href="orders.html"
+                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                    >
+                        <i data-lucide="clipboard-list" class="w-4 h-4"></i>
+                        My Orders
+                    </a>
+                    <a
+                        href="analytics.html"
+                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                    >
+                        <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
+                        Analytics
+                    </a>
+
+                    <div
+                        class="text-xs font-semibold text-zinc-400 uppercase tracking-wider mt-6 mb-2 px-3"
+                    >
+                        External
+                    </div>
+                    <a
+                        href="../../hr-app/dashboard.html"
+                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                    >
+                        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                        Back to HR App
+                    </a>
+                    <a
+                        href="../login.html"
+                        class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-50 rounded-lg"
+                    >
+                        <i data-lucide="log-out" class="w-4 h-4"></i>
+                        Sign Out
+                    </a>
+                </nav>
+            </aside>
+
+            <main class="flex-1 overflow-y-auto">
+                <header class="bg-white border-b border-zinc-200 px-8 py-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h1 class="text-xl font-semibold text-zinc-900">
+                                Medical Analytic
+                            </h1>
+                            <p class="text-sm text-zinc-500">
+                                Employee health & medical check-up analytics
+                            </p>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <button
+                                class="p-2 text-zinc-400 hover:text-zinc-600 relative"
+                            >
+                                <i data-lucide="bell" class="w-5 h-5"></i>
+                            </button>
+                            <div class="flex items-center gap-3">
+                                <div
+                                    class="w-8 h-8 bg-zinc-200 rounded-full flex items-center justify-center"
+                                >
+                                    <i
+                                        data-lucide="user"
+                                        class="w-4 h-4 text-zinc-600"
+                                    ></i>
+                                </div>
+                                <div class="text-sm">
+                                    <div class="font-medium text-zinc-900">
+                                        View Only
+                                    </div>
+                                    <div class="text-zinc-500">Company</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="p-8">
+                    <!-- Read-only Banner -->
+                    <div
+                        class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-8 flex items-center gap-3"
+                    >
+                        <i
+                            data-lucide="info"
+                            class="w-5 h-5 text-blue-600 flex-shrink-0"
+                        ></i>
+                        <p class="text-sm text-blue-700">
+                            This is a read-only view. Contact your partner for
+                            data corrections or questions about health
+                            assessments.
+                        </p>
+                    </div>
+
+                    <!-- KPI Cards -->
+                    <div
+                        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8"
+                    >
+                        <div
+                            class="bg-white rounded-xl border border-zinc-200 p-6"
+                        >
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="p-2 bg-red-50 rounded-lg">
+                                    <i
+                                        data-lucide="heart-pulse"
+                                        class="w-5 h-5 text-red-600"
+                                    ></i>
+                                </div>
+                                <span class="text-xs text-zinc-500"
+                                    >Total MCU</span
+                                >
+                            </div>
+                            <div class="text-2xl font-semibold text-zinc-900">
+                                245
+                            </div>
+                            <div class="text-sm text-zinc-500">
+                                Employees checked
+                            </div>
+                        </div>
+
+                        <div
+                            class="bg-white rounded-xl border border-zinc-200 p-6"
+                        >
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="p-2 bg-amber-50 rounded-lg">
+                                    <i
+                                        data-lucide="alert-triangle"
+                                        class="w-5 h-5 text-amber-600"
+                                    ></i>
+                                </div>
+                                <span class="text-xs text-zinc-500"
+                                    >At Risk</span
+                                >
+                            </div>
+                            <div class="text-2xl font-semibold text-zinc-900">
+                                42
+                            </div>
+                            <div class="text-sm text-amber-600">
+                                17.1% of workforce
+                            </div>
+                        </div>
+
+                        <div
+                            class="bg-white rounded-xl border border-zinc-200 p-6"
+                        >
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="p-2 bg-emerald-50 rounded-lg">
+                                    <i
+                                        data-lucide="check-circle"
+                                        class="w-5 h-5 text-emerald-600"
+                                    ></i>
+                                </div>
+                                <span class="text-xs text-zinc-500"
+                                    >Healthy</span
+                                >
+                            </div>
+                            <div class="text-2xl font-semibold text-zinc-900">
+                                203
+                            </div>
+                            <div class="text-sm text-emerald-600">
+                                82.9% of workforce
+                            </div>
+                        </div>
+
+                        <div
+                            class="bg-white rounded-xl border border-zinc-200 p-6"
+                        >
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="p-2 bg-blue-50 rounded-lg">
+                                    <i
+                                        data-lucide="calendar"
+                                        class="w-5 h-5 text-blue-600"
+                                    ></i>
+                                </div>
+                                <span class="text-xs text-zinc-500"
+                                    >Next MCU</span
+                                >
+                            </div>
+                            <div class="text-2xl font-semibold text-zinc-900">
+                                Q3 2024
+                            </div>
+                            <div class="text-sm text-zinc-500">
+                                89 days remaining
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Health Risk Distribution & Trends -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                        <div
+                            class="bg-white rounded-xl border border-zinc-200 p-6"
+                        >
+                            <h3 class="font-semibold text-zinc-900 mb-6">
+                                Health Risk Distribution
+                            </h3>
+                            <div class="relative h-64">
+                                <canvas id="riskDistributionChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div
+                            class="bg-white rounded-xl border border-zinc-200 p-6"
+                        >
+                            <div class="flex items-center justify-between mb-6">
+                                <h3 class="font-semibold text-zinc-900">
+                                    Health Trends (6 Months)
+                                </h3>
+                                <select
+                                    class="text-sm border border-zinc-200 rounded-lg px-3 py-1.5 bg-zinc-50"
+                                >
+                                    <option>All Metrics</option>
+                                    <option>Blood Pressure</option>
+                                    <option>Glucose</option>
+                                    <option>BMI</option>
+                                </select>
+                            </div>
+                            <div class="relative h-64">
+                                <canvas id="healthTrendChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Condition Breakdown -->
+                    <div
+                        class="bg-white rounded-xl border border-zinc-200 p-6 mb-8"
+                    >
+                        <h3 class="font-semibold text-zinc-900 mb-6">
+                            Condition Breakdown by Department
+                        </h3>
+                        <div class="relative h-72">
+                            <canvas id="departmentConditionChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Top Health Risks Table -->
+                    <div
+                        class="bg-white rounded-xl border border-zinc-200 p-6 mb-8"
+                    >
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-semibold text-zinc-900">
+                                High Risk Employees
+                            </h3>
+                            <a
+                                href="employee-database.html"
+                                class="text-sm font-medium text-zinc-600 hover:text-zinc-900"
+                                >View All</a
+                            >
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="border-b border-zinc-100">
+                                        <th
+                                            class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase"
+                                        >
+                                            Employee
+                                        </th>
+                                        <th
+                                            class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase"
+                                        >
+                                            Department
+                                        </th>
+                                        <th
+                                            class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase"
+                                        >
+                                            Primary Risk
+                                        </th>
+                                        <th
+                                            class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase"
+                                        >
+                                            Risk Score
+                                        </th>
+                                        <th
+                                            class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase"
+                                        >
+                                            Last Check
+                                        </th>
+                                        <th
+                                            class="text-left py-3 px-4 text-xs font-semibold text-zinc-500 uppercase"
+                                        ></th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-zinc-100">
+                                    <tr class="hover:bg-zinc-50">
+                                        <td class="py-3 px-4">
+                                            <div
+                                                class="flex items-center gap-3"
+                                            >
+                                                <div
+                                                    class="w-9 h-9 bg-zinc-200 rounded-full flex items-center justify-center"
+                                                >
+                                                    <i
+                                                        data-lucide="user"
+                                                        class="w-4 h-4 text-zinc-500"
+                                                    ></i>
+                                                </div>
+                                                <div>
+                                                    <div
+                                                        class="font-medium text-zinc-900"
+                                                    >
+                                                        Hadi Sucipto
+                                                    </div>
+                                                    <div
+                                                        class="text-xs text-zinc-500"
+                                                    >
+                                                        TC-2024-004
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td
+                                            class="py-3 px-4 text-sm text-zinc-600"
+                                        >
+                                            Operations
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <span
+                                                class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-red-50 text-red-700"
+                                            >
+                                                <i
+                                                    data-lucide="activity"
+                                                    class="w-3 h-3"
+                                                ></i>
+                                                Hypertension
+                                            </span>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <div
+                                                class="flex items-center gap-2"
+                                            >
+                                                <div
+                                                    class="w-20 h-2 bg-zinc-100 rounded-full overflow-hidden"
+                                                >
+                                                    <div
+                                                        class="h-full bg-red-500 rounded-full"
+                                                        style="width: 92%"
+                                                    ></div>
+                                                </div>
+                                                <span
+                                                    class="text-sm font-medium text-red-600"
+                                                    >92</span
+                                                >
+                                            </div>
+                                        </td>
+                                        <td
+                                            class="py-3 px-4 text-sm text-zinc-600"
+                                        >
+                                            Jan 10, 2024
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <a
+                                                href="employee-detail.html?id=EMP008&category=medical"
+                                                class="text-indigo-600 hover:text-indigo-700 text-sm font-medium"
+                                                >View</a
+                                            >
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-zinc-50">
+                                        <td class="py-3 px-4">
+                                            <div
+                                                class="flex items-center gap-3"
+                                            >
+                                                <div
+                                                    class="w-9 h-9 bg-zinc-200 rounded-full flex items-center justify-center"
+                                                >
+                                                    <i
+                                                        data-lucide="user"
+                                                        class="w-4 h-4 text-zinc-500"
+                                                    ></i>
+                                                </div>
+                                                <div>
+                                                    <div
+                                                        class="font-medium text-zinc-900"
+                                                    >
+                                                        Kartika Sari
+                                                    </div>
+                                                    <div
+                                                        class="text-xs text-zinc-500"
+                                                    >
+                                                        TC-2024-007
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td
+                                            class="py-3 px-4 text-sm text-zinc-600"
+                                        >
+                                            Finance
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <span
+                                                class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-orange-50 text-orange-700"
+                                            >
+                                                <i
+                                                    data-lucide="scale"
+                                                    class="w-3 h-3"
+                                                ></i>
+                                                Obesity + Diabetes
+                                            </span>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <div
+                                                class="flex items-center gap-2"
+                                            >
+                                                <div
+                                                    class="w-20 h-2 bg-zinc-100 rounded-full overflow-hidden"
+                                                >
+                                                    <div
+                                                        class="h-full bg-orange-500 rounded-full"
+                                                        style="width: 87%"
+                                                    ></div>
+                                                </div>
+                                                <span
+                                                    class="text-sm font-medium text-orange-600"
+                                                    >87</span
+                                                >
+                                            </div>
+                                        </td>
+                                        <td
+                                            class="py-3 px-4 text-sm text-zinc-600"
+                                        >
+                                            Jan 12, 2024
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <a
+                                                href="employee-detail.html?id=EMP011&category=medical"
+                                                class="text-indigo-600 hover:text-indigo-700 text-sm font-medium"
+                                                >View</a
+                                            >
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-zinc-50">
+                                        <td class="py-3 px-4">
+                                            <div
+                                                class="flex items-center gap-3"
+                                            >
+                                                <div
+                                                    class="w-9 h-9 bg-zinc-200 rounded-full flex items-center justify-center"
+                                                >
+                                                    <i
+                                                        data-lucide="user"
+                                                        class="w-4 h-4 text-zinc-500"
+                                                    ></i>
+                                                </div>
+                                                <div>
+                                                    <div
+                                                        class="font-medium text-zinc-900"
+                                                    >
+                                                        Ahmad Wijaya
+                                                    </div>
+                                                    <div
+                                                        class="text-xs text-zinc-500"
+                                                    >
+                                                        TC-2024-001
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td
+                                            class="py-3 px-4 text-sm text-zinc-600"
+                                        >
+                                            Operations
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <span
+                                                class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-700"
+                                            >
+                                                <i
+                                                    data-lucide="heart"
+                                                    class="w-3 h-3"
+                                                ></i>
+                                                Hypertension
+                                            </span>
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <div
+                                                class="flex items-center gap-2"
+                                            >
+                                                <div
+                                                    class="w-20 h-2 bg-zinc-100 rounded-full overflow-hidden"
+                                                >
+                                                    <div
+                                                        class="h-full bg-amber-500 rounded-full"
+                                                        style="width: 78%"
+                                                    ></div>
+                                                </div>
+                                                <span
+                                                    class="text-sm font-medium text-amber-600"
+                                                    >78</span
+                                                >
+                                            </div>
+                                        </td>
+                                        <td
+                                            class="py-3 px-4 text-sm text-zinc-600"
+                                        >
+                                            Jan 15, 2024
+                                        </td>
+                                        <td class="py-3 px-4">
+                                            <a
+                                                href="employee-detail.html?id=EMP001&category=medical"
+                                                class="text-indigo-600 hover:text-indigo-700 text-sm font-medium"
+                                                >View</a
+                                            >
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- AI Medical Insights -->
+                    <div
+                        class="bg-gradient-to-br from-rose-50 to-red-50 rounded-xl border border-rose-100 p-6"
+                    >
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="p-2 bg-white rounded-lg shadow-sm">
+                                <i
+                                    data-lucide="sparkles"
+                                    class="w-5 h-5 text-rose-600"
+                                ></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-zinc-900">
+                                    AI Medical Insights
+                                </h3>
+                                <p class="text-sm text-zinc-500">
+                                    Based on latest MCU data analysis
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="bg-white rounded-lg p-4 shadow-sm">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <i
+                                        data-lucide="trending-up"
+                                        class="w-4 h-4 text-amber-600"
+                                    ></i>
+                                    <span class="text-sm font-medium text-zinc-900"
+                                        >Hypertension Trend</span
+                                    >
+                                </div>
+                                <p class="text-sm text-zinc-600">
+                                    15% increase in hypertension cases in
+                                    Operations department. Recommend stress
+                                    management workshop.
+                                </p>
+                            </div>
+
+                            <div class="bg-white rounded-lg p-4 shadow-sm">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <i
+                                        data-lucide="shield-alert"
+                                        class="w-4 h-4 text-red-600"
+                                    ></i>
+                                    <span class="text-sm font-medium text-zinc-900"
+                                        >Critical Alert</span
+                                    >
+                                </div>
+                                <p class="text-sm text-zinc-600">
+                                    3 employees require immediate medical
+                                    attention for cardiovascular risk factors.
+                                </p>
+                            </div>
+
+                            <div class="bg-white rounded-lg p-4 shadow-sm">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <i
+                                        data-lucide="calendar-check"
+                                        class="w-4 h-4 text-emerald-600"
+                                    ></i>
+                                    <span class="text-sm font-medium text-zinc-900"
+                                        >Recommendation</span
+                                    >
+                                </div>
+                                <p class="text-sm text-zinc-600">
+                                    Schedule follow-up MCU in 3 months for high
+                                    risk employees. Consider wellness program.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <script>
+            function medicalAnalytic() {
+                return {
+                    initCharts() {
+                        // Risk Distribution Chart
+                        new Chart(
+                            document.getElementById("riskDistributionChart"),
+                            {
+                                type: "doughnut",
+                                data: {
+                                    labels: [
+                                        "Low Risk",
+                                        "Medium Risk",
+                                        "High Risk",
+                                        "Critical",
+                                    ],
+                                    datasets: [
+                                        {
+                                            data: [165, 38, 32, 10],
+                                            backgroundColor: [
+                                                "#10b981",
+                                                "#f59e0b",
+                                                "#ef4444",
+                                                "#7f1d1d",
+                                            ],
+                                            borderWidth: 0,
+                                        },
+                                    ],
+                                },
+                                options: {
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    cutout: "70%",
+                                    plugins: {
+                                        legend: {
+                                            position: "bottom",
+                                        },
+                                    },
+                                },
+                            },
+                        );
+
+                        // Health Trends Chart
+                        new Chart(
+                            document.getElementById("healthTrendChart"),
+                            {
+                                type: "line",
+                                data: {
+                                    labels: [
+                                        "Aug",
+                                        "Sep",
+                                        "Oct",
+                                        "Nov",
+                                        "Dec",
+                                        "Jan",
+                                    ],
+                                    datasets: [
+                                        {
+                                            label: "Avg Glucose",
+                                            data: [105, 108, 110, 112, 115, 118],
+                                            borderColor: "#ef4444",
+                                            backgroundColor:
+                                                "rgba(239, 68, 68, 0.1)",
+                                            tension: 0.4,
+                                            fill: true,
+                                        },
+                                        {
+                                            label: "Avg Systolic BP",
+                                            data: [125, 128, 130, 132, 135, 138],
+                                            borderColor: "#f59e0b",
+                                            backgroundColor:
+                                                "rgba(245, 158, 11, 0.1)",
+                                            tension: 0.4,
+                                            fill: true,
+                                        },
+                                        {
+                                            label: "Avg BMI",
+                                            data: [24.5, 24.8, 25.1, 25.3, 25.6, 25.9],
+                                            borderColor: "#3b82f6",
+                                            backgroundColor:
+                                                "rgba(59, 130, 246, 0.1)",
+                                            tension: 0.4,
+                                            fill: true,
+                                        },
+                                    ],
+                                },
+                                options: {
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    plugins: { legend: { position: "bottom" } },
+                                    scales: {
+                                        y: {
+                                            beginAtZero: false,
+                                            grid: { color: "#f4f4f5" },
+                                        },
+                                        x: {
+                                            grid: { display: false },
+                                        },
+                                    },
+                                },
+                            },
+                        );
+
+                        // Department Condition Chart
+                        new Chart(
+                            document.getElementById("departmentConditionChart"),
+                            {
+                                type: "bar",
+                                data: {
+                                    labels: [
+                                        "Operations",
+                                        "Engineering",
+                                        "Finance",
+                                        "HR",
+                                        "Sales",
+                                        "Marketing",
+                                    ],
+                                    datasets: [
+                                        {
+                                            label: "Hypertension",
+                                            data: [18, 8, 5, 3, 6, 4],
+                                            backgroundColor: "#ef4444",
+                                            borderRadius: 4,
+                                        },
+                                        {
+                                            label: "Diabetes Risk",
+                                            data: [12, 6, 8, 2, 5, 3],
+                                            backgroundColor: "#f97316",
+                                            borderRadius: 4,
+                                        },
+                                        {
+                                            label: "Obesity",
+                                            data: [15, 10, 6, 4, 7, 5],
+                                            backgroundColor: "#f59e0b",
+                                            borderRadius: 4,
+                                        },
+                                        {
+                                            label: "Heart Disease",
+                                            data: [8, 4, 3, 2, 3, 2],
+                                            backgroundColor: "#f43f5e",
+                                            borderRadius: 4,
+                                        },
+                                    ],
+                                },
+                                options: {
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    plugins: {
+                                        legend: { position: "bottom" },
+                                    },
+                                    scales: {
+                                        x: {
+                                            stacked: true,
+                                            grid: { display: false },
+                                        },
+                                        y: {
+                                            stacked: true,
+                                            beginAtZero: true,
+                                            grid: { color: "#f4f4f5" },
+                                        },
+                                    },
+                                },
+                            },
+                        );
+                    },
+                };
+            }
+        </script>
+    </body>
+</html>
